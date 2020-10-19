@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "tmxtotxt": {
+      "commandName": "Project",
+      "commandLineArgs": "tiled.tmx 1 result.txt"
+    }
+  }
+}
