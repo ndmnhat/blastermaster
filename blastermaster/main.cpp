@@ -19,7 +19,7 @@
 #include "Textures.h"
 
 #include "Mario.h"
-#include "Enemy.h"
+#include "OutdoorEnemy.h"
 #include "Enemy1.h"
 #include "Enemy2.h"
 #include "Enemy3.h"
@@ -41,7 +41,7 @@
 CGame *game;
 CMario *mario;
 
-CEnemy* e1, * e2, * e3;
+COutdoorEnemy* e1, * e2, * e3;
 
 Map m;
 
