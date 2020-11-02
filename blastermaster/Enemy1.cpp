@@ -3,8 +3,9 @@
 void CEnemy1::Update(DWORD dt)
 {
 	CGameObject::Update(dt);
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
+	nx++;
+	if (vx > 0 && nx > 200) {
+		nx = 200; vx = -vx;
 	}
 	if (vx < 0 && x < 0) {
 		x = 0; vx = -vx;

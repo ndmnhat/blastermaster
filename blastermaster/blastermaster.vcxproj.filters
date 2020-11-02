@@ -27,9 +27,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mario.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sprites.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,6 +48,15 @@
     <ClCompile Include="Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Define.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sophia.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h">
@@ -60,9 +66,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sprites.h">
@@ -86,12 +89,27 @@
     <ClInclude Include="Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sophia.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="map2.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\tiles.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\enemies.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\BlasterMasterSheet1.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

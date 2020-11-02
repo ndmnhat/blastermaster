@@ -11,6 +11,8 @@
 
 class CEnemy1 : public CEnemy
 {
+private:
+	float nx = 0, ny = 0;
 public:
 	void Update(DWORD dt);
 	void Render();

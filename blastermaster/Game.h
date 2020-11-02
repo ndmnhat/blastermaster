@@ -43,7 +43,7 @@ public:
 	void InitKeyboard(LPKEYEVENTHANDLER handler);
 	void Init(HWND hWnd);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
-
+	void Draw(D3DXVECTOR3 Position, LPDIRECT3DTEXTURE9 texture, RECT ScrRect);
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
 

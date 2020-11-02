@@ -144,7 +144,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="Define.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enemy1.cpp" />
     <ClCompile Include="Enemy2.cpp" />
@@ -153,12 +155,14 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="Define.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy1.h" />
     <ClInclude Include="Enemy2.h" />
@@ -166,7 +170,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Mario.h" />
+    <ClInclude Include="Sophia.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
   </ItemGroup>
@@ -176,6 +180,8 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="textures\BlasterMasterSheet1.png" />
+    <Image Include="textures\enemies.png" />
     <Image Include="textures\tiles.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

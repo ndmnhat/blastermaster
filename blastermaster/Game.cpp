@@ -66,6 +66,11 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
 }
 
+void CGame::Draw(D3DXVECTOR3 Position, LPDIRECT3DTEXTURE9 texture, RECT ScrRect)
+{
+	spriteHandler->Draw(texture, &ScrRect, NULL, &Position, D3DCOLOR_XRGB(255, 255, 255));
+}
+
 int CGame::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
