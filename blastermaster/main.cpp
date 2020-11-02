@@ -17,33 +17,29 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "Textures.h"
+#include "Define.h"
 
-#include "Mario.h"
+#include "Sophia.h"
 #include "OutdoorEnemy.h"
+
 #include "Enemy1.h"
 #include "Enemy2.h"
 #include "Enemy3.h"
 #include "Map.h"
+#include "Camera.h"
 
-#define WINDOW_CLASS_NAME L"SampleWindow"
-#define MAIN_WINDOW_TITLE L"02 - Sprite animation"
 
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(255, 255, 255)
-#define SCREEN_WIDTH 272
-#define SCREEN_HEIGHT 264
-
-#define MAX_FRAME_RATE 60
-
-#define ID_TEX_MARIO 0
+#define ID_TEX_PLAYER 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
 
 CGame *game;
-CMario *mario;
+CSophia *sophia;
 
 COutdoorEnemy* e1, * e2, * e3;
+CCamera* cam = CCamera::GetInstance();
 
-Map m;
+CMap m;
 
 class CSampleKeyHander: public CKeyEventHandler
 {
@@ -60,7 +56,9 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
-		mario->SetState(MARIO_STATE_JUMP);
+		sophia->SetState(SOPHIA_STATE_JUMP);
+		break;
+	case DIK_DOWN:
 		break;
 	}
 }
@@ -73,10 +71,10 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 void CSampleKeyHander::KeyState(BYTE *states)
 {
 	if (game->IsKeyDown(DIK_RIGHT))
-		mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		sophia->SetState(SOPHIA_STATE_WALKING_RIGHT);
 	else if (game->IsKeyDown(DIK_LEFT))
-		mario->SetState(MARIO_STATE_WALKING_LEFT);
-	else mario->SetState(MARIO_STATE_IDLE);
+		sophia->SetState(SOPHIA_STATE_WALKING_LEFT);
+	else sophia->SetState(SOPHIA_STATE_IDLE);
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -100,7 +98,7 @@ void LoadResources()
 {
 	CTextures * textures = CTextures::GetInstance();
 
-	textures->Add(ID_TEX_MARIO, L"textures\\mario.png",D3DCOLOR_XRGB(176, 224, 248));
+	textures->Add(ID_TEX_PLAYER, L"textures\\BlasterMasterSheet1.png",D3DCOLOR_ARGB(0, 0, 0,0));
 	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_ARGB(0,0,0,0));
 	textures->Add(ID_TEX_MAP, L"textures\\tiles.png", D3DCOLOR_XRGB(0, 0, 0));
 	
@@ -110,19 +108,18 @@ void LoadResources()
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	
-	LPDIRECT3DTEXTURE9 texMario = textures->Get(ID_TEX_MARIO);
+	LPDIRECT3DTEXTURE9 texPlayer = textures->Get(ID_TEX_PLAYER);
 	LPDIRECT3DTEXTURE9 textEnemies = textures->Get(ID_TEX_ENEMY);
 
-	sprites->Add(10001, 246, 154, 260, 181, texMario);
+	sprites->Add(10001, 3, 0, 29, 18, texPlayer);
+	sprites->Add(10002, 34, 0, 60, 18, texPlayer);
+	sprites->Add(10003, 67, 0, 93, 18, texPlayer);
+	sprites->Add(10004, 99, 0, 125, 18, texPlayer);
 
-	sprites->Add(10002, 275, 154, 290, 181, texMario);
-	sprites->Add(10003, 304, 154, 321, 181, texMario);
-
-	sprites->Add(10011, 186, 154, 200, 181, texMario);
-
-	sprites->Add(10012, 155, 154, 170, 181, texMario);
-	sprites->Add(10013, 125, 154, 140, 181, texMario);
-	
+	sprites->Add(10005, 136, 0, 162, 18, texPlayer);
+	sprites->Add(10006, 168, 0, 194, 18, texPlayer);
+	sprites->Add(10007, 201, 0, 227, 18, texPlayer);
+	sprites->Add(10008, 232, 0, 258, 18, texPlayer);
 	//Enemy1
 	sprites->Add(20001, 67, 424, 85, 441, textEnemies);
 	sprites->Add(20002, 87, 424, 105, 441, textEnemies);
@@ -151,20 +148,22 @@ void LoadResources()
 	animations->Add(400, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(10011);
+	ani->Add(10005);
 	animations->Add(401, ani);
 
 
 	ani = new CAnimation(100);
-	ani->Add(10001);
-	ani->Add(10002);
+	ani->Add(10004);
 	ani->Add(10003);
+	ani->Add(10002);
+	ani->Add(10001);
 	animations->Add(500, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(10011);
-	ani->Add(10012);
-	ani->Add(10013);
+	ani->Add(10005);
+	ani->Add(10006);
+	ani->Add(10007);
+	ani->Add(10008);
 	animations->Add(501, ani);
 
 	//Enemy1
@@ -201,11 +200,11 @@ void LoadResources()
 	animations->Add(801, ani);
 
 
-	mario = new CMario();
-	mario->AddAnimation(400);		// idle right
-	mario->AddAnimation(401);		// idle left
-	mario->AddAnimation(500);		// walk right
-	mario->AddAnimation(501);		// walk left
+	sophia = new CSophia();
+	sophia->AddAnimation(400);		// idle left
+	sophia->AddAnimation(401);		// idle right
+	sophia->AddAnimation(500);		// walk left
+	sophia->AddAnimation(501);		// walk right
 
 	e1 = new CEnemy1();
 	e1->AddAnimation(600);
@@ -219,10 +218,13 @@ void LoadResources()
 	e3->AddAnimation(800);
 	e3->AddAnimation(801);
 
-	//mario->SetPosition(0.0f, 100.0f);
-	e1->SetPosition(0.0f, 50.0f);
-	e2->SetPosition(0.0f, 25.0f);
-	e3->SetPosition(0.0f, 75.0f);
+	sophia->SetPosition(1080.0f, 1180.0f);
+	e1->SetPosition(999.0f, 1215.0f);
+	e2->SetPosition(999.0f, 1215.0f);
+	e3->SetPosition(999.0f, 1215.0f);
+	//cam->SetPosition(1024.0f, 1040.0f);
+	cam->SetPosition(0.0f, 0.0f);
+	cam->SetFollow(sophia);
 }
 
 /*
@@ -231,10 +233,11 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	//mario->Update(dt);
+	sophia->Update(dt);
 	e1->Update(dt);
 	e2->Update(dt);
 	e3->Update(dt);
+	cam->Update(dt);
 }
 
 /*
@@ -253,11 +256,12 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		//mario->Render();
+		m.DrawMap(cam);
+
+		sophia->Render();
 		e1->Render();
 		e2->Render();
 		e3->Render();
-		m.DrawMap();
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}

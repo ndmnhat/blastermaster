@@ -3,25 +3,24 @@
 #include <fstream>
 using namespace std;
 
-void Map::ReadMap(char* filename)
+void CMap::ReadMap(char* filename)
 {
 	fstream fs;
 	fs.open(filename, ios::in | ios::out);
-	fs >> mapWidth >> mapHeight >> tileWidth >> tileHeight >> tileCount;
+	fs >> mapWidth >> mapHeight >> tileWidth >> tileHeight >> tileCount >> tileColumn;
 	for (int i = 0; i < mapWidth * mapHeight; ++i)
 	{
 		fs >> tileMap[i / mapHeight][i % mapWidth];
 	}
 	_texture = CTextures::GetInstance()->Get(ID_TEX_MAP);
 }
-void Map::DrawMap()
+void CMap::DrawMap(CCamera * cam)
 {
 	CGame * game = CGame::GetInstance();
-	float xcam, ycam;
-	xcam = 1024;
-	ycam = 1040;
-	int firstRow = ycam / tileHeight;
-	int firstColumn = xcam / tileWidth;
+	D3DXVECTOR3 camPosition = cam->GetPosition();
+	cam->SetCamBoundary(mapWidth*tileWidth - SCREEN_WIDTH, mapHeight*tileHeight - SCREEN_HEIGHT);
+	int firstRow = camPosition.y / tileHeight;
+	int firstColumn = camPosition.x / tileWidth;
 	for (int i = 0; i < firstRow + SCREEN_HEIGHT / tileWidth; i++)
 	{
 		for (int j = 0; j < firstColumn + SCREEN_WIDTH / tileHeight; j++)
@@ -29,7 +28,15 @@ void Map::DrawMap()
 			int currentRow = firstRow + i;
 			int currentColumn = firstColumn + j;
 			int gid = tileMap[currentRow][currentColumn]-1;
-			game->Draw((float)(j * tileWidth-(int)xcam%16), (float)(i * tileHeight-(int)ycam%16), _texture, (gid%13) * tileWidth, (gid / 13) * tileHeight, (gid % 13) * tileWidth + tileWidth, (gid / 13) * tileHeight + tileHeight);
+			float tileX = (float)(j * tileWidth - (camPosition.x - (camPosition.x / 16) * 16));
+			float tileY = (float)(i * tileHeight - (camPosition.y - (camPosition.y / 16) * 16));
+			D3DXVECTOR3 tilePosition(tileX, tileY, 0);
+			RECT r;
+			r.left = (long)((gid % tileColumn) * tileWidth);
+			r.right = (gid % tileColumn) * tileWidth + tileWidth;
+			r.top = (gid / tileColumn) * tileHeight;
+			r.bottom = (gid / tileColumn) * tileHeight + tileHeight;
+			game->Draw(tilePosition, _texture, r);
 		}
 	}
 }

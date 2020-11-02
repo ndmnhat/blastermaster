@@ -1,5 +1,6 @@
 #include "Sprites.h"
 #include "Game.h"
+#include "Camera.h"
 #include "debug.h"
 
 CSprite::CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
@@ -22,8 +23,9 @@ CSprites *CSprites::GetInstance()
 
 void CSprite::Draw(float x, float y)
 {
+	D3DXVECTOR3 screenCoordinate = CCamera::GetInstance()->Transform(D3DXVECTOR3(x, y, 0));
 	CGame * game = CGame::GetInstance();
-	game->Draw(x, y, texture, left, top, right, bottom);
+	game->Draw(screenCoordinate.x, screenCoordinate.y, texture, left, top, right, bottom);
 }
 
 

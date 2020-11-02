@@ -28,7 +28,8 @@ namespace tmxtotxt
             var tileWidth = Convert.ToInt32(xDoc.Root.Attribute("tilewidth").Value);
             var tileHeight = Convert.ToInt32(xDoc.Root.Attribute("tileheight").Value);
             var tilecount = Convert.ToInt32(xDoc.Root.Element("tileset").Attribute("tilecount").Value);
-            sw.WriteLine("{0} {1} {2} {3} {4}", mapWidth, mapHeight, tileWidth, tileHeight, tilecount);
+            var tilecolumn = Convert.ToInt32(xDoc.Root.Element("tileset").Attribute("columns").Value);
+            sw.WriteLine("{0} {1} {2} {3} {4}", mapWidth, mapHeight, tileWidth, tileHeight, tilecount, tilecolumn);
 
             // Parse tile data
             var layer = (from c in xDoc.Root.Elements("layer")

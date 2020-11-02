@@ -151,6 +151,9 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Dome.cpp" />
     <ClCompile Include="OutdoorEnemy.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Define.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enemy1.cpp" />
     <ClCompile Include="Enemy2.cpp" />
     <ClCompile Include="Enemy3.cpp" />
@@ -163,11 +166,11 @@
     <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Mine.cpp" />
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Skull.cpp" />
+    <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Teleporter.cpp" />
     <ClCompile Include="Textures.cpp" />
@@ -183,6 +186,9 @@
     <ClInclude Include="debug.h" />
     <ClInclude Include="Dome.h" />
     <ClInclude Include="OutdoorEnemy.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Define.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy1.h" />
     <ClInclude Include="Enemy2.h" />
     <ClInclude Include="Enemy3.h" />
@@ -194,11 +200,11 @@
     <ClInclude Include="Insect.h" />
     <ClInclude Include="Jumper.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Mario.h" />
     <ClInclude Include="Mine.h" />
     <ClInclude Include="Orb.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="Skull.h" />
+    <ClInclude Include="Sophia.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Teleporter.h" />
     <ClInclude Include="Textures.h" />
@@ -212,6 +218,8 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="textures\BlasterMasterSheet1.png" />
+    <Image Include="textures\enemies.png" />
     <Image Include="textures\tiles.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
