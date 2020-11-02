@@ -144,35 +144,73 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="BossCrabullus.cpp" />
+    <ClCompile Include="Plutonium.cpp" />
+    <ClCompile Include="Cannon.cpp" />
+    <ClCompile Include="Dasher.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="Dome.cpp" />
+    <ClCompile Include="OutdoorEnemy.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Define.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enemy1.cpp" />
     <ClCompile Include="Enemy2.cpp" />
     <ClCompile Include="Enemy3.cpp" />
+    <ClCompile Include="Eyeball.cpp" />
+    <ClCompile Include="Floater.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="IndoorEnemy.cpp" />
+    <ClCompile Include="Insect.cpp" />
+    <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Mine.cpp" />
+    <ClCompile Include="Orb.cpp" />
+    <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="Skull.cpp" />
     <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="Teleporter.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="UnderworldLord.cpp" />
+    <ClCompile Include="Waver.cpp" />
+    <ClCompile Include="Worm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="BossCrabullus.h" />
+    <ClInclude Include="Plutonium.h" />
+    <ClInclude Include="Cannon.h" />
+    <ClInclude Include="Dasher.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="Dome.h" />
+    <ClInclude Include="OutdoorEnemy.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy1.h" />
     <ClInclude Include="Enemy2.h" />
     <ClInclude Include="Enemy3.h" />
+    <ClInclude Include="Eyeball.h" />
+    <ClInclude Include="Floater.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="IndoorEnemy.h" />
+    <ClInclude Include="Insect.h" />
+    <ClInclude Include="Jumper.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Mine.h" />
+    <ClInclude Include="Orb.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="Skull.h" />
     <ClInclude Include="Sophia.h" />
     <ClInclude Include="Sprites.h" />
+    <ClInclude Include="Teleporter.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="UnderworldLord.h" />
+    <ClInclude Include="Waver.h" />
+    <ClInclude Include="Worm.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="map2.txt">

@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{f8ce3e78-2877-462b-99fa-c6bbfa46003c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\IndoorEnemy">
+      <UniqueIdentifier>{1641e540-f612-4ec0-91af-945fea6767e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\OutdoorEnemy">
+      <UniqueIdentifier>{99cc318f-f8f8-4eec-a015-3146d0e218b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="debug.cpp">
@@ -33,20 +42,74 @@
     <ClCompile Include="Textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
+    <ClCompile Include="Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Enemy1.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Objects\OutdoorEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Enemy2.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Objects\OutdoorEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Enemy3.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Objects\OutdoorEnemy</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Worm.cpp">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Dome.cpp">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Floater.cpp">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Skull.cpp">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Orb.cpp">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Insect.cpp">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Mine.cpp">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Jumper.cpp">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="IndoorEnemy.cpp">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Cannon.cpp">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleporter.cpp">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Eyeball.cpp">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BossCrabullus.cpp">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Ship.cpp">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Dasher.cpp">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Waver.cpp">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="UnderworldLord.cpp">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Plutonium.cpp">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="OutdoorEnemy.cpp">
+      <Filter>Objects\OutdoorEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
@@ -74,20 +137,74 @@
     <ClInclude Include="Textures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
+    <ClInclude Include="Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enemy1.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects\OutdoorEnemy</Filter>
     </ClInclude>
     <ClInclude Include="Enemy2.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects\OutdoorEnemy</Filter>
     </ClInclude>
     <ClInclude Include="Enemy3.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects\OutdoorEnemy</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Worm.h">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Dome.h">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Floater.h">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Skull.h">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Orb.h">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Insect.h">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Mine.h">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Jumper.h">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="IndoorEnemy.h">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Cannon.h">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleporter.h">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Eyeball.h">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BossCrabullus.h">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Ship.h">
+      <Filter>Objects\OutdoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Dasher.h">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Waver.h">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="UnderworldLord.h">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Plutonium.h">
+      <Filter>Objects\IndoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="OutdoorEnemy.h">
+      <Filter>Objects\OutdoorEnemy</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>

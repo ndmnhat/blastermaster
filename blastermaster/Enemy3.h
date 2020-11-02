@@ -1,5 +1,5 @@
 #pragma once
-#include "Enemy.h"
+#include "OutdoorEnemy.h"
 
 #define ENEMY3_WALKING_SPEED		0.2f
 			 
@@ -9,12 +9,12 @@
 #define ENEMY3_ANI_WALKING_RIGHT	0
 #define ENEMY3_ANI_WALKING_LEFT		1
 
-class CEnemy3 : public CEnemy
+class CEnemy3 : public COutdoorEnemy
 {
 public:
 	void Update(DWORD dt);
 	void Render();
 	void SetState(int state);
-	CEnemy3() : CEnemy() { vx = ENEMY3_WALKING_SPEED; };
+	CEnemy3() : COutdoorEnemy() { vx = ENEMY3_WALKING_SPEED; };
 };
 

@@ -20,7 +20,8 @@
 #include "Define.h"
 
 #include "Sophia.h"
-#include "Enemy.h"
+#include "OutdoorEnemy.h"
+
 #include "Enemy1.h"
 #include "Enemy2.h"
 #include "Enemy3.h"
@@ -35,8 +36,8 @@
 CGame *game;
 CSophia *sophia;
 
+COutdoorEnemy* e1, * e2, * e3;
 CCamera* cam = CCamera::GetInstance();
-CEnemy* e1, * e2, * e3;
 
 CMap m;
 
