@@ -8,10 +8,10 @@
 #define SCREEN_WIDTH 272
 #define SCREEN_HEIGHT 264
 
-#define FREE_CAM_WIDTH 50
-#define FREE_CAM_HEIGHT 50
+#define FREE_CAM_WIDTH 100
+#define FREE_CAM_HEIGHT 75
 
-#define MAX_FRAME_RATE 60
+#define MAX_FRAME_RATE 90
 
 enum GameObjectID
 {

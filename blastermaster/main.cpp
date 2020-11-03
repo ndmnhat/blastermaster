@@ -20,11 +20,11 @@
 #include "Define.h"
 
 #include "Sophia.h"
-#include "OutdoorEnemy.h"
+#include "Enemy\OutdoorEnemy.h"
 
-#include "Enemy1.h"
-#include "Enemy2.h"
-#include "Enemy3.h"
+#include "Enemy\Enemy1.h"
+#include "Enemy\Enemy2.h"
+#include "Enemy\Enemy3.h"
 #include "Map.h"
 #include "Camera.h"
 

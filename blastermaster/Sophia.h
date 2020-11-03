@@ -19,7 +19,6 @@
 class CSophia : public CGameObject
 {
 public: 
-
 	void Update(DWORD dt);
 	void Render();
 	void SetState(int state);

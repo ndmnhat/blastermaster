@@ -6,9 +6,9 @@ void CSophia::Update(DWORD dt)
 
 	// simple fall down
 	vy += SOPHIA_GRAVITY;
-	if (y > 1180) 
+	if (y > 1170) 
 	{
-		vy = 0; y = 1180.0f;
+		vy = 0; y = 1170.0f;
 	}
 
 	// simple screen edge collision!!!
