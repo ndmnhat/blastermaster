@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "..\GameObject.h"
 
 
 class CIndoorEnemy : public CGameObject

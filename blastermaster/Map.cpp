@@ -28,8 +28,10 @@ void CMap::DrawMap(CCamera * cam)
 			int currentRow = firstRow + i;
 			int currentColumn = firstColumn + j;
 			int gid = tileMap[currentRow][currentColumn]-1;
-			float tileX = (float)(j * tileWidth - (camPosition.x - (camPosition.x / 16) * 16));
-			float tileY = (float)(i * tileHeight - (camPosition.y - (camPosition.y / 16) * 16));
+			//float tileX = (float)(j * tileWidth - (camPosition.x - (camPosition.x / 16) * 16));
+			//float tileY = (float)(i * tileHeight - (camPosition.y - (camPosition.y / 16) * 16));
+			float tileX = (float)(j*tileWidth-(int)camPosition.x%tileWidth);
+			float tileY = (float)(i*tileHeight- (int)camPosition.y%tileHeight);
 			D3DXVECTOR3 tilePosition(tileX, tileY, 0);
 			RECT r;
 			r.left = (long)((gid % tileColumn) * tileWidth);
