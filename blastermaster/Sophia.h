@@ -9,18 +9,33 @@
 #define SOPHIA_STATE_WALKING_RIGHT	100
 #define SOPHIA_STATE_WALKING_LEFT	200
 #define SOPHIA_STATE_JUMP			300
+#define SOPHIA_STATE_DIE			400
+#define SOPHIA_STATE_ATTACKED		500
+
 
 #define SOPHIA_ANI_IDLE_LEFT		0
 #define SOPHIA_ANI_IDLE_RIGHT		1
 #define SOPHIA_ANI_WALKING_LEFT		2
 #define SOPHIA_ANI_WALKING_RIGHT	3
 
+#define SOPHIA_UNTOUCHABLE_TIME 1000
+
+#define SOPHIA_BBOX_WIDTH  26
+#define SOPHIA_BBOX_HEIGHT 18
 
 class CSophia : public CGameObject
 {
-public: 
+	DWORD untouchableStart;
 
-	void Update(DWORD dt);
+public:
+	bool isUntouchable; 
+	
+
+	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	void Render();
 	void SetState(int state);
+	void UpdateStateTime();
+	void StartUntouchable() { isUntouchable = true; untouchableStart = GetTickCount(); };
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+
 };

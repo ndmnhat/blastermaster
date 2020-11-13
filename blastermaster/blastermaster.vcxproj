@@ -153,7 +153,6 @@
     <ClCompile Include="OutdoorEnemy.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Define.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enemy1.cpp" />
     <ClCompile Include="Enemy2.cpp" />
     <ClCompile Include="Enemy3.cpp" />
@@ -188,7 +187,6 @@
     <ClInclude Include="OutdoorEnemy.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Define.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy1.h" />
     <ClInclude Include="Enemy2.h" />
     <ClInclude Include="Enemy3.h" />

@@ -22,6 +22,9 @@
     <Filter Include="Objects\OutdoorEnemy">
       <UniqueIdentifier>{99cc318f-f8f8-4eec-a015-3146d0e218b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Sophia">
+      <UniqueIdentifier>{6dab6776-35bf-4aba-813c-d59a4b7445aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="debug.cpp">
@@ -118,7 +121,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sophia.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Objects\Sophia</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,7 +216,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sophia.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects\Sophia</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
