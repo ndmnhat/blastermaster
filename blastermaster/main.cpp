@@ -19,12 +19,9 @@
 #include "Textures.h"
 #include "Define.h"
 
-#include "Sophia.h"
-#include "OutdoorEnemy.h"
+#include "Object\Player\Sophia.h"
+#include "Object\OutdoorEnemy\OutdoorEnemy.h"
 
-#include "Enemy1.h"
-#include "Enemy2.h"
-#include "Enemy3.h"
 #include "Map.h"
 #include "Camera.h"
 

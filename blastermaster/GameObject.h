@@ -88,3 +88,5 @@ public:
 
 	~CGameObject();
 };
+
+typedef CGameObject* LPGAMEOBJECT;

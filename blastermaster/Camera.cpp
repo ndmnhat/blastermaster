@@ -14,16 +14,16 @@ void CCamera::SetFollow(CGameObject* gameobject)
 
 void CCamera::Update(DWORD dt)
 {
-	if (objectToFollow->GetX() < xCam + (SCREEN_WIDTH - freeCamWidth)/2 - 50)
-		this->xCam = objectToFollow->GetX() - (SCREEN_WIDTH - freeCamWidth) / 2 + 50;
+	if (objectToFollow->GetX() < xCam + (SCREEN_WIDTH - freeCamWidth)/2)
+		this->xCam = objectToFollow->GetX() - (SCREEN_WIDTH - freeCamWidth) / 2;
 
-	if (objectToFollow->GetX() > xCam + (SCREEN_WIDTH / 2 + freeCamWidth / 2))
-		this->xCam = objectToFollow->GetX() - (SCREEN_WIDTH + freeCamWidth) / 2;
+	if (objectToFollow->GetX() > xCam + (SCREEN_WIDTH  + freeCamWidth) / 2 - 30)
+		this->xCam = objectToFollow->GetX() - (SCREEN_WIDTH + freeCamWidth) / 2 + 30;
 	
 	if (objectToFollow->GetY() < yCam + (SCREEN_HEIGHT - freeCamHeight) / 2)
 		this->yCam = objectToFollow->GetY() - (SCREEN_HEIGHT - freeCamHeight) / 2;
 
-	if (objectToFollow->GetY() > yCam + (SCREEN_HEIGHT / 2 + freeCamHeight / 2))
+	if (objectToFollow->GetY() > yCam + (SCREEN_HEIGHT + freeCamHeight) / 2)
 		this->yCam = objectToFollow->GetY() - (SCREEN_HEIGHT + freeCamHeight) / 2;
 
 	//this->xCam = objectToFollow->GetX() - SCREEN_WIDTH/2;
