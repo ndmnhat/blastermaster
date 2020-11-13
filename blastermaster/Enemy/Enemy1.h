@@ -16,7 +16,8 @@ private:
 public:
 	void Update(DWORD dt);
 	void Render();
-	void SetState(int state);
+	virtual void SetState(int state);
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	CEnemy1() : COutdoorEnemy() { vx = ENEMY1_WALKING_SPEED; };
 };
 

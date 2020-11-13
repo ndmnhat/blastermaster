@@ -22,6 +22,9 @@
     <Filter Include="Objects\OutdoorEnemy">
       <UniqueIdentifier>{99cc318f-f8f8-4eec-a015-3146d0e218b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Sophia">
+      <UniqueIdentifier>{6dab6776-35bf-4aba-813c-d59a4b7445aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="debug.cpp">
@@ -120,6 +123,8 @@
     <ClCompile Include="Enemy\Teleporter.cpp">
       <Filter>Objects\IndoorEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="Sophia.cpp">
+      <Filter>Objects\Sophia</Filter>
     <ClCompile Include="Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -218,6 +223,8 @@
     <ClInclude Include="Enemy\Teleporter.h">
       <Filter>Objects\IndoorEnemy</Filter>
     </ClInclude>
+    <ClInclude Include="Sophia.h">
+      <Filter>Objects\Sophia</Filter>
     <ClInclude Include="Grid.h">
       <Filter>Header Files</Filter>
     </ClInclude>

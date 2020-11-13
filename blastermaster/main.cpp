@@ -36,7 +36,7 @@
 CGame *game;
 CSophia *sophia;
 
-COutdoorEnemy* e1, * e2, * e3;
+//COutdoorEnemy* e1, * e2, * e3;
 CCamera* cam = CCamera::GetInstance();
 
 CMap m;
@@ -74,6 +74,8 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		sophia->SetState(SOPHIA_STATE_WALKING_RIGHT);
 	else if (game->IsKeyDown(DIK_LEFT))
 		sophia->SetState(SOPHIA_STATE_WALKING_LEFT);
+	else if (game->IsKeyDown(DIK_SPACE))
+		sophia->SetState(SOPHIA_STATE_JUMP);
 	else sophia->SetState(SOPHIA_STATE_IDLE);
 }
 
@@ -120,26 +122,26 @@ void LoadResources()
 	sprites->Add(10006, 168, 0, 194, 18, texPlayer);
 	sprites->Add(10007, 201, 0, 227, 18, texPlayer);
 	sprites->Add(10008, 232, 0, 258, 18, texPlayer);
-	//Enemy1
-	sprites->Add(20001, 67, 424, 85, 441, textEnemies);
-	sprites->Add(20002, 87, 424, 105, 441, textEnemies);
+	////Enemy1
+	//sprites->Add(20001, 67, 424, 85, 441, textEnemies);
+	//sprites->Add(20002, 87, 424, 105, 441, textEnemies);
 
-	sprites->Add(20003, 149, 424, 168, 441, textEnemies);
-	sprites->Add(20004, 169, 424, 188, 441, textEnemies);
+	//sprites->Add(20003, 149, 424, 168, 441, textEnemies);
+	//sprites->Add(20004, 169, 424, 188, 441, textEnemies);
 
-	//Enemy2
-	sprites->Add(30001, 172, 412, 190, 422, textEnemies);
-	sprites->Add(30002, 191, 412, 209, 422, textEnemies);
+	////Enemy2
+	//sprites->Add(30001, 172, 412, 190, 422, textEnemies);
+	//sprites->Add(30002, 191, 412, 209, 422, textEnemies);
 
-	sprites->Add(30003, 64, 412, 82, 422, textEnemies);
-	sprites->Add(30004, 46, 412, 64, 422, textEnemies);
+	//sprites->Add(30003, 64, 412, 82, 422, textEnemies);
+	//sprites->Add(30004, 46, 412, 64, 422, textEnemies);
 
-	//Enemy3
-	sprites->Add(40001, 174, 527, 192, 548, textEnemies);
-	sprites->Add(40002, 194, 530, 212, 548, textEnemies);
+	////Enemy3
+	//sprites->Add(40001, 174, 527, 192, 548, textEnemies);
+	//sprites->Add(40002, 194, 530, 212, 548, textEnemies);
 
-	sprites->Add(40003, 62, 527, 80, 548, textEnemies);
-	sprites->Add(40004, 42, 530, 60, 548, textEnemies);
+	//sprites->Add(40003, 62, 527, 80, 548, textEnemies);
+	//sprites->Add(40004, 42, 530, 60, 548, textEnemies);
 
 	LPANIMATION ani;
 
@@ -206,7 +208,7 @@ void LoadResources()
 	sophia->AddAnimation(500);		// walk left
 	sophia->AddAnimation(501);		// walk right
 
-	e1 = new CEnemy1();
+	/*e1 = new CEnemy1();
 	e1->AddAnimation(600);
 	e1->AddAnimation(601);
 
@@ -216,12 +218,12 @@ void LoadResources()
 
 	e3 = new CEnemy3();
 	e3->AddAnimation(800);
-	e3->AddAnimation(801);
+	e3->AddAnimation(801);*/
 
 	sophia->SetPosition(1080.0f, 1180.0f);
-	e1->SetPosition(999.0f, 1215.0f);
+	/*e1->SetPosition(999.0f, 1215.0f);
 	e2->SetPosition(999.0f, 1215.0f);
-	e3->SetPosition(999.0f, 1215.0f);
+	e3->SetPosition(999.0f, 1215.0f);*/
 	//cam->SetPosition(1024.0f, 1040.0f);
 	cam->SetPosition(0.0f, 0.0f);
 	cam->SetFollow(sophia);
@@ -233,10 +235,10 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	sophia->Update(dt);
-	e1->Update(dt);
+	sophia->Update(dt, &onCamObjects);
+	/*e1->Update(dt);
 	e2->Update(dt);
-	e3->Update(dt);
+	e3->Update(dt);*/
 	cam->Update(dt);
 }
 
@@ -259,9 +261,9 @@ void Render()
 		m.DrawMap(cam);
 
 		sophia->Render();
-		e1->Render();
+		/*e1->Render();
 		e2->Render();
-		e3->Render();
+		e3->Render();*/
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}

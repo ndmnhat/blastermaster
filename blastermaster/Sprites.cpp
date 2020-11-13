@@ -25,7 +25,12 @@ void CSprite::Draw(float x, float y)
 {
 	D3DXVECTOR3 screenCoordinate = CCamera::GetInstance()->Transform(D3DXVECTOR3(x, y, 0));
 	CGame * game = CGame::GetInstance();
-	game->Draw(screenCoordinate.x, screenCoordinate.y, texture, left, top, right, bottom);
+	RECT rect;
+	rect.left = left;
+	rect.right = right;
+	rect.top = top;
+	rect.bottom = bottom;
+	game->Draw(screenCoordinate, texture, rect);
 }
 
 

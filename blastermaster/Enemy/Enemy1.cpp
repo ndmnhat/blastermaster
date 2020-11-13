@@ -19,3 +19,13 @@ void CEnemy1::Render()
 	else
 		animations[ENEMY1_ANI_WALKING_LEFT]->Render(x, y);
 }
+
+void CEnemy1::SetState(int state)
+{
+	CGameObject::SetState(state);
+}
+
+void CEnemy1::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	
+}
