@@ -120,6 +120,9 @@
     <ClCompile Include="Enemy\Teleporter.cpp">
       <Filter>Objects\IndoorEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="Enemy\Teleporter.h">
       <Filter>Objects\IndoorEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

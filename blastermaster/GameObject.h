@@ -43,3 +43,5 @@ public:
 	virtual void Render();
 	~CGameObject();
 };
+
+typedef CGameObject* LPGAMEOBJECT;

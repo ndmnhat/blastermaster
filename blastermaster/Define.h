@@ -13,6 +13,10 @@
 
 #define MAX_FRAME_RATE 90
 
+#define GRID_CELL_HEIGHT 100
+#define GRID_CELL_WIDTH 150
+
+
 enum GameObjectID
 {
 
