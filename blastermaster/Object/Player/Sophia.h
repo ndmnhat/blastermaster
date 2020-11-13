@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "..\..\GameObject.h"
 
 #define SOPHIA_WALKING_SPEED 0.1f
 #define SOPHIA_JUMP_SPEED_Y 0.5f
