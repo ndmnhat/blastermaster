@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);G:\DirectX\Include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;G:\DirectX\Lib\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -92,6 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -168,6 +169,8 @@
     <ClCompile Include="Object\OutdoorEnemy\Ship.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Skull.cpp" />
     <ClCompile Include="Object\Player\Sophia.cpp" />
+    <ClCompile Include="Scence.cpp" />
+    <ClCompile Include="ScenceGame.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Teleporter.cpp" />
     <ClCompile Include="Textures.cpp" />
@@ -199,6 +202,8 @@
     <ClInclude Include="Object\OutdoorEnemy\Ship.h" />
     <ClInclude Include="Object\OutdoorEnemy\Skull.h" />
     <ClInclude Include="Object\Player\Sophia.h" />
+    <ClInclude Include="Scence.h" />
+    <ClInclude Include="ScenceGame.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Object\IndoorEnemy\Teleporter.h" />
     <ClInclude Include="Textures.h" />

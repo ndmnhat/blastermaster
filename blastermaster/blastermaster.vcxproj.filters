@@ -31,6 +31,8 @@
     <ClCompile Include="Object\IndoorEnemy\UnderworldLord.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Waver.cpp" />
     <ClCompile Include="Object\Player\Sophia.cpp" />
+    <ClCompile Include="Scence.cpp" />
+    <ClCompile Include="ScenceGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h" />
@@ -62,6 +64,8 @@
     <ClInclude Include="Object\IndoorEnemy\UnderworldLord.h" />
     <ClInclude Include="Object\IndoorEnemy\Waver.h" />
     <ClInclude Include="Object\Player\Sophia.h" />
+    <ClInclude Include="Scence.h" />
+    <ClInclude Include="ScenceGame.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />

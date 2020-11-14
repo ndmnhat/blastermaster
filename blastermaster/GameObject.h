@@ -55,6 +55,8 @@ public:
 	ObjectType type;
 	vector<LPANIMATION> animations;
 
+	LPANIMATION animation_set;
+
 public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
@@ -66,6 +68,8 @@ public:
 	int GetState() { return this->state; }
 
 	void RenderBoundingBox();
+
+	void SetAnimationSet(LPANIMATION ani_set) { animation_set = ani_set; }
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
