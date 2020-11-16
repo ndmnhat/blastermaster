@@ -1,11 +1,4 @@
-#include "ScenceGame.h"
-#include "Textures.h"
-#include "Scence.h"
-#include "Sprites.h"
-#include "GameObject.h"
-#include "Sophia.h"
-#include <fstream>
-#include <iostream>
+#include "SceneGame.h"
 
 using namespace std;
 
@@ -20,24 +13,19 @@ using namespace std;
 
 #define MAX_SCENE_LINE 1024
 
-CScenceGame::CScenceGame(int id, LPCWSTR filePath) :
+CSceneGame::CSceneGame(int id, LPCWSTR filePath) :
 	CScene(id, filePath)
 {
-	key_handler = new CScenceKeyHandler(this);
+	key_handler = new CSceneGameKeyHandler(this);
 }
 
-ScenceGame::ScenceGame()
+CSceneGame::~CSceneGame()
 {
 }
 
-
-ScenceGame::~ScenceGame()
+void CSceneGame::_ParseSection_TEXTURES(std::string line)
 {
-}
-
-void CScenceGame::_ParseSection_TEXTURES(string line)
-{
-	vector<string> tokens = split(line);
+	vector<std::string> tokens = split(line);
 
 	if (tokens.size() < 5) return; // skip invalid lines
 
@@ -50,9 +38,9 @@ void CScenceGame::_ParseSection_TEXTURES(string line)
 	CTextures::GetInstance()->Add(texID, path.c_str(), D3DCOLOR_XRGB(R, G, B));
 }
 
-void CScenceGame::_ParseSection_SPRITES(string line)
+void CSceneGame::_ParseSection_SPRITES(std::string line)
 {
-	vector<string> tokens = split(line);
+	vector<std::string> tokens = split(line);
 
 	if (tokens.size() < 6) return; // skip invalid lines
 
@@ -73,9 +61,9 @@ void CScenceGame::_ParseSection_SPRITES(string line)
 	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
 }
 
-void CScenceGame::_ParseSection_ANIMATIONS(string line)
+void CSceneGame::_ParseSection_ANIMATIONS(std::string line)
 {
-	vector<string> tokens = split(line);
+	vector<std::string> tokens = split(line);
 
 	if (tokens.size() < 3) return; // skip invalid lines - an animation must at least has 1 frame and 1 frame time
 
@@ -94,9 +82,9 @@ void CScenceGame::_ParseSection_ANIMATIONS(string line)
 	CAnimations::GetInstance()->Add(ani_id, ani);
 }
 
-void CScenceGame::_ParseSection_ANIMATION_SETS(string line)
+void CSceneGame::_ParseSection_ANIMATION_SETS(std::string line)
 {
-	vector<string> tokens = split(line);
+	vector<std::string> tokens = split(line);
 
 	if (tokens.size() < 2) return; // skip invalid lines - an animation set must at least id and one animation id
 
@@ -117,9 +105,9 @@ void CScenceGame::_ParseSection_ANIMATION_SETS(string line)
 	CAnimationSets::GetInstance()->Add(ani_set_id, s);
 }
 
-void CScenceGame::_ParseSection_OBJECTS(string line)
+void CSceneGame::_ParseSection_OBJECTS(std::string line)
 {
-	vector<string> tokens = split(line);
+	vector<std::string> tokens = split(line);
 
 	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
 
@@ -143,7 +131,7 @@ void CScenceGame::_ParseSection_OBJECTS(string line)
 			//DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
-		obj = new CSophia(x, y);
+		obj = new CSophia();
 		player = (CSophia*)obj;
 
 		//DebugOut(L"[INFO] Player object created!\n");
@@ -163,7 +151,7 @@ void CScenceGame::_ParseSection_OBJECTS(string line)
 	objects.push_back(obj);
 }
 
-void CScenceGame::Load()
+void CSceneGame::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
 
@@ -176,7 +164,7 @@ void CScenceGame::Load()
 	char str[MAX_SCENE_LINE];
 	while (f.getline(str, MAX_SCENE_LINE))
 	{
-		string line(str);
+		std::string line(str);
 
 		if (line[0] == '#') continue;	// skip comment lines	
 
@@ -213,4 +201,26 @@ void CScenceGame::Load()
 	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
+}
+
+void CSceneGame::Unload()
+{
+}
+
+void CSceneGame::Update(DWORD dt)
+{
+}
+
+void CSceneGame::Render()
+{
+}
+
+void CSceneGameKeyHandler::KeyState(BYTE* states)
+{
+	return;
+}
+
+void CSceneGameKeyHandler::OnKeyDown(int KeyCode)
+{
+	return;
 }

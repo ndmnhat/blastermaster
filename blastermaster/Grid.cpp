@@ -10,21 +10,43 @@ void CGrid::initGrid(vector<LPGAMEOBJECT> objects)
 
 void CGrid::addObject(LPGAMEOBJECT object)
 {
-	int CellColumnIndex = object->GetX() / GRID_CELL_WIDTH;
-	int CellRowIndex = object->GetY() / GRID_CELL_HEIGHT;
-	Cell[CellColumnIndex][CellRowIndex].push_back(object);
+	float left, right, top, bottom;
+	object->GetBoundingBox(left, top, right, bottom);
+	int firstRow = top / GRID_CELL_HEIGHT;
+	int lastRow = bottom / GRID_CELL_HEIGHT;
+	int firstColumn = left / GRID_CELL_WIDTH;
+	int lastColumn = right / GRID_CELL_WIDTH;
+	for (int i = firstRow; i <= lastRow; ++i)
+	{
+		for (int j = firstColumn; j < lastColumn; ++j)
+		{
+
+			Cell[i][j].push_back(object);
+		}
+	}
 }
 void CGrid::removeObject(LPGAMEOBJECT object)
 {
-	int CellColumnIndex = object->GetX() / GRID_CELL_WIDTH;
-	int CellRowIndex = object->GetY() / GRID_CELL_HEIGHT;
-	for (int i = 0; i < Cell[CellColumnIndex][CellRowIndex].size(); ++i)
+	float left, right, top, bottom;
+	object->GetBoundingBox(left, top, right, bottom);
+	int firstRow = top / GRID_CELL_HEIGHT - 1;
+	int lastRow = bottom / GRID_CELL_HEIGHT - 1;
+	int firstColumn = left / GRID_CELL_WIDTH - 1;
+	int lastColumn = right / GRID_CELL_WIDTH - 1;
+	for (int CellRowIndex = firstRow; CellRowIndex < lastRow; ++CellRowIndex)
 	{
-		if (Cell[CellColumnIndex][CellRowIndex].at(i) == object)
+		for (int CellColumnIndex = firstColumn; CellColumnIndex < lastColumn; ++CellColumnIndex)
 		{
-			Cell[CellColumnIndex][CellRowIndex].erase(Cell[CellColumnIndex][CellRowIndex].begin() + i);
+			for (int i = 0; i < Cell[CellRowIndex][CellColumnIndex].size(); ++i)
+			{
+				if (Cell[CellRowIndex][CellColumnIndex].at(i) == object)
+				{
+					Cell[CellRowIndex][CellColumnIndex].erase(Cell[CellRowIndex][CellColumnIndex].begin() + i);
+				}
+			}
 		}
 	}
+
 }
 
 void CGrid::updateObjects(vector<LPGAMEOBJECT> objects)

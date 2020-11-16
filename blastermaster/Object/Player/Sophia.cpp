@@ -17,9 +17,10 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	vector<LPGAMEOBJECT> listObject;
 	listObject.clear();
-	for (UINT i = 0; i < coObjects->size(); i++)
-	{
-	}
+	if(coObjects != NULL)
+		for (UINT i = 0; i < coObjects->size(); i++)
+		{
+		}
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;

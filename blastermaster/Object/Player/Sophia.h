@@ -29,7 +29,7 @@ class CSophia : public CGameObject
 public:
 	bool isUntouchable;
 
-	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
+	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 
 	void Render();
 	void SetState(int state);

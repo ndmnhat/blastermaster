@@ -1,34 +1,30 @@
 #pragma once
+
+#include <unordered_map>
+
 #include <Windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "Camera.h"
+
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
+#include "Scene.h"
+
+using namespace std;
 
 #define KEYBOARD_BUFFER_SIZE 1024
-/*
-Abstract class to define keyboard event handlers
-*/
-class CKeyEventHandler
-{
-public:
-	virtual void KeyState(BYTE *state) = 0;
-	virtual void OnKeyDown(int KeyCode) = 0;
-	virtual void OnKeyUp(int KeyCode) = 0;
-};
-
-typedef CKeyEventHandler * LPKEYEVENTHANDLER;
 
 class CGame
 {
-	static CGame * __instance;
+	static CGame* __instance;
 	HWND hWnd;									// Window handle
 
 	LPDIRECT3D9 d3d = NULL;						// Direct3D handle
 	LPDIRECT3DDEVICE9 d3ddv = NULL;				// Direct3D device object
 
-	LPDIRECT3DSURFACE9 backBuffer = NULL;		
+	LPDIRECT3DSURFACE9 backBuffer = NULL;
 	LPD3DXSPRITE spriteHandler = NULL;			// Sprite helper library to help us draw 2D image on the screen 
 
 	LPDIRECTINPUT8       di;		// The DirectInput object         
@@ -39,12 +35,31 @@ class CGame
 
 	LPKEYEVENTHANDLER keyHandler;
 
+	int screen_width;
+	int screen_height;
+
+	unordered_map<int, LPSCENE> scenes;
+	int current_scene;
+
+	void _ParseSection_SETTINGS(std::string line);
+	void _ParseSection_SCENES(std::string line);
+
 public:
-	void InitKeyboard(LPKEYEVENTHANDLER handler);
+	void InitKeyboard();
+	void SetKeyHandler(LPKEYEVENTHANDLER handler) { keyHandler = handler; }
 	void Init(HWND hWnd);
-	void Draw(D3DXVECTOR3 Position, LPDIRECT3DTEXTURE9 texture, RECT ScrRect, int alpha = 255);
+	void Draw(D3DXVECTOR3 p, LPDIRECT3DTEXTURE9 texture, RECT rect, int alpha = 255);
+	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
+
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
+
+	void Load(LPCWSTR gameFile);
+	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
+	void SwitchScene(int scene_id);
+
+	int GetScreenWidth() { return screen_width; }
+	int GetScreenHeight() { return screen_height; }
 
 	static void SweptAABB(
 		float ml,			// move left 
@@ -65,9 +80,7 @@ public:
 	LPDIRECT3DSURFACE9 GetBackBuffer() { return backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
 
-	static CGame * GetInstance();
+	static CGame* GetInstance();
 
 	~CGame();
 };
-
-

@@ -13,7 +13,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "debug.h"
+#include "Utils.h"
 #include "Game.h"
 #include "GameObject.h"
 #include "Textures.h"
@@ -25,6 +25,7 @@
 #include "Map.h"
 #include "Camera.h"
 
+#include "SceneGame.h"
 
 #define ID_TEX_PLAYER 0
 #define ID_TEX_ENEMY 10
@@ -38,43 +39,43 @@ CCamera* cam = CCamera::GetInstance();
 
 CMap m;
 
-class CSampleKeyHander: public CKeyEventHandler
-{
-	virtual void KeyState(BYTE *states);
-	virtual void OnKeyDown(int KeyCode);
-	virtual void OnKeyUp(int KeyCode);
-};
-
-CSampleKeyHander * keyHandler; 
-
-void CSampleKeyHander::OnKeyDown(int KeyCode)
-{
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-	switch (KeyCode)
-	{
-	case DIK_SPACE:
-		sophia->SetState(SOPHIA_STATE_JUMP);
-		break;
-	case DIK_DOWN:
-		break;
-	}
-}
-
-void CSampleKeyHander::OnKeyUp(int KeyCode)
-{
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
-}
-
-void CSampleKeyHander::KeyState(BYTE *states)
-{
-	if (game->IsKeyDown(DIK_RIGHT))
-		sophia->SetState(SOPHIA_STATE_WALKING_RIGHT);
-	else if (game->IsKeyDown(DIK_LEFT))
-		sophia->SetState(SOPHIA_STATE_WALKING_LEFT);
-	else if (game->IsKeyDown(DIK_SPACE))
-		sophia->SetState(SOPHIA_STATE_JUMP);
-	else sophia->SetState(SOPHIA_STATE_IDLE);
-}
+//class CSampleKeyHander: public CKeyEventHandler
+//{
+//	virtual void KeyState(BYTE *states);
+//	virtual void OnKeyDown(int KeyCode);
+//	virtual void OnKeyUp(int KeyCode);
+//};
+//
+//CSampleKeyHander * keyHandler; 
+//
+//void CSampleKeyHander::OnKeyDown(int KeyCode)
+//{
+//	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+//	switch (KeyCode)
+//	{
+//	case DIK_SPACE:
+//		sophia->SetState(SOPHIA_STATE_JUMP);
+//		break;
+//	case DIK_DOWN:
+//		break;
+//	}
+//}
+//
+//void CSampleKeyHander::OnKeyUp(int KeyCode)
+//{
+//	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+//}
+//
+//void CSampleKeyHander::KeyState(BYTE *states)
+//{
+//	if (game->IsKeyDown(DIK_RIGHT))
+//		sophia->SetState(SOPHIA_STATE_WALKING_RIGHT);
+//	else if (game->IsKeyDown(DIK_LEFT))
+//		sophia->SetState(SOPHIA_STATE_WALKING_LEFT);
+//	else if (game->IsKeyDown(DIK_SPACE))
+//		sophia->SetState(SOPHIA_STATE_JUMP);
+//	else sophia->SetState(SOPHIA_STATE_IDLE);
+//}
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -232,7 +233,7 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	sophia->Update(dt, &onCamObjects);
+	sophia->Update(dt);
 	/*e1->Update(dt);
 	e2->Update(dt);
 	e3->Update(dt);*/
@@ -343,7 +344,7 @@ int Run()
 		{
 			frameStart = now;
 
-			game->ProcessKeyboard();
+			//game->ProcessKeyboard();
 			
 			Update(dt);
 			Render();
@@ -361,10 +362,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	game = CGame::GetInstance();
 	game->Init(hWnd);
-
-	keyHandler = new CSampleKeyHander();
-	game->InitKeyboard(keyHandler);
-
 	LoadResources();
 	Run();
 

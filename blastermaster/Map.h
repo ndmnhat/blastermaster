@@ -1,6 +1,6 @@
 #pragma once
 #include "debug.h"
-#include "Sprites.h"
+#include "Animations.h"
 #include "Textures.h"
 #include "Game.h"
 #include "Camera.h"

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="debug.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Define.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -31,11 +30,12 @@
     <ClCompile Include="Object\IndoorEnemy\UnderworldLord.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Waver.cpp" />
     <ClCompile Include="Object\Player\Sophia.cpp" />
-    <ClCompile Include="Scence.cpp" />
-    <ClCompile Include="ScenceGame.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Animations.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="debug.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Game.h" />
@@ -64,8 +64,11 @@
     <ClInclude Include="Object\IndoorEnemy\UnderworldLord.h" />
     <ClInclude Include="Object\IndoorEnemy\Waver.h" />
     <ClInclude Include="Object\Player\Sophia.h" />
-    <ClInclude Include="Scence.h" />
-    <ClInclude Include="ScenceGame.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneGame.h" />
+    <ClInclude Include="KeyEventHandler.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="Animations.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />

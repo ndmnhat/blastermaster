@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "Game.h"
 #include "GameObject.h"
-#include "Sprites.h"
+#include "Animations.h"
 #include "Textures.h"
 
 CGameObject::CGameObject()
@@ -37,7 +37,7 @@ void CGameObject::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(p, bbox, rect, 32);
+	CGame::GetInstance()->Draw(p , bbox, rect, 32);
 }
 
 LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)

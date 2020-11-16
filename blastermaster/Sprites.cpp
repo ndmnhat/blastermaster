@@ -1,7 +1,6 @@
 #include "Sprites.h"
 #include "Game.h"
-#include "Camera.h"
-#include "debug.h"
+#include "Utils.h"
 
 CSprite::CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
 {
@@ -13,32 +12,26 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEX
 	this->texture = tex;
 }
 
-CSprites * CSprites::__instance = NULL;
+CSprites* CSprites::__instance = NULL;
 
-CSprites *CSprites::GetInstance()
+CSprites* CSprites::GetInstance()
 {
 	if (__instance == NULL) __instance = new CSprites();
 	return __instance;
 }
 
-void CSprite::Draw(float x, float y)
+void CSprite::Draw(float x, float y, int alpha)
 {
-	D3DXVECTOR3 screenCoordinate = CCamera::GetInstance()->Transform(D3DXVECTOR3(x, y, 0));
-	CGame * game = CGame::GetInstance();
-	RECT rect;
-	rect.left = left;
-	rect.right = right;
-	rect.top = top;
-	rect.bottom = bottom;
-	game->Draw(screenCoordinate, texture, rect);
+	CGame* game = CGame::GetInstance();
+	game->Draw(x, y, texture, left, top, right, bottom, alpha);
 }
-
-
 
 void CSprites::Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
 {
 	LPSPRITE s = new CSprite(id, left, top, right, bottom, tex);
 	sprites[id] = s;
+
+	DebugOut(L"[INFO] sprite added: %d, %d, %d, %d, %d \n", id, left, top, right, bottom);
 }
 
 LPSPRITE CSprites::Get(int id)
@@ -46,76 +39,16 @@ LPSPRITE CSprites::Get(int id)
 	return sprites[id];
 }
 
-
-
-void CAnimation::Add(int spriteId, DWORD time)
+/*
+	Clear all loaded textures
+*/
+void CSprites::Clear()
 {
-	int t = time;
-	if (time == 0) t=this->defaultTime;
-
-	LPSPRITE sprite = CSprites::GetInstance()->Get(spriteId);
-	LPANIMATION_FRAME frame = new CAnimationFrame(sprite, t);
-	frames.push_back(frame);
-}
-
-void CAnimation::Render(float x, float y)
-{
-	DWORD now = GetTickCount();
-	if (currentFrame == -1) 
+	for (auto x : sprites)
 	{
-		currentFrame = 0; 
-		lastFrameTime = now;
-	}
-	else
-	{
-		DWORD t = frames[currentFrame]->GetTime();
-		if (now - lastFrameTime > t)
-		{
-			currentFrame++;
-			lastFrameTime = now;
-			if (currentFrame == frames.size()) currentFrame = 0;
-			//DebugOut(L"now: %d, lastFrameTime: %d, t: %d\n", now, lastFrameTime, t);
-		}
-		
+		LPSPRITE s = x.second;
+		delete s;
 	}
 
-	frames[currentFrame]->GetSprite()->Draw(x, y);
-}
-
-CAnimations * CAnimations::__instance = NULL;
-
-CAnimations * CAnimations::GetInstance()
-{
-	if (__instance == NULL) __instance = new CAnimations();
-	return __instance;
-}
-
-void CAnimations::Add(int id, LPANIMATION ani)
-{
-	animations[id] = ani;
-}
-
-LPANIMATION CAnimations::Get(int id)
-{
-	return animations[id];
-}
-
-CAnimationSets *CAnimationSets::GetInstance()
-{
-	if (__instance == NULL) __instance = new CAnimationSets();
-	return __instance;
-}
-
-LPANIMATION_SET CAnimationSets::Get(unsigned int id)
-{
-	LPANIMATION_SET ani_set = animation_sets[id];
-	if (ani_set == NULL)
-		DebugOut(L"[ERROR] Failed to find animation set id: %d\n", id);
-
-	return ani_set;
-}
-
-void CAnimationSets::Add(int id, LPANIMATION_SET ani_set)
-{
-	animation_sets[id] = ani_set;
+	sprites.clear();
 }
