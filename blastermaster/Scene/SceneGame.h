@@ -1,8 +1,7 @@
 #pragma once
-#include "Animations.h"
-#include "Textures.h"
+#include "..\Animations\Animations.h"
 #include "Scene.h"
-#include ".\Object\Player\Sophia.h"
+#include "..\Object\Player\Sophia.h"
 #include <fstream>
 #include <iostream>
 

@@ -13,19 +13,17 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "Utils.h"
-#include "Game.h"
-#include "GameObject.h"
-#include "Textures.h"
-#include "Define.h"
+#include ".\Game\Game.h"
+#include ".\Object\GameObject.h"
+#include ".\Animations\Animations.h"
 
-#include "Object\Player\Sophia.h"
-#include "Object\OutdoorEnemy\OutdoorEnemy.h"
+#include ".\Object\Player\Sophia.h"
+#include ".\Object\OutdoorEnemy\OutdoorEnemy.h"
 
-#include "Map.h"
-#include "Camera.h"
+#include ".\Map\Map.h"
+#include ".\Camera\Camera.h"
 
-#include "SceneGame.h"
+#include ".\Scene\SceneGame.h"
 
 #define ID_TEX_PLAYER 0
 #define ID_TEX_ENEMY 10
@@ -102,7 +100,7 @@ void LoadResources()
 	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_ARGB(0,0,0,0));
 	textures->Add(ID_TEX_MAP, L"textures\\tiles.png", D3DCOLOR_XRGB(0, 0, 0));
 	
-	m.ReadMap("map2.txt");
+	m.ReadMap(".\\Map\\map2.txt");
 
 
 	CSprites * sprites = CSprites::GetInstance();

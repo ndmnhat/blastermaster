@@ -1,8 +1,7 @@
 #include <iostream>
 #include "Game.h"
 #include <fstream>
-#include "Utils.h"
-#include "SceneGame.h"
+#include "..\Utils\Utils.h"
 
 CGame* CGame::__instance = NULL;
 

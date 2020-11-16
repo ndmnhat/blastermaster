@@ -6,11 +6,11 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "Camera.h"
+#include "..\Camera\Camera.h"
 
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
-#include "Scene.h"
+#include "..\Scene\SceneGame.h"
 
 using namespace std;
 

@@ -1,11 +1,11 @@
 #pragma once
-#include "Define.h"
+#include "..\Define\Define.h"
 #include <Windows.h>
 #include <d3dx9.h>
 #include <unordered_map>
 #include <math.h>
-#include "GameObject.h"
-#include "Camera.h"
+#include "..\Object\GameObject.h"
+#include "..\Camera\Camera.h"
 class CGrid
 {
 private:

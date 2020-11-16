@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <d3dx9.h>
 #include <vector>
-#include "Animations.h"
+#include "..\Animations\Animations.h"
 
 #define ID_TEX_BBOX -1		// special texture to draw object bounding box
 

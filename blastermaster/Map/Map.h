@@ -1,10 +1,9 @@
 #pragma once
-#include "debug.h"
-#include "Animations.h"
-#include "Textures.h"
-#include "Game.h"
-#include "Camera.h"
-#include "Define.h"
+#include "..\Utils\Utils.h"
+#include "..\Animations\Animations.h"
+#include "..\Game\Game.h"
+#include "..\Camera\Camera.h"
+#include "..\Define\Define.h"
 
 #define ID_TEX_MAP 30
 

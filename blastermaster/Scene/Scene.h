@@ -1,6 +1,6 @@
 #pragma once
 #include <d3dx9.h>
-#include "Utils.h"
+#include "..\Utils\Utils.h"
 #include "KeyEventHandler.h"
 
 class CSceneKeyHandler;
