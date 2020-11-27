@@ -20,10 +20,10 @@
 #include ".\Object\Player\Sophia.h"
 #include ".\Object\OutdoorEnemy\OutdoorEnemy.h"
 
-#include ".\Map\Map.h"
-#include ".\Camera\Camera.h"
+//#include ".\Map\Map.h"
+//#include ".\Camera\Camera.h"
 
-#include ".\Scene\SceneGame.h"
+#include ".\Scene\CSceneManager.h"
 
 #define ID_TEX_PLAYER 0
 #define ID_TEX_ENEMY 10
@@ -35,8 +35,9 @@ CSophia *sophia;
 //COutdoorEnemy* e1, * e2, * e3;
 CCamera* cam = CCamera::GetInstance();
 
-CMap m;
+//CMap m;
 
+CScene* scenegame = new CSceneGame(1, L"Scene\\scene.txt");
 //class CSampleKeyHander: public CKeyEventHandler
 //{
 //	virtual void KeyState(BYTE *states);
@@ -100,7 +101,7 @@ void LoadResources()
 	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_ARGB(0,0,0,0));
 	textures->Add(ID_TEX_MAP, L"textures\\tiles.png", D3DCOLOR_XRGB(0, 0, 0));
 	
-	m.ReadMap(".\\Map\\map2.txt");
+	//m.ReadMap(L".\\Map\\map2.txt");
 
 
 	CSprites * sprites = CSprites::GetInstance();
@@ -216,13 +217,13 @@ void LoadResources()
 	e3->AddAnimation(800);
 	e3->AddAnimation(801);*/
 
-	sophia->SetPosition(1080.0f, 1180.0f);
+	//sophia->SetPosition(1080.0f, 1180.0f);
 	/*e1->SetPosition(999.0f, 1215.0f);
 	e2->SetPosition(999.0f, 1215.0f);
 	e3->SetPosition(999.0f, 1215.0f);*/
 	//cam->SetPosition(1024.0f, 1040.0f);
 	cam->SetPosition(0.0f, 0.0f);
-	cam->SetFollow(sophia);
+	//cam->SetFollow(sophia);
 }
 
 /*
@@ -231,11 +232,12 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	sophia->Update(dt);
+	//sophia->Update(dt);
 	/*e1->Update(dt);
 	e2->Update(dt);
 	e3->Update(dt);*/
-	cam->Update(dt);
+	//cam->Update(dt);
+	//scenegame->Update(dt);
 }
 
 /*
@@ -254,9 +256,9 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		m.DrawMap(cam);
+		scenegame->Render();
 
-		sophia->Render();
+		//sophia->Render();
 		/*e1->Render();
 		e2->Render();
 		e3->Render();*/
@@ -344,8 +346,11 @@ int Run()
 
 			//game->ProcessKeyboard();
 			
-			Update(dt);
-			Render();
+			//Update(dt);
+			//Render();
+
+			CSceneManager::GetInstance()->Update(dt);
+			CSceneManager::GetInstance()->Render();
 		}
 		else
 			Sleep(tickPerFrame - dt);	
@@ -360,7 +365,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	game = CGame::GetInstance();
 	game->Init(hWnd);
-	LoadResources();
+	//scenegame->Load();
+	CSceneManager::GetInstance()->AddScene(scenegame);
+	CSceneManager::GetInstance()->SetScene(1);
+	//LoadResources();
 	Run();
 
 

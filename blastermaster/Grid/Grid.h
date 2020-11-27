@@ -11,7 +11,6 @@ class CGrid
 private:
 	vector<vector<vector<LPGAMEOBJECT>>> Cell;
 public:
-	void initGrid(vector<LPGAMEOBJECT> objects);
 	void addObject(LPGAMEOBJECT object);
 	void removeObject(LPGAMEOBJECT object);
 	void updateObjects(vector<LPGAMEOBJECT> objects);

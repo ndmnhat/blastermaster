@@ -3,16 +3,16 @@
 #include "Scene.h"
 #include "..\Object\Player\Sophia.h"
 #include <fstream>
-#include <iostream>
-
-
+#include "..\Map\Map.h"
+#include "..\Grid\Grid.h"
 using namespace std;
-
+class CMap; //forward declaration to temporarily fix circular include
 class CSceneGame : public CScene
 {
 protected:
-	CSophia *player;					// A play scene has to have player, right? 
-
+	CMap *map;
+	CSophia *player;				
+	CGrid* grid;
 	vector<LPGAMEOBJECT> objects;
 
 	void _ParseSection_TEXTURES(std::string line);
@@ -20,7 +20,7 @@ protected:
 	void _ParseSection_ANIMATIONS(std::string line);
 	void _ParseSection_ANIMATION_SETS(std::string line);
 	void _ParseSection_OBJECTS(std::string line);
-
+	void _ParseSection_MAP(std::string line);
 
 public:
 	CSceneGame(int id, LPCWSTR filePath);

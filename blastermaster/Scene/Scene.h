@@ -16,6 +16,7 @@ public:
 	CScene(int id, LPCWSTR filePath);
 
 	CSceneKeyHandler* GetKeyEventHandler() { return key_handler; }
+	int GetSceneID() { return id; }
 	virtual void Load() = 0;
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;

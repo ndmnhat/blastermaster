@@ -8,7 +8,7 @@ using namespace std;
 #define SCENE_SECTION_ANIMATIONS 4
 #define SCENE_SECTION_ANIMATION_SETS	5
 #define SCENE_SECTION_OBJECTS	6
-
+#define SCENE_SECTION_MAP	7
 #define OBJECT_TYPE_SOPHIA	0
 
 #define MAX_SCENE_LINE 1024
@@ -16,6 +16,7 @@ using namespace std;
 CSceneGame::CSceneGame(int id, LPCWSTR filePath) :
 	CScene(id, filePath)
 {
+	//map = new CMap();
 	key_handler = new CSceneGameKeyHandler(this);
 }
 
@@ -36,6 +37,19 @@ void CSceneGame::_ParseSection_TEXTURES(std::string line)
 	int B = atoi(tokens[4].c_str());
 
 	CTextures::GetInstance()->Add(texID, path.c_str(), D3DCOLOR_XRGB(R, G, B));
+}
+
+void CSceneGame::_ParseSection_MAP(std::string line)
+{
+	vector<std::string> tokens = split(line);
+
+	if (tokens.size() < 1) return; // skip invalid lines
+	wstring path = ToWSTR(tokens[0]);
+	int mapTexID = atoi(tokens[1].c_str());
+	//map->ReadMap(path.c_str());
+	//map->ReadMap(L"map2.txt");
+	//map->SetMapFile(path.c_str());
+	map = new CMap(path, mapTexID);
 }
 
 void CSceneGame::_ParseSection_SPRITES(std::string line)
@@ -149,6 +163,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 
 	obj->SetAnimationSet(ani_set);
 	objects.push_back(obj);
+	grid->addObject(obj);
 }
 
 void CSceneGame::Load()
@@ -181,6 +196,9 @@ void CSceneGame::Load()
 		if (line == "[OBJECTS]") {
 			section = SCENE_SECTION_OBJECTS; continue;
 		}
+		if (line == "[MAP]") {
+			section = SCENE_SECTION_MAP; continue;
+		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		//
@@ -193,13 +211,15 @@ void CSceneGame::Load()
 		case SCENE_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
 		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
+		case SCENE_SECTION_MAP: _ParseSection_MAP(line); break;
 		}
 	}
 
 	f.close();
 
+	map->ReadMap();
 	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-
+	CCamera::GetInstance()->SetPosition(0.0f, 2048.0f); //Add cam position to scene.txt
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
 
@@ -213,6 +233,7 @@ void CSceneGame::Update(DWORD dt)
 
 void CSceneGame::Render()
 {
+	map->DrawMap(CCamera::GetInstance());
 }
 
 void CSceneGameKeyHandler::KeyState(BYTE* states)

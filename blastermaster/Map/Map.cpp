@@ -3,23 +3,36 @@
 #include <fstream>
 using namespace std;
 
-void CMap::ReadMap(char* filename)
+CMap::CMap(wstring filePath, int TextureID)
 {
-	fstream fs;
-	fs.open(filename, ios::in | ios::out);
+	this->mapFile = filePath;
+	this->_texture = CTextures::GetInstance()->Get(TextureID);
+}
+
+//void CMap::SetMapFile(LPCWSTR file)
+//{
+//	this->mapFile = file;
+//}
+
+void CMap::ReadMap()
+{
+	ifstream fs;
+	fs.clear();
+	fs.open(mapFile);
 	fs >> mapWidth >> mapHeight >> tileWidth >> tileHeight >> tileCount >> tileColumn;
 	for (int i = 0; i < mapWidth * mapHeight; ++i)
 	{
 		fs >> tileMap[i / mapHeight][i % mapWidth];
 	}
-	_texture = CTextures::GetInstance()->Get(ID_TEX_MAP);
+	fs.close();
 }
 void CMap::DrawMap(CCamera * cam)
 {
 	CGame * game = CGame::GetInstance();
 	D3DXVECTOR3 camPosition = cam->GetPosition();
 	cam->SetCamBoundary(mapWidth*tileWidth - SCREEN_WIDTH, mapHeight*tileHeight - SCREEN_HEIGHT);
-	int firstRow = camPosition.y / tileHeight;
+	//Origin is left down -> reverse row index
+	int firstRow = ((mapHeight * tileHeight) - camPosition.y) / tileHeight;
 	int firstColumn = camPosition.x / tileWidth;
 	for (int i = 0; i < firstRow + SCREEN_HEIGHT / tileWidth; i++)
 	{

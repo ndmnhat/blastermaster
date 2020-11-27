@@ -24,5 +24,7 @@ enum GameObjectID
 
 enum TextureID
 {
-	ID_TEXT_ENEMY = 10,
+	ID_TEX_SOPHIA = 0,
+	ID_TEX_ENEMY = 10,
+	ID_TEX_MAP = 30
 };

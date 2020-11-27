@@ -67,7 +67,5 @@ public:
 	CAnimationSets();
 	void Add(int id, LPANIMATION_SET ani);
 	LPANIMATION_SET Get(unsigned int id);
-
-
 	static CAnimationSets* GetInstance();
 };

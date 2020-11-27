@@ -34,6 +34,7 @@
     <ClCompile Include="Animations\Textures.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
     <ClCompile Include="Object\GameObject.cpp" />
+    <ClCompile Include="Scene\CSceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
@@ -69,6 +70,7 @@
     <ClInclude Include="Animations\Sprites.h" />
     <ClInclude Include="Utils\Utils.h" />
     <ClInclude Include="Object\GameObject.h" />
+    <ClInclude Include="Scene\CSceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />
@@ -77,5 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Map\map2.txt" />
+    <Text Include="Scene\scene.txt" />
   </ItemGroup>
 </Project>
