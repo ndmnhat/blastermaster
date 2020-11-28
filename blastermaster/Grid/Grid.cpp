@@ -1,6 +1,11 @@
 #include "Grid.h"
 
 
+CGrid::CGrid()
+{
+
+}
+
 void CGrid::addObject(LPGAMEOBJECT object)
 {
 	float left, right, top, bottom;
@@ -9,9 +14,9 @@ void CGrid::addObject(LPGAMEOBJECT object)
 	int lastRow = bottom / GRID_CELL_HEIGHT;
 	int firstColumn = left / GRID_CELL_WIDTH;
 	int lastColumn = right / GRID_CELL_WIDTH;
-	for (int i = firstRow; i <= lastRow; ++i)
+	for (int i = lastRow; i <= firstRow; ++i)
 	{
-		for (int j = firstColumn; j < lastColumn; ++j)
+		for (int j = firstColumn; j <= lastColumn; ++j)
 		{
 
 			Cell[i][j].push_back(object);
@@ -64,9 +69,19 @@ vector<LPGAMEOBJECT> CGrid::ObjectsInCam(CCamera* cam)
 		{
 			for (auto& GameObject : Cell[i][j])
 			{
-				objects.push_back(GameObject);
+				if (GameObject->isInCam == false)
+				{
+					objects.push_back(GameObject);
+					GameObject->isInCam = true;
+				}
 			}
 		}
 	}
+
+	for (auto& GameObject : objects)
+	{
+		GameObject->isInCam = false;
+	}
+
 	return objects;
 }

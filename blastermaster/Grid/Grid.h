@@ -9,8 +9,9 @@
 class CGrid
 {
 private:
-	vector<vector<vector<LPGAMEOBJECT>>> Cell;
+	unordered_map<int,unordered_map<int, vector<LPGAMEOBJECT>>> Cell;
 public:
+	CGrid();
 	void addObject(LPGAMEOBJECT object);
 	void removeObject(LPGAMEOBJECT object);
 	void updateObjects(vector<LPGAMEOBJECT> objects);

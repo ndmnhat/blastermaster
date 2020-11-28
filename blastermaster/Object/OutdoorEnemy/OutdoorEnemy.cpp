@@ -2,7 +2,7 @@
 
 COutdoorEnemy::COutdoorEnemy()
 {
-	type = ObjectType::ENEMY;
+	type = TYPE_ENEMY;
 }
 
 void COutdoorEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

@@ -18,10 +18,10 @@
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
-400	10001
-401	10005
-500	10004	10003	10002	10001
-501	10005	10006	10007	10008
+400	10001	100
+401	10005	100
+500	10004	100	10003	100	10002	100	10001	100
+501	10005	100	10006	100	10007	100	10008	100
 #
 # id	ani1	ani2	ani3
 #
@@ -30,8 +30,9 @@
 
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
-# type: 0 = Sophia , 1 = Brick, 2 = Goomba
+# type: 0 = Sophia , 1 = Wall, 2 = Goomba
 0	50	2000	100
+1	0	1900	0	500	100
 # --- SCENE PORTAL ----
 # type	l	t	ani_set_id	r	b	scene_id
 #50	300	98	0	316	150	2

@@ -44,7 +44,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (e->obj->type == ObjectType::ENEMY)
+			if (e->obj->type == ObjectType::TYPE_ENEMY)
 			{
 				if (isUntouchable)
 				{
@@ -78,7 +78,7 @@ void CSophia::Render()
 	else
 		ani = SOPHIA_ANI_WALKING_LEFT;
 
-	animations[ani]->Render(x, y);
+	animation_set->at(2)->Render(x, y);
 }
 
 void CSophia::SetState(int state)
@@ -119,7 +119,7 @@ void CSophia::UpdateStateTime()
 void CSophia::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	left = x;
-	top = y;
+	bottom = y;
 	right = left + SOPHIA_BBOX_WIDTH;
-	bottom = top + SOPHIA_BBOX_HEIGHT;
+	top = bottom + SOPHIA_BBOX_HEIGHT;
 }

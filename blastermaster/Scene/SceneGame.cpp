@@ -18,6 +18,7 @@ CSceneGame::CSceneGame(int id, LPCWSTR filePath) :
 {
 	//map = new CMap();
 	key_handler = new CSceneGameKeyHandler(this);
+	grid = new CGrid();
 }
 
 CSceneGame::~CSceneGame()
@@ -133,35 +134,48 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 
 	int ani_set_id = atoi(tokens[3].c_str());
 
-	CAnimations * animation_sets = CAnimations::GetInstance();
+	CAnimationSets * animation_sets = CAnimationSets::GetInstance();
 
 	CGameObject *obj = NULL;
 
 	switch (object_type)
 	{
-	case OBJECT_TYPE_SOPHIA:
+	case TYPE_SOPHIA:
 		if (player != NULL)
 		{
-			//DebugOut(L"[ERROR] MARIO object was created before!\n");
+			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
 		obj = new CSophia();
 		player = (CSophia*)obj;
 
-		//DebugOut(L"[INFO] Player object created!\n");
+		DebugOut(L"[INFO] Player object created!\n");
 		break;
-	
+
+	case TYPE_WALL:
+	{
+		obj = new CWall();
+
+		int width = atoi(tokens[4].c_str());
+		int height = atoi(tokens[5].c_str());
+
+		((CWall*)obj)->SetSize(width, height);
+		obj->SetPosition(x, y);
+
+		goto addObjectToScene;
+	}
+
 	default:
-		//DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
+		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
 	}
 
 	// General object setup
 	obj->SetPosition(x, y);
-
-	LPANIMATION ani_set = animation_sets->Get(ani_set_id);
-
+	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 	obj->SetAnimationSet(ani_set);
+	
+	addObjectToScene:
 	objects.push_back(obj);
 	grid->addObject(obj);
 }
@@ -234,6 +248,10 @@ void CSceneGame::Update(DWORD dt)
 void CSceneGame::Render()
 {
 	map->DrawMap(CCamera::GetInstance());
+	for (auto& GameObject : grid->ObjectsInCam(CCamera::GetInstance()))
+	{
+		GameObject->Render();
+	}
 }
 
 void CSceneGameKeyHandler::KeyState(BYTE* states)

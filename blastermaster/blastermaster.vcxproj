@@ -186,6 +186,7 @@
     <ClCompile Include="Object\IndoorEnemy\Waver.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Worm.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
+    <ClCompile Include="Object\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\Animations.h" />
@@ -222,6 +223,7 @@
     <ClInclude Include="Object\IndoorEnemy\Waver.h" />
     <ClInclude Include="Object\OutdoorEnemy\Worm.h" />
     <ClInclude Include="Utils\Utils.h" />
+    <ClInclude Include="Object\Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Map\map2.txt">

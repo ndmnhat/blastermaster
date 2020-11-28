@@ -33,9 +33,9 @@ void CGameObject::RenderBoundingBox()
 	rect.left = 0;
 	rect.top = 0;
 	rect.right = (int)r - (int)l;
-	rect.bottom = (int)b - (int)t;
+	rect.bottom = (int)t - (int)b;
 
-	CGame::GetInstance()->Draw(p , bbox, rect, 32);
+	CGame::GetInstance()->Draw(x,y,bbox,rect.left,rect.top,rect.right,rect.bottom,30);
 }
 
 LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)
@@ -118,11 +118,6 @@ void CGameObject::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPC
 	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
 }
 
-void CGameObject::AddAnimation(int aniId)
-{
-	LPANIMATION ani = CAnimations::GetInstance()->Get(aniId);
-	animations.push_back(ani);
-}
 
 
 

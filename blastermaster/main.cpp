@@ -199,11 +199,11 @@ void LoadResources()
 	animations->Add(801, ani);
 
 
-	sophia = new CSophia();
-	sophia->AddAnimation(400);		// idle left
-	sophia->AddAnimation(401);		// idle right
-	sophia->AddAnimation(500);		// walk left
-	sophia->AddAnimation(501);		// walk right
+	//sophia = new CSophia();
+	//sophia->AddAnimation(400);		// idle left
+	//sophia->AddAnimation(401);		// idle right
+	//sophia->AddAnimation(500);		// walk left
+	//sophia->AddAnimation(501);		// walk right
 
 	/*e1 = new CEnemy1();
 	e1->AddAnimation(600);

@@ -2,9 +2,11 @@
 #include "..\Animations\Animations.h"
 #include "Scene.h"
 #include "..\Object\Player\Sophia.h"
+#include "..\Object\Wall.h"
 #include <fstream>
 #include "..\Map\Map.h"
 #include "..\Grid\Grid.h"
+
 using namespace std;
 class CMap; //forward declaration to temporarily fix circular include
 class CSceneGame : public CScene
