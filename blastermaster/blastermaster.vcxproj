@@ -155,7 +155,6 @@
     <ClCompile Include="Animations\Animations.cpp" />
     <ClCompile Include="Scene\CSceneManager.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\BossCrabullus.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Plutonium.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Cannon.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Dasher.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Dome.cpp" />
@@ -174,7 +173,6 @@
     <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Mine.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Orb.cpp" />
-    <ClCompile Include="Object\OutdoorEnemy\Ship.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Skull.cpp" />
     <ClCompile Include="Object\Player\Sophia.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
@@ -193,7 +191,6 @@
     <ClInclude Include="Scene\CSceneManager.h" />
     <ClInclude Include="Scene\KeyEventHandler.h" />
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
-    <ClInclude Include="Object\IndoorEnemy\Plutonium.h" />
     <ClInclude Include="Object\IndoorEnemy\Cannon.h" />
     <ClInclude Include="Object\IndoorEnemy\Dasher.h" />
     <ClInclude Include="Object\OutdoorEnemy\Dome.h" />
@@ -211,7 +208,6 @@
     <ClInclude Include="Map\Map.h" />
     <ClInclude Include="Object\OutdoorEnemy\Mine.h" />
     <ClInclude Include="Object\OutdoorEnemy\Orb.h" />
-    <ClInclude Include="Object\OutdoorEnemy\Ship.h" />
     <ClInclude Include="Object\OutdoorEnemy\Skull.h" />
     <ClInclude Include="Object\Player\Sophia.h" />
     <ClInclude Include="Scene\Scene.h" />

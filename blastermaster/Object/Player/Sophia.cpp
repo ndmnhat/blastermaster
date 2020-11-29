@@ -3,15 +3,21 @@
 void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	CGameObject::Update(dt);
-	x += dx;
-	y += dy;
 	// simple fall down
+<<<<<<< HEAD
+	if (isFalling == true) 
+	{
+		vy -= SOPHIA_GRAVITY * dt;
+	}
+	
+=======
 	vy += SOPHIA_GRAVITY;
 	//if (y > 1170)
 	//{
 	//	vy = 0;
 	//	y = 1170.0f;
 	//}
+>>>>>>> main
 
 	UpdateStateTime();
 
@@ -96,14 +102,15 @@ void CSophia::SetState(int state)
 		break;
 	case SOPHIA_STATE_JUMP:
 		//if (y==100)
-		vy = -SOPHIA_JUMP_SPEED_Y;
-		break;
-	case SOPHIA_STATE_IDLE:
-		vx = 0;
+		vy = SOPHIA_JUMP_SPEED_Y;
 		break;
 	case SOPHIA_STATE_ATTACKED:
 		vx = -0.1f * nx;
 		StartUntouchable();
+		break;
+	case SOPHIA_STATE_IDLE:
+		vx = 0;
+		break;
 	}
 }
 
