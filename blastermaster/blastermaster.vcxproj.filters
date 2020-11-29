@@ -19,17 +19,12 @@
     <ClCompile Include="Object\OutdoorEnemy\Mine.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Orb.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\OutdoorEnemy.cpp" />
-    <ClCompile Include="Object\OutdoorEnemy\Ship.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Skull.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Worm.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Cannon.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Dasher.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Eyeball.cpp" />
     <ClCompile Include="Object\IndoorEnemy\IndoorEnemy.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Plutonium.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Teleporter.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\UnderworldLord.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Waver.cpp" />
     <ClCompile Include="Object\Player\Sophia.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -50,17 +45,12 @@
     <ClInclude Include="Object\OutdoorEnemy\Mine.h" />
     <ClInclude Include="Object\OutdoorEnemy\Orb.h" />
     <ClInclude Include="Object\OutdoorEnemy\OutdoorEnemy.h" />
-    <ClInclude Include="Object\OutdoorEnemy\Ship.h" />
     <ClInclude Include="Object\OutdoorEnemy\Skull.h" />
     <ClInclude Include="Object\OutdoorEnemy\Worm.h" />
     <ClInclude Include="Object\IndoorEnemy\Cannon.h" />
-    <ClInclude Include="Object\IndoorEnemy\Dasher.h" />
     <ClInclude Include="Object\IndoorEnemy\Eyeball.h" />
     <ClInclude Include="Object\IndoorEnemy\IndoorEnemy.h" />
-    <ClInclude Include="Object\IndoorEnemy\Plutonium.h" />
     <ClInclude Include="Object\IndoorEnemy\Teleporter.h" />
-    <ClInclude Include="Object\IndoorEnemy\UnderworldLord.h" />
-    <ClInclude Include="Object\IndoorEnemy\Waver.h" />
     <ClInclude Include="Object\Player\Sophia.h" />
   </ItemGroup>
   <ItemGroup>

@@ -28,16 +28,12 @@ class CSophia : public CGameObject
 
 public:
 	bool isUntouchable;
+	bool isFalling;
 
-	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
-
-	void Render();
-	void SetState(int state);
-	void UpdateStateTime();
-	void StartUntouchable()
-	{
-		isUntouchable = true;
-		untouchableStart = GetTickCount();
-	};
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
+	virtual void Render();
+	virtual void SetState(int state);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	void UpdateStateTime();
+	void StartUntouchable() { isUntouchable = true; untouchableStart = GetTickCount(); }
 };

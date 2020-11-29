@@ -145,9 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Object\OutdoorEnemy\BossCrabullus.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Plutonium.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Cannon.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Dasher.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Dome.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\OutdoorEnemy.cpp" />
@@ -165,21 +163,16 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Mine.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Orb.cpp" />
-    <ClCompile Include="Object\OutdoorEnemy\Ship.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Skull.cpp" />
     <ClCompile Include="Object\Player\Sophia.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Teleporter.cpp" />
     <ClCompile Include="Textures.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\UnderworldLord.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Waver.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Worm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
-    <ClInclude Include="Object\IndoorEnemy\Plutonium.h" />
     <ClInclude Include="Object\IndoorEnemy\Cannon.h" />
-    <ClInclude Include="Object\IndoorEnemy\Dasher.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Object\OutdoorEnemy\Dome.h" />
     <ClInclude Include="Object\OutdoorEnemy\OutdoorEnemy.h" />
@@ -196,14 +189,11 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Object\OutdoorEnemy\Mine.h" />
     <ClInclude Include="Object\OutdoorEnemy\Orb.h" />
-    <ClInclude Include="Object\OutdoorEnemy\Ship.h" />
     <ClInclude Include="Object\OutdoorEnemy\Skull.h" />
     <ClInclude Include="Object\Player\Sophia.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Object\IndoorEnemy\Teleporter.h" />
     <ClInclude Include="Textures.h" />
-    <ClInclude Include="Object\IndoorEnemy\UnderworldLord.h" />
-    <ClInclude Include="Object\IndoorEnemy\Waver.h" />
     <ClInclude Include="Object\OutdoorEnemy\Worm.h" />
   </ItemGroup>
   <ItemGroup>

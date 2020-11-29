@@ -49,7 +49,13 @@ public:
 
 	int nx;	 
 
-	int state;									
+	int state;
+
+	int ID;
+
+	int width;
+	int height;
+	float gravity;
 
 	DWORD dt;
 	ObjectType type;
