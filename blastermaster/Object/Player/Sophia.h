@@ -30,11 +30,6 @@ public:
 	bool isUntouchable;
 	bool isFalling;
 
-<<<<<<< HEAD
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
-	virtual void Render();
-	virtual void SetState(int state);
-=======
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 
 	void Render();
@@ -45,7 +40,6 @@ public:
 		isUntouchable = true;
 		untouchableStart = GetTickCount();
 	};
->>>>>>> main
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void UpdateStateTime();
 	void StartUntouchable() { isUntouchable = true; untouchableStart = GetTickCount(); }
