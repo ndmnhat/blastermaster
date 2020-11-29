@@ -11,7 +11,7 @@ D3DXVECTOR3 CCamera::Transform(D3DXVECTOR3 mapPosition)
 	matrix._41 = xCam;
 	matrix._42 = yCam;
 
-	D3DXVECTOR3 pos3(xCam, yCam, 1);
+	D3DXVECTOR3 pos3(mapPosition.x, mapPosition.y, 1);
 	D3DXVECTOR4 MatrixResult;
 	D3DXVec3Transform(&MatrixResult, &pos3, &matrix);
 

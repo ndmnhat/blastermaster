@@ -162,7 +162,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		((CWall*)obj)->SetSize(width, height);
 		obj->SetPosition(x, y);
 
-		goto addObjectToScene;
+		goto addObjectToGrid;
 	}
 
 	default:
@@ -175,8 +175,8 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 	obj->SetAnimationSet(ani_set);
 	
-	addObjectToScene:
-	objects.push_back(obj);
+	addObjectToGrid:
+	//objects.push_back(obj);
 	grid->addObject(obj);
 }
 
@@ -243,12 +243,18 @@ void CSceneGame::Unload()
 
 void CSceneGame::Update(DWORD dt)
 {
+	objects.clear();
+	for (auto& GameObject : grid->ObjectsInCam(CCamera::GetInstance()))
+	{
+		objects.push_back(GameObject);
+		GameObject->Update(dt);
+	}
 }
 
 void CSceneGame::Render()
 {
 	map->DrawMap(CCamera::GetInstance());
-	for (auto& GameObject : grid->ObjectsInCam(CCamera::GetInstance()))
+	for (auto& GameObject : objects)
 	{
 		GameObject->Render();
 	}

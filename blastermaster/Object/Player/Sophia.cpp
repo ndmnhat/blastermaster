@@ -7,11 +7,11 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	y += dy;
 	// simple fall down
 	vy += SOPHIA_GRAVITY;
-	if (y > 1170)
-	{
-		vy = 0;
-		y = 1170.0f;
-	}
+	//if (y > 1170)
+	//{
+	//	vy = 0;
+	//	y = 1170.0f;
+	//}
 
 	UpdateStateTime();
 
