@@ -4,19 +4,29 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	CGameObject::Update(dt);
 	// simple fall down
+<<<<<<< HEAD
 	if (isFalling == true) 
 	{
 		vy -= SOPHIA_GRAVITY * dt;
 	}
 	
+=======
+	vy += SOPHIA_GRAVITY;
+	//if (y > 1170)
+	//{
+	//	vy = 0;
+	//	y = 1170.0f;
+	//}
+>>>>>>> main
 
 	UpdateStateTime();
 
 	vector<LPGAMEOBJECT> listObject;
 	listObject.clear();
-	for (UINT i = 0; i < coObjects->size(); i++)
-	{
-	}
+	if(coObjects != NULL)
+		for (UINT i = 0; i < coObjects->size(); i++)
+		{
+		}
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -40,7 +50,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (e->obj->type == ObjectType::ENEMY)
+			if (e->obj->type == ObjectType::TYPE_ENEMY)
 			{
 				if (isUntouchable)
 				{
@@ -74,7 +84,7 @@ void CSophia::Render()
 	else
 		ani = SOPHIA_ANI_WALKING_LEFT;
 
-	animations[ani]->Render(x, y);
+	animation_set->at(2)->Render(x, y);
 }
 
 void CSophia::SetState(int state)
@@ -116,7 +126,7 @@ void CSophia::UpdateStateTime()
 void CSophia::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	left = x;
-	top = y;
+	bottom = y;
 	right = left + SOPHIA_BBOX_WIDTH;
-	bottom = top + SOPHIA_BBOX_HEIGHT;
+	top = bottom + SOPHIA_BBOX_HEIGHT;
 }

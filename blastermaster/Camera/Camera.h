@@ -1,7 +1,7 @@
 #pragma once
-#include "Define.h"
+#include "..\Define\Define.h"
 #include <d3dx9.h>
-#include "GameObject.h"
+#include "..\Object\GameObject.h"
 class CCamera
 {
 private:

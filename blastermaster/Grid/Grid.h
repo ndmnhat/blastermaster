@@ -1,17 +1,17 @@
 #pragma once
-#include "Define.h"
+#include "..\Define\Define.h"
 #include <Windows.h>
 #include <d3dx9.h>
 #include <unordered_map>
 #include <math.h>
-#include "GameObject.h"
-#include "Camera.h"
+#include "..\Object\GameObject.h"
+#include "..\Camera\Camera.h"
 class CGrid
 {
 private:
-	vector<vector<vector<LPGAMEOBJECT>>> Cell;
+	unordered_map<int,unordered_map<int, vector<LPGAMEOBJECT>>> Cell;
 public:
-	void initGrid(vector<LPGAMEOBJECT> objects);
+	CGrid();
 	void addObject(LPGAMEOBJECT object);
 	void removeObject(LPGAMEOBJECT object);
 	void updateObjects(vector<LPGAMEOBJECT> objects);

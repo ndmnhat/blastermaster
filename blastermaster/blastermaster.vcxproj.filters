@@ -1,16 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="debug.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Define.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Sprites.cpp" />
-    <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\BossCrabullus.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Dome.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Floater.cpp" />
@@ -26,17 +17,22 @@
     <ClCompile Include="Object\IndoorEnemy\IndoorEnemy.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Teleporter.cpp" />
     <ClCompile Include="Object\Player\Sophia.cpp" />
+    <ClCompile Include="Animations\Animations.cpp" />
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Define\Define.cpp" />
+    <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Grid\Grid.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\SceneGame.cpp" />
+    <ClCompile Include="Map\Map.cpp" />
+    <ClCompile Include="Animations\Sprites.cpp" />
+    <ClCompile Include="Animations\Textures.cpp" />
+    <ClCompile Include="Utils\Utils.cpp" />
+    <ClCompile Include="Object\GameObject.cpp" />
+    <ClCompile Include="Scene\CSceneManager.cpp" />
+    <ClCompile Include="Object\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="debug.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Define.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Grid.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="Sprites.h" />
-    <ClInclude Include="Textures.h" />
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
     <ClInclude Include="Object\OutdoorEnemy\Dome.h" />
     <ClInclude Include="Object\OutdoorEnemy\Floater.h" />
@@ -52,6 +48,21 @@
     <ClInclude Include="Object\IndoorEnemy\IndoorEnemy.h" />
     <ClInclude Include="Object\IndoorEnemy\Teleporter.h" />
     <ClInclude Include="Object\Player\Sophia.h" />
+    <ClInclude Include="Animations\Animations.h" />
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Define\Define.h" />
+    <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Grid\Grid.h" />
+    <ClInclude Include="Scene\KeyEventHandler.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneGame.h" />
+    <ClInclude Include="Map\Map.h" />
+    <ClInclude Include="Animations\Textures.h" />
+    <ClInclude Include="Animations\Sprites.h" />
+    <ClInclude Include="Utils\Utils.h" />
+    <ClInclude Include="Object\GameObject.h" />
+    <ClInclude Include="Scene\CSceneManager.h" />
+    <ClInclude Include="Object\Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />
@@ -59,6 +70,7 @@
     <Image Include="textures\tiles.png" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="map2.txt" />
+    <Text Include="Map\map2.txt" />
+    <Text Include="Scene\scene.txt" />
   </ItemGroup>
 </Project>

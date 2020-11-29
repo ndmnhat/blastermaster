@@ -17,12 +17,15 @@
 #define GRID_CELL_WIDTH 150
 
 
-enum GameObjectID
-{
-
+enum ObjectType {
+	TYPE_SOPHIA = 0,
+	TYPE_WALL = 1,
+	TYPE_ENEMY = 2
 };
 
 enum TextureID
 {
-	ID_TEXT_ENEMY = 10,
+	ID_TEX_SOPHIA = 0,
+	ID_TEX_ENEMY = 10,
+	ID_TEX_MAP = 30
 };

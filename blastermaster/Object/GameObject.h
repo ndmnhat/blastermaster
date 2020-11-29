@@ -1,18 +1,14 @@
 #pragma once
-
+#include "..\Define\Define.h"
 #include <Windows.h>
 #include <d3dx9.h>
 #include <vector>
-#include "Sprites.h"
+#include "..\Animations\Animations.h"
 
 #define ID_TEX_BBOX -1		// special texture to draw object bounding box
 
 
-enum ObjectType {
-	SOPHIA,
-	ENEMY,
-	GROUND
-};
+
 
 using namespace std;
 
@@ -57,9 +53,12 @@ public:
 	int height;
 	float gravity;
 
+	bool isInCam = false;
 	DWORD dt;
 	ObjectType type;
-	vector<LPANIMATION> animations;
+	LPANIMATION animation;
+
+	LPANIMATION_SET animation_set;
 
 public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -73,6 +72,8 @@ public:
 
 	void RenderBoundingBox();
 
+	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
+	void SetAnimation(LPANIMATION ani) { animation = ani; }
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
 	void FilterCollision(
@@ -83,7 +84,6 @@ public:
 		float& nx,
 		float& ny);
 
-	void AddAnimation(int aniId);
 
 	CGameObject();
 

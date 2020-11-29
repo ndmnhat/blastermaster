@@ -2,7 +2,7 @@
 
 COutdoorEnemy::COutdoorEnemy()
 {
-	type = ObjectType::ENEMY;
+	type = TYPE_ENEMY;
 }
 
 void COutdoorEnemy::GetBoundingBox(float& left, float& top, float& right, float& bottom)
