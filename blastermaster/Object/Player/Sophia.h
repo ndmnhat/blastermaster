@@ -34,12 +34,6 @@ public:
 
 	void Render();
 	void SetState(int state);
-	void UpdateStateTime();
-	void StartUntouchable()
-	{
-		isUntouchable = true;
-		untouchableStart = GetTickCount();
-	};
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void UpdateStateTime();
 	void StartUntouchable() { isUntouchable = true; untouchableStart = GetTickCount(); }
