@@ -19,32 +19,32 @@ void CMap::ReadMap()
 	ifstream fs;
 	fs.clear();
 	fs.open(mapFile);
-	fs >> mapWidth >> mapHeight >> tileWidth >> tileHeight >> tileCount >> tileColumn;
-	for (int i = 0; i < mapWidth * mapHeight; ++i)
+	fs >> mapColumnCount >> mapRowCount >> tileWidth >> tileHeight >> tileCount >> tileColumn;
+	for (int i = 0; i < mapColumnCount * mapRowCount; ++i)
 	{
-		fs >> tileMap[i / mapHeight][i % mapWidth];
+		fs >> tileMap[i / mapColumnCount][i % mapColumnCount];
 	}
 	fs.close();
+	CCamera::GetInstance()->SetCamBoundary(mapColumnCount * tileWidth - SCREEN_WIDTH, mapRowCount * tileHeight);
 }
 void CMap::DrawMap(CCamera * cam)
 {
 	CGame * game = CGame::GetInstance();
 	D3DXVECTOR3 camPosition = cam->GetPosition();
-	cam->SetCamBoundary(mapWidth*tileWidth - SCREEN_WIDTH, mapHeight*tileHeight - SCREEN_HEIGHT);
 	//Origin is left down -> reverse row index
-	int firstRow = ((mapHeight * tileHeight) - camPosition.y) / tileHeight;
+	int firstRow = ((GetMapHeight() - camPosition.y) / tileHeight);
 	int firstColumn = camPosition.x / tileWidth;
-	for (int i = 0; i < firstRow + SCREEN_HEIGHT / tileWidth; i++)
+	for (int i = 0; i < SCREEN_HEIGHT / tileHeight; i++)
 	{
-		for (int j = 0; j < firstColumn + SCREEN_WIDTH / tileHeight; j++)
+		for (int j = 0; j < SCREEN_WIDTH / tileWidth; j++)
 		{
 			int currentRow = firstRow + i;
 			int currentColumn = firstColumn + j;
 			int gid = tileMap[currentRow][currentColumn]-1;
 			//float tileX = (float)(j * tileWidth - (camPosition.x - (camPosition.x / 16) * 16));
 			//float tileY = (float)(i * tileHeight - (camPosition.y - (camPosition.y / 16) * 16));
-			float tileX = (float)(j*tileWidth-(int)camPosition.x%tileWidth);
-			float tileY = (float)(i*tileHeight- (int)camPosition.y%tileHeight);
+			float tileX = (float)(j*tileWidth - (int)camPosition.x%tileWidth);
+			float tileY = (float)((i-1)*tileHeight + (int)(camPosition.y)%tileHeight);
 			D3DXVECTOR3 tilePosition(tileX, tileY, 0);
 			RECT r;
 			r.left = (long)((gid % tileColumn) * tileWidth);

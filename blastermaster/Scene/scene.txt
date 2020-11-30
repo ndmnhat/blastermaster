@@ -31,11 +31,8 @@
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
 # type: 0 = Sophia , 1 = Wall, 2 = Goomba
-0	50	1950	100
-1	25	1900	0	100	20
-1	25	2000	0	20	125
-1	25	2000	0	100	20
-1	125	2000	0	20	125
+0	1088	900	100
+1	1024	864	0	320	16
 # --- SCENE PORTAL ----
 # type	l	t	ani_set_id	r	b	scene_id
 #50	300	98	0	316	150	2

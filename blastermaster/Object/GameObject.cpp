@@ -131,7 +131,7 @@ void CGameObject::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vecto
 		else
 			delete e;
 	}
-	DebugOut(L"%d\n", coEvents.size());
+	//DebugOut(L"%d\n", coEvents.size());
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
 

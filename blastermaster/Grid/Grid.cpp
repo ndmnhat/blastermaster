@@ -1,5 +1,5 @@
 #include "Grid.h"
-
+#include "..\Utils\Utils.h"
 
 CGrid::CGrid()
 {
@@ -18,7 +18,7 @@ void CGrid::addObject(LPGAMEOBJECT object)
 	{
 		for (int j = firstColumn; j <= lastColumn; ++j)
 		{
-
+			//DebugOut(L"%d , %d , %d\n", object->type, i, j);
 			Cell[i][j].push_back(object);
 		}
 	}
@@ -63,9 +63,9 @@ vector<LPGAMEOBJECT> CGrid::ObjectsInCam(CCamera* cam)
 	int lastRow = firstRow - SCREEN_HEIGHT / GRID_CELL_HEIGHT;
 	int lastColumn = firstColumn + SCREEN_WIDTH / GRID_CELL_WIDTH;
 	vector<LPGAMEOBJECT> objects;
-	for (int i = lastRow; i < firstRow; ++i)
+	for (int i = lastRow; i <= firstRow; ++i)
 	{
-		for (int j = firstColumn; j < lastColumn; ++j)
+		for (int j = firstColumn; j <= lastColumn; ++j)
 		{
 			for (auto& GameObject : Cell[i][j])
 			{

@@ -148,7 +148,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		}
 		obj = new CSophia();
 		player = (CSophia*)obj;
-
+		CCamera::GetInstance()->SetFollow(obj);
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 
@@ -251,7 +251,12 @@ void CSceneGame::Update(DWORD dt)
 	for (auto& GameObject : objects)
 	{
 		GameObject->Update(dt, &objects);
+		if (GameObject->type == TYPE_WALL)
+			DebugOut(L"Wall pos: %f,%f\n", GameObject->x, GameObject->y);
 	}
+	CCamera::GetInstance()->Update(dt);
+
+	grid->updateObjects(objects);
 }
 
 void CSceneGame::Render()
