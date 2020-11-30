@@ -69,6 +69,57 @@ LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 	return e;
 }
 
+bool CGameObject::isCollidingWith(LPGAMEOBJECT coObject, float &space, int &direction)
+{
+	float coOleft, coOtop, coOright, coObottom;
+	float Oleft, Otop, Oright, Obottom;
+
+	coObject->GetBoundingBox(coOleft, coOtop, coOright, coObottom);
+	GetBoundingBox(Oleft, Otop, Oright, Obottom);
+
+	if (Oleft > coOright || Oright < coOleft || Otop < coObottom || Obottom > coOtop)
+		return false;
+	else
+	{
+		float minHorizontal, minVertical;
+		float spaceLeft = Oright - coOleft;
+		float spaceRight = Oleft - coOright;
+		float spaceBottom = Otop - coObottom;
+		float spaceTop = Obottom - coOtop;
+		
+		if (abs(spaceLeft) < abs(spaceRight))
+		{
+			minHorizontal = spaceLeft;
+		}
+		else
+		{
+			minHorizontal = spaceRight;
+		}
+
+		if (abs(spaceBottom) < abs(spaceTop))
+		{
+			minVertical = spaceBottom;
+		}
+		else
+		{
+			minVertical = spaceTop;
+		}
+
+		if (abs(minVertical) < abs(minHorizontal))
+		{
+			direction = 0;
+			space = minVertical;
+		}
+		else
+		{
+			direction = 1;
+			space = minHorizontal;
+		}
+
+		return true;
+	}
+}
+
 void CGameObject::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents)
 {
 	for (UINT i = 0; i < coObjects->size(); i++)
@@ -80,7 +131,7 @@ void CGameObject::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vecto
 		else
 			delete e;
 	}
-
+	DebugOut(L"%d\n", coEvents.size());
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
 

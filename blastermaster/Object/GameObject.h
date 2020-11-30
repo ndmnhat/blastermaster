@@ -75,6 +75,7 @@ public:
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
 	void SetAnimation(LPANIMATION ani) { animation = ani; }
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
+	bool isCollidingWith(LPGAMEOBJECT coObject, float &space, int &direction);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
 	void FilterCollision(
 		vector<LPCOLLISIONEVENT>& coEvents,

@@ -10,7 +10,6 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	//{
 		vy -= SOPHIA_GRAVITY * dt;
 	//}
-	
 
 	UpdateStateTime();
 
@@ -41,8 +40,6 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		float min_tx, min_ty, nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 
-		
-
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
@@ -50,11 +47,11 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			{
 				case TYPE_WALL:
 				{
-					x += min_tx * dx + nx * 0.1f;
-					y += min_ty * dy + ny * 0.1f;
+					x += min_tx * dx + e->nx * 0.1f;
+					y += min_ty * dy + e->ny * 0.1f;
 
-					if (nx != 0) vx = 0;
-					if (ny != 0) vy = 0;
+					if (e->nx != 0) vx = 0;
+					if (e->ny != 0) vy = 0;
 				}
 				break;
 				case TYPE_ENEMY:
@@ -74,6 +71,33 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			}
 		}
 	}
+
+#pragma region Colliding with wall handle
+
+	for (UINT i = 0; i < listObject->size(); i++)
+	{
+		if (listObject->at(i)->type == TYPE_WALL)
+		{
+			float space;
+			int direction;
+			if (isCollidingWith(listObject->at(i), space, direction))
+			{
+				if (direction == 0)
+				{
+					y -= space;
+					vy = 0;
+				}
+				else
+				{
+					x -= space;
+					vx = 0;
+				}
+					
+			}
+		}
+	}
+#pragma endregion
+
 	// simple screen edge collision!!!
 	//if (vx > 0 && x > 290) x = 290;
 	//if (vx < 0 && x < 0) x = 0;
