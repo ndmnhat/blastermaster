@@ -265,10 +265,33 @@ void CSceneGame::Render()
 
 void CSceneGameKeyHandler::KeyState(BYTE* states)
 {
-	return;
+	CGame* game = CGame::GetInstance();
+	CSophia* sophia = ((CSceneGame*)scence)->GetPlayer();
+
+	if (sophia->GetState() == SOPHIA_STATE_DIE) return;
+	if (game->IsKeyDown(DIK_RIGHT))
+		sophia->SetState(SOPHIA_STATE_WALKING_RIGHT);
+	else if (game->IsKeyDown(DIK_LEFT))
+		sophia->SetState(SOPHIA_STATE_WALKING_LEFT);
+	else
+		sophia->SetState(SOPHIA_STATE_IDLE);
 }
 
 void CSceneGameKeyHandler::OnKeyDown(int KeyCode)
 {
+	CSophia* sophia = ((CSceneGame*)scence)->GetPlayer();
+	switch (KeyCode)
+	{
+	case DIK_SPACE:
+		sophia->SetState(SOPHIA_STATE_JUMP);
+		break;
+	case DIK_A:
+		break;
+	}
 	return;
+}
+
+void CSceneGameKeyHandler::OnKeyUp(int KeyCode)
+{
+
 }

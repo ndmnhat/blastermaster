@@ -33,6 +33,9 @@
 # type: 0 = Sophia , 1 = Wall, 2 = Goomba
 0	50	2000	100
 1	25	1900	0	100	20
+1	25	2000	0	20	100
+1	25	2000	0	100	20
+1	125	2000	0	20	100
 # --- SCENE PORTAL ----
 # type	l	t	ani_set_id	r	b	scene_id
 #50	300	98	0	316	150	2

@@ -2,7 +2,7 @@
 #include "..\GameObject.h"
 
 #define SOPHIA_WALKING_SPEED 0.1f
-#define SOPHIA_JUMP_SPEED_Y 0.5f
+#define SOPHIA_JUMP_SPEED_Y 0.05f
 #define SOPHIA_GRAVITY 0.0001f
 
 #define SOPHIA_STATE_IDLE 0
