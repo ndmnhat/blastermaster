@@ -60,10 +60,10 @@ vector<LPGAMEOBJECT> CGrid::ObjectsInCam(CCamera* cam)
 {
 	int firstRow = cam->GetPosition().y / GRID_CELL_HEIGHT;
 	int firstColumn = cam->GetPosition().x / GRID_CELL_WIDTH;
-	int lastRow = firstRow + SCREEN_HEIGHT / GRID_CELL_HEIGHT;
+	int lastRow = firstRow - SCREEN_HEIGHT / GRID_CELL_HEIGHT;
 	int lastColumn = firstColumn + SCREEN_WIDTH / GRID_CELL_WIDTH;
 	vector<LPGAMEOBJECT> objects;
-	for (int i = firstRow; i < lastRow; ++i)
+	for (int i = lastRow; i < firstRow; ++i)
 	{
 		for (int j = firstColumn; j < lastColumn; ++j)
 		{

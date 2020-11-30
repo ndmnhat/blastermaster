@@ -2,65 +2,75 @@
 
 void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	//Calculate dx, dy
 	CGameObject::Update(dt);
+
 	// simple fall down
-<<<<<<< HEAD
-	if (isFalling == true) 
-	{
-		vy -= SOPHIA_GRAVITY * dt;
-	}
-	
-=======
-	vy += SOPHIA_GRAVITY;
-	//if (y > 1170)
+	//if (isFalling == true) 
 	//{
-	//	vy = 0;
-	//	y = 1170.0f;
+		vy -= SOPHIA_GRAVITY * dt;
 	//}
->>>>>>> main
+	
 
 	UpdateStateTime();
 
-	vector<LPGAMEOBJECT> listObject;
-	listObject.clear();
+	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
+	listObject->clear();
 	if(coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
+			if (coObjects->at(i)->type != TYPE_SOPHIA)
+				listObject->push_back(coObjects->at(i));
 		}
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	CalcPotentialCollisions(&listObject, coEvents);
+
+	CalcPotentialCollisions(listObject, coEvents);
 
 	if (coEvents.size() == 0)
 	{
 		x += dx;
 		y += dy;
 	}
+
 	else
 	{
 		float min_tx, min_ty, nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 
-		x += min_tx * dx + nx * 0.1f; // nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.1f;
+		
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (e->obj->type == ObjectType::TYPE_ENEMY)
+			switch (e->obj->type)
 			{
-				if (isUntouchable)
+				case TYPE_WALL:
 				{
-					if (e->nx != 0)
-						x += dx;
-					if (e->ny != 0)
-						y += dy;
+					x += min_tx * dx + nx * 0.1f;
+					y += min_ty * dy + ny * 0.1f;
+
+					if (nx != 0) vx = 0;
+					if (ny != 0) vy = 0;
 				}
-				else
-					SetState(SOPHIA_STATE_ATTACKED);
+				break;
+				case TYPE_ENEMY:
+				{
+					if (isUntouchable)
+					{
+						if (e->nx != 0)
+							x += dx;
+						if (e->ny != 0)
+							y += dy;
+					}
+					else
+						SetState(SOPHIA_STATE_ATTACKED);
+				}
+				break;
+				default: break;
 			}
 		}
 	}
@@ -85,6 +95,7 @@ void CSophia::Render()
 		ani = SOPHIA_ANI_WALKING_LEFT;
 
 	animation_set->at(2)->Render(x, y);
+	RenderBoundingBox();
 }
 
 void CSophia::SetState(int state)
@@ -126,7 +137,7 @@ void CSophia::UpdateStateTime()
 void CSophia::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	left = x;
-	bottom = y;
+	top = y;
 	right = left + SOPHIA_BBOX_WIDTH;
-	top = bottom + SOPHIA_BBOX_HEIGHT;
+	bottom = top - SOPHIA_BBOX_HEIGHT;
 }

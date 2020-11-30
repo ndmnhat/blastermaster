@@ -156,7 +156,6 @@
     <ClCompile Include="Scene\CSceneManager.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\BossCrabullus.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Cannon.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Dasher.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Dome.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\OutdoorEnemy.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
@@ -180,8 +179,6 @@
     <ClCompile Include="Animations\Sprites.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Teleporter.cpp" />
     <ClCompile Include="Animations\Textures.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\UnderworldLord.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Waver.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Worm.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
     <ClCompile Include="Object\Wall.cpp" />
@@ -192,7 +189,6 @@
     <ClInclude Include="Scene\KeyEventHandler.h" />
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
     <ClInclude Include="Object\IndoorEnemy\Cannon.h" />
-    <ClInclude Include="Object\IndoorEnemy\Dasher.h" />
     <ClInclude Include="Object\OutdoorEnemy\Dome.h" />
     <ClInclude Include="Object\OutdoorEnemy\OutdoorEnemy.h" />
     <ClInclude Include="Camera\Camera.h" />
@@ -215,8 +211,6 @@
     <ClInclude Include="Animations\Sprites.h" />
     <ClInclude Include="Object\IndoorEnemy\Teleporter.h" />
     <ClInclude Include="Animations\Textures.h" />
-    <ClInclude Include="Object\IndoorEnemy\UnderworldLord.h" />
-    <ClInclude Include="Object\IndoorEnemy\Waver.h" />
     <ClInclude Include="Object\OutdoorEnemy\Worm.h" />
     <ClInclude Include="Utils\Utils.h" />
     <ClInclude Include="Object\Wall.h" />
