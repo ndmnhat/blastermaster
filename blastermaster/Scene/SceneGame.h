@@ -24,6 +24,8 @@ protected:
 	void _ParseSection_OBJECTS(std::string line);
 	void _ParseSection_MAP(std::string line);
 
+	friend class CSceneGameKeyHandler;
+
 public:
 	CSceneGame(int id, LPCWSTR filePath);
 

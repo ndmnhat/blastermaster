@@ -1,6 +1,6 @@
 # id	file_path	transparent_color_r	g	b
 [TEXTURES]
-0	textures\sophia.png	255	255	255
+0	textures\sophia.png	255	0	255
 10	textures\enemies.png 255 255 255
 30	textures\area2tiles.png	255	255	255
 
@@ -32,7 +32,7 @@
 # type	x	y	ani_set_id	extra_settings per object type
 # type: 0 = Sophia , 1 = Wall, 2 = Goomba
 0	50	2000	100
-1	0	1900	0	500	100
+1	25	1900	0	100	20
 # --- SCENE PORTAL ----
 # type	l	t	ani_set_id	r	b	scene_id
 #50	300	98	0	316	150	2

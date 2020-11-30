@@ -247,7 +247,10 @@ void CSceneGame::Update(DWORD dt)
 	for (auto& GameObject : grid->ObjectsInCam(CCamera::GetInstance()))
 	{
 		objects.push_back(GameObject);
-		GameObject->Update(dt);
+	}
+	for (auto& GameObject : objects)
+	{
+		GameObject->Update(dt, &objects);
 	}
 }
 

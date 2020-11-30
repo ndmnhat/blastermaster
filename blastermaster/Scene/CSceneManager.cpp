@@ -17,6 +17,7 @@ void CSceneManager::SetScene(int id)
     if(CurrentSceneID!=-1)
         scenes[CurrentSceneID]->Unload();
     CurrentSceneID = id;
+	CGame::GetInstance()->SetKeyHandler(scenes[CurrentSceneID]->GetKeyEventHandler());
     scenes[CurrentSceneID]->Load();
 }
 
