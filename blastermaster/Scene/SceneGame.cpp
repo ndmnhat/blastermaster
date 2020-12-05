@@ -1,5 +1,5 @@
 #include "SceneGame.h"
-
+#include "..\Object\OutdoorEnemy\OutdoorEnemy.h"
 using namespace std;
 
 #define SCENE_SECTION_UNKNOWN -1
@@ -251,11 +251,8 @@ void CSceneGame::Update(DWORD dt)
 	for (auto& GameObject : objects)
 	{
 		GameObject->Update(dt, &objects);
-		if (GameObject->type == TYPE_WALL)
-			DebugOut(L"Wall pos: %f,%f\n", GameObject->x, GameObject->y);
 	}
 	CCamera::GetInstance()->Update(dt);
-
 	grid->updateObjects(objects);
 }
 
@@ -279,7 +276,13 @@ void CSceneGameKeyHandler::KeyState(BYTE* states)
 	else if (game->IsKeyDown(DIK_LEFT))
 		sophia->SetState(SOPHIA_STATE_WALKING_LEFT);
 	else
-		sophia->SetState(SOPHIA_STATE_IDLE);
+	{
+		int nx = sophia->Getnx();
+		if (nx > 0)
+			sophia->SetState(SOPHIA_STATE_IDLE_RIGHT);
+		else
+			sophia->SetState(SOPHIA_STATE_IDLE_LEFT);
+	}
 }
 
 void CSceneGameKeyHandler::OnKeyDown(int KeyCode)

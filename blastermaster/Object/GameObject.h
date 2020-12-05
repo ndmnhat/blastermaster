@@ -67,7 +67,7 @@ public:
 	float GetY() { return this->y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
-	
+	int Getnx() { return this->nx; }
 	int GetState() { return this->state; }
 
 	void RenderBoundingBox();

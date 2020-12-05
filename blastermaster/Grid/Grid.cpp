@@ -27,10 +27,10 @@ void CGrid::removeObject(LPGAMEOBJECT object)
 {
 	float left, right, top, bottom;
 	object->GetBoundingBox(left, top, right, bottom);
-	int firstRow = top / GRID_CELL_HEIGHT - 1;
+	int firstRow = top / GRID_CELL_HEIGHT + 1;
 	int lastRow = bottom / GRID_CELL_HEIGHT - 1;
 	int firstColumn = left / GRID_CELL_WIDTH - 1;
-	int lastColumn = right / GRID_CELL_WIDTH - 1;
+	int lastColumn = right / GRID_CELL_WIDTH + 1;
 	for (int CellRowIndex = firstRow; CellRowIndex < lastRow; ++CellRowIndex)
 	{
 		for (int CellColumnIndex = firstColumn; CellColumnIndex < lastColumn; ++CellColumnIndex)
@@ -60,8 +60,8 @@ vector<LPGAMEOBJECT> CGrid::ObjectsInCam(CCamera* cam)
 {
 	int firstRow = cam->GetPosition().y / GRID_CELL_HEIGHT;
 	int firstColumn = cam->GetPosition().x / GRID_CELL_WIDTH;
-	int lastRow = firstRow - SCREEN_HEIGHT / GRID_CELL_HEIGHT;
-	int lastColumn = firstColumn + SCREEN_WIDTH / GRID_CELL_WIDTH;
+	int lastRow = firstRow - ceil((double)SCREEN_HEIGHT / GRID_CELL_HEIGHT);
+	int lastColumn = firstColumn + ceil((double)SCREEN_WIDTH / GRID_CELL_WIDTH);
 	vector<LPGAMEOBJECT> objects;
 	for (int i = lastRow; i <= firstRow; ++i)
 	{
