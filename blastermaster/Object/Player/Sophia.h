@@ -48,6 +48,7 @@
 
 class CSophia : public CGameObject
 {
+	static CSophia* __instance; // Singleton Patern
 	DWORD untouchableStart;
 	DWORD rotatingStart;
 	int currentAnimation;

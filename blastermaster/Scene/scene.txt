@@ -1,10 +1,9 @@
 # id	file_path	transparent_color_r	g	b
 [TEXTURES]
 0	textures\sophia.png	255	0	255
-10	textures\enemies.png 255 255 255
 30	textures\area2tiles.png	255	255	255
-
-# id	left	top	right	bottom	texture_id
+50	textures\enemies.png	255	255	255
+# id	left	top		right	bottom	texture_id
 [SPRITES]
 # Sophia
 #SOPHIA WALK
@@ -40,6 +39,7 @@
 10023	201	101	225	119	0
 10024	236	101	260	119	0
 
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 #SOPHIA_IDLE
@@ -70,15 +70,22 @@
 606	10022	50	10018	50
 607	10023	50	10019	50
 608	10024	50	10020	50
+
+#WORM
+700	20001	250
+701	20004	250
+702	20001	250	20002	250
+703	20004	250	20003	250
 #
 # id	ani1	ani2	ani3
 #
 [ANIMATION_SETS]
 100	400	401	402	403	404	405	406	407	500	501	601	602	603	604	605	606	607	608
-
+#WORM
+200	600	601	700	701
 [OBJECTS]
-# type	x	y	ani_set_id	extra_settings per object type
-# type: 0 = Sophia , 1 = Wall, 2 = Goomba
+# type	x		y		ani_set_id	extra_settings per object type
+# type: 0 = Sophia , 1 = Wall, 2 = Enemy, 3 = Worm
 0	1088	900	100
 #WALL
 1	1024	864	0	320	16
@@ -119,9 +126,9 @@
 1	1040	848	0	16	48
 1	1024	736	0	800	32
 
-
-# --- SCENE PORTAL ----
-# type	l	t	ani_set_id	r	b	scene_id
+3	1188	900	200
+# --- SCENE PORTAL ---- 
+# type	l		t		ani_set_id	r		b		scene_id
 #50	300	98	0	316	150	2
 [MAP]
 # filepath	textureid

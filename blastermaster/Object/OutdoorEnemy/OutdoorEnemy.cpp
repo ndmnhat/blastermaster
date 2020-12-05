@@ -18,6 +18,10 @@ void COutdoorEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt);
 }
 
+void COutdoorEnemy::Render()
+{
+}
+
 void COutdoorEnemy::SetState(int state)
 {
 	CGameObject::SetState(state);

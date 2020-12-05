@@ -20,7 +20,8 @@
 enum ObjectType {
 	TYPE_SOPHIA = 0,
 	TYPE_WALL = 1,
-	TYPE_ENEMY = 2
+	TYPE_ENEMY = 2,
+	TYPE_ENEMY_WORM = 3
 };
 
 enum TextureID
