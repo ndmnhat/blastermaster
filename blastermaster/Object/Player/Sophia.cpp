@@ -134,7 +134,7 @@ void CSophia::Render()
 	if (ani != -1)
 		currentAnimation = ani;
 	animation_set->at(currentAnimation)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 	
 }
 
@@ -154,7 +154,7 @@ void CSophia::SetState(int state)
 		nx = -1;
 		break;
 	case SOPHIA_STATE_JUMP:
-		if (!isJumping&&!isFalling)
+		//if (!isJumping&&!isFalling)
 		{
 			vy = SOPHIA_JUMP_SPEED_Y;
 			isJumping = true;
@@ -171,6 +171,9 @@ void CSophia::SetState(int state)
 		}
 		break;
 	}
+	float left, right, top, bot;
+	GetBoundingBox(left, right, top, bot);
+	DebugOut(L"left: %f, right: %f, top: %f, bot: %f\n", left, right, top, bot);
 }
 
 void CSophia::UpdateStateTime()
@@ -190,9 +193,9 @@ void CSophia::UpdateStateTime()
 void CSophia::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	left = x;
-	bottom = y;
+	top = y;
 	right = left + SOPHIA_BBOX_WIDTH;
-	top = bottom + SOPHIA_BBOX_HEIGHT;
+	bottom = top - SOPHIA_BBOX_HEIGHT;
 }
 void CSophia::RenderWalkingLeft(int &ani)
 {

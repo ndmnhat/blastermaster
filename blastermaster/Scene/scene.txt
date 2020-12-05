@@ -90,7 +90,7 @@
 [OBJECTS]
 # type	x		y		ani_set_id	extra_settings per object type
 # type: 0 = Sophia , 1 = Wall, 2 = Enemy, 3 = Worm
-0	1088	900	100
+0	1104	896	100
 #WALL
 1	1024	864	0	320	16
 1	1072	992	0	32	32

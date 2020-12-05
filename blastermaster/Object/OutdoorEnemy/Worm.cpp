@@ -133,8 +133,8 @@ void CWorm::Render()
  void CWorm::GetBoundingBox(float& left, float& top, float& right, float& bottom)
  {
 	 left = x;
-	 bottom = y;
+	 top = y;
 	 right = x + WORM_BBOX_WIDTH;
-	 top = y + WORM_BBOX_HEIGHT;
-	 DebugOut(L"%f\n", bottom);
+	 bottom = y - WORM_BBOX_HEIGHT;
+	 //DebugOut(L"%f\n", bottom);
  }

@@ -13,13 +13,13 @@ void CWall::SetSize(int width, int height)
 
 void CWall::Render()
 {
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CWall::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
-	bottom = y;
+	top = y;
 	right = left + width;
-	top = bottom + height;
+	bottom = top - height;
 }

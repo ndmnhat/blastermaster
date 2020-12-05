@@ -148,7 +148,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		}
 		obj = new CSophia();
 		player = (CSophia*)obj;
-		//CCamera::GetInstance()->SetFollow(obj);
+		CCamera::GetInstance()->SetFollow(obj);
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 
@@ -167,7 +167,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		break;
 	case TYPE_ENEMY_WORM:
 		obj = new CWorm();
-		CCamera::GetInstance()->SetFollow(obj);
+		//CCamera::GetInstance()->SetFollow(obj);
 		break;
 
 	default:
@@ -259,6 +259,7 @@ void CSceneGame::Update(DWORD dt)
 	}
 	CCamera::GetInstance()->Update(dt);
 	grid->updateObjects(objects);
+	//CCamera::GetInstance()->SetPosition(0.0f,2048.0f);
 }
 
 void CSceneGame::Render()
