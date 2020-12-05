@@ -38,7 +38,11 @@
 10022	169	101	193	119	0
 10023	201	101	225	119	0
 10024	236	101	260	119	0
-
+#Worm
+20001	46	412	63	422	50
+20002	64	412	82	422	50
+20003	172	412	190	422	50
+20004	191	412	208	422	50
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
@@ -82,7 +86,7 @@
 [ANIMATION_SETS]
 100	400	401	402	403	404	405	406	407	500	501	601	602	603	604	605	606	607	608
 #WORM
-200	600	601	700	701
+200	701	701	702	703
 [OBJECTS]
 # type	x		y		ani_set_id	extra_settings per object type
 # type: 0 = Sophia , 1 = Wall, 2 = Enemy, 3 = Worm

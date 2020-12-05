@@ -1,8 +1,8 @@
 #pragma once
 #include "OutdoorEnemy.h"
-#include "../Player/Sophia.h"
-#include "C:\Users\ROG\source\repos\blastermaster\blastermaster\Scene\SceneGame.h"
-#include "C:\Users\ROG\source\repos\blastermaster\blastermaster\Game\Game.h"
+#include "..\Player\Sophia.h"
+#include "..\..\Scene\SceneGame.h"
+#include "..\..\Game\Game.h"
 
 #define WORM_WALKING_SPEED	0.025f
 #define WORM_GRAVITY		0.0005f

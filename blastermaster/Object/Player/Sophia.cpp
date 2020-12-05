@@ -1,14 +1,5 @@
 #include "Sophia.h"
 
-
-CSophia* CSophia::__instance = NULL;
-CSophia* CSophia::GetInstance()
-{
-	if (__instance == NULL) __instance = new CSophia();
-	return __instance;
-}
-
-
 void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	//Calculate dx, dy
