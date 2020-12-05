@@ -77,7 +77,7 @@ bool CGameObject::isCollidingWith(LPGAMEOBJECT coObject, float &space, int &dire
 	coObject->GetBoundingBox(coOleft, coOtop, coOright, coObottom);
 	GetBoundingBox(Oleft, Otop, Oright, Obottom);
 
-	if (Oleft > coOright || Oright < coOleft || Otop < coObottom || Obottom > coOtop)
+	if (Oleft >= coOright || Oright <= coOleft || Otop <= coObottom || Obottom >= coOtop)
 		return false;
 	else
 	{

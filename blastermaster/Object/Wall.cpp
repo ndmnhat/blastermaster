@@ -19,7 +19,7 @@ void CWall::Render()
 void CWall::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
-	top = y;
+	bottom = y;
 	right = left + width;
-	bottom = top - height;
+	top = bottom + height;
 }

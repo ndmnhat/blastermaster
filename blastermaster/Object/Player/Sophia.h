@@ -24,14 +24,15 @@
 
 class CSophia : public CGameObject
 {
+	static CSophia* __instance; // Singleton Patern
 	DWORD untouchableStart;
 
 public:
 	bool isUntouchable;
-	bool isFalling;
+
+	static CSophia* GetInstance();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
-
 	void Render();
 	void SetState(int state);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

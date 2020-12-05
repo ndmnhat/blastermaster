@@ -1,5 +1,14 @@
 #include "Sophia.h"
 
+
+CSophia* CSophia::__instance = NULL;
+CSophia* CSophia::GetInstance()
+{
+	if (__instance == NULL) __instance = new CSophia();
+	return __instance;
+}
+
+
 void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	//Calculate dx, dy
@@ -161,7 +170,7 @@ void CSophia::UpdateStateTime()
 void CSophia::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	left = x;
-	top = y;
+	bottom = y;
 	right = left + SOPHIA_BBOX_WIDTH;
-	bottom = top - SOPHIA_BBOX_HEIGHT;
+	top = bottom + SOPHIA_BBOX_HEIGHT;
 }

@@ -3,6 +3,8 @@
 #include "Scene.h"
 #include "..\Object\Player\Sophia.h"
 #include "..\Object\Wall.h"
+#include "..\Object\OutdoorEnemy\OutdoorEnemy.h"
+#include "..\Object\OutdoorEnemy\Worm.h"
 #include <fstream>
 #include "..\Map\Map.h"
 #include "..\Grid\Grid.h"
