@@ -289,6 +289,10 @@ void CSceneGameKeyHandler::KeyState(BYTE* states)
 		else
 			sophia->SetState(SOPHIA_STATE_IDLE_LEFT);
 	}
+	if (game->IsKeyDown(DIK_UP))
+	{
+		sophia->isPressingUp = true;
+	}
 }
 
 void CSceneGameKeyHandler::OnKeyDown(int KeyCode)
@@ -307,5 +311,11 @@ void CSceneGameKeyHandler::OnKeyDown(int KeyCode)
 
 void CSceneGameKeyHandler::OnKeyUp(int KeyCode)
 {
-
+	CSophia* sophia = ((CSceneGame*)scence)->GetPlayer();
+	switch (KeyCode)
+	{
+	case DIK_UP:
+		sophia->isPressingUp = false;
+	}
+	return;
 }
