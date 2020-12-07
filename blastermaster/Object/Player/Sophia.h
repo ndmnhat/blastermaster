@@ -59,25 +59,34 @@
 #define SOPHIA_ANI_WALKING_LEFT_FALL 30
 #define SOPHIA_ANI_WALKING_RIGHT_FALL 31
 
-#define SOPHIA_ANI_ROTATING_LEFT_1 32
-#define SOPHIA_ANI_ROTATING_LEFT_2 33
-#define SOPHIA_ANI_ROTATING_LEFT_3 34
-#define SOPHIA_ANI_ROTATING_LEFT_4 35
+#define SOPHIA_ANI_WALKING_LEFT_GUNUP 32
+#define SOPHIA_ANI_WALKING_RIGHT_GUNUP 33
 
-#define SOPHIA_ANI_ROTATING_RIGHT_1 36
-#define SOPHIA_ANI_ROTATING_RIGHT_2 37
-#define SOPHIA_ANI_ROTATING_RIGHT_3 38
-#define SOPHIA_ANI_ROTATING_RIGHT_4 39
+#define SOPHIA_ANI_ROTATING_LEFT_1 34
+#define SOPHIA_ANI_ROTATING_LEFT_2 35
+#define SOPHIA_ANI_ROTATING_LEFT_3 36
+#define SOPHIA_ANI_ROTATING_LEFT_4 37
 
-#define SOPHIA_ANI_ROTATING_LEFT_JUMP_1 40
-#define SOPHIA_ANI_ROTATING_LEFT_JUMP_2 41
-#define SOPHIA_ANI_ROTATING_LEFT_JUMP_3 42
-#define SOPHIA_ANI_ROTATING_LEFT_JUMP_4 43
+#define SOPHIA_ANI_ROTATING_RIGHT_1 38
+#define SOPHIA_ANI_ROTATING_RIGHT_2 39
+#define SOPHIA_ANI_ROTATING_RIGHT_3 40
+#define SOPHIA_ANI_ROTATING_RIGHT_4 41
 
-#define SOPHIA_ANI_ROTATING_RIGHT_JUMP_1 44
-#define SOPHIA_ANI_ROTATING_RIGHT_JUMP_2 45
-#define SOPHIA_ANI_ROTATING_RIGHT_JUMP_3 46
-#define SOPHIA_ANI_ROTATING_RIGHT_JUMP_4 47
+#define SOPHIA_ANI_ROTATING_LEFT_JUMP_1 42
+#define SOPHIA_ANI_ROTATING_LEFT_JUMP_2 43
+#define SOPHIA_ANI_ROTATING_LEFT_JUMP_3 44
+#define SOPHIA_ANI_ROTATING_LEFT_JUMP_4 45
+
+#define SOPHIA_ANI_ROTATING_RIGHT_JUMP_1 46
+#define SOPHIA_ANI_ROTATING_RIGHT_JUMP_2 47
+#define SOPHIA_ANI_ROTATING_RIGHT_JUMP_3 48
+#define SOPHIA_ANI_ROTATING_RIGHT_JUMP_4 49
+
+#define SOPHIA_ANI_LIFTING_RIGHT 50
+#define SOPHIA_ANI_LIFTING_LEFT 51
+
+#define SOPHIA_ANI_LOWERING_RIGHT 52
+#define SOPHIA_ANI_LOWERING_LEFT 53
 
 #define SOPHIA_UNTOUCHABLE_TIME 1000
 
@@ -87,7 +96,6 @@
 
 class CSophia : public CGameObject
 {
-	static CSophia* __instance; // Singleton Patern
 	DWORD untouchableStart;
 	DWORD rotatingStart;
 	DWORD gunUpStart;
@@ -99,12 +107,16 @@ class CSophia : public CGameObject
 	void RenderJumping(int& ani);
 	void RenderFalling(int& ani);
 	void RenderRotatingWhileJumping(int& ani);
+	void RenderLiftingGun(int& ani, float& xdraw, float& ydraw);
+	void RenderLoweringGun(int& ani, float& xdraw, float& ydraw);
+	void RenderGunUp(int& ani, float& xdraw, float& ydraw);
 public:
 	bool isRotating;
 	bool isUntouchable;
 	bool isFalling;
 	bool isGunUp = false;
 	bool isLiftingGun = false;
+	bool isLoweringGun = false;
 	bool isPressingUp = false;
 	bool isJumping = false;
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
@@ -113,4 +125,5 @@ public:
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void UpdateStateTime();
 	void StartUntouchable() { isUntouchable = true; untouchableStart = GetTickCount(); }
+	CSophia();
 };
