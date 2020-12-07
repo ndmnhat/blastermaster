@@ -1,5 +1,5 @@
 #include "SceneGame.h"
-
+#include "..\Object\OutdoorEnemy\OutdoorEnemy.h"
 using namespace std;
 
 #define SCENE_SECTION_UNKNOWN -1
@@ -148,7 +148,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		}
 		obj = new CSophia();
 		player = (CSophia*)obj;
-
+		CCamera::GetInstance()->SetFollow(obj);
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 
@@ -164,6 +164,11 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 
 		goto addObjectToGrid;
 	}
+		break;
+	case TYPE_ENEMY_WORM:
+		obj = new CWorm();
+		//CCamera::GetInstance()->SetFollow(obj);
+		break;
 
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
@@ -252,6 +257,9 @@ void CSceneGame::Update(DWORD dt)
 	{
 		GameObject->Update(dt, &objects);
 	}
+	CCamera::GetInstance()->Update(dt);
+	grid->updateObjects(objects);
+	//CCamera::GetInstance()->SetPosition(0.0f,2048.0f);
 }
 
 void CSceneGame::Render()
@@ -265,10 +273,49 @@ void CSceneGame::Render()
 
 void CSceneGameKeyHandler::KeyState(BYTE* states)
 {
-	return;
+	CGame* game = CGame::GetInstance();
+	CSophia* sophia = ((CSceneGame*)scence)->GetPlayer();
+
+	if (sophia->GetState() == SOPHIA_STATE_DIE) return;
+	if (game->IsKeyDown(DIK_RIGHT))
+		sophia->SetState(SOPHIA_STATE_WALKING_RIGHT);
+	else if (game->IsKeyDown(DIK_LEFT))
+		sophia->SetState(SOPHIA_STATE_WALKING_LEFT);
+	else
+	{
+		int nx = sophia->Getnx();
+		if (nx > 0)
+			sophia->SetState(SOPHIA_STATE_IDLE_RIGHT);
+		else
+			sophia->SetState(SOPHIA_STATE_IDLE_LEFT);
+	}
+	if (game->IsKeyDown(DIK_UP))
+	{
+		sophia->isPressingUp = true;
+	}
 }
 
 void CSceneGameKeyHandler::OnKeyDown(int KeyCode)
 {
+	CSophia* sophia = ((CSceneGame*)scence)->GetPlayer();
+	switch (KeyCode)
+	{
+	case DIK_SPACE:
+		sophia->SetState(SOPHIA_STATE_JUMP);
+		break;
+	case DIK_A:
+		break;
+	}
+	return;
+}
+
+void CSceneGameKeyHandler::OnKeyUp(int KeyCode)
+{
+	CSophia* sophia = ((CSceneGame*)scence)->GetPlayer();
+	switch (KeyCode)
+	{
+	case DIK_UP:
+		sophia->isPressingUp = false;
+	}
 	return;
 }

@@ -3,6 +3,8 @@
 #include "Scene.h"
 #include "..\Object\Player\Sophia.h"
 #include "..\Object\Wall.h"
+#include "..\Object\OutdoorEnemy\OutdoorEnemy.h"
+#include "..\Object\OutdoorEnemy\Worm.h"
 #include <fstream>
 #include "..\Map\Map.h"
 #include "..\Grid\Grid.h"
@@ -44,7 +46,7 @@ class CSceneGameKeyHandler : public CSceneKeyHandler
 public:
 	virtual void KeyState(BYTE* states);
 	virtual void OnKeyDown(int KeyCode);
-	virtual void OnKeyUp(int KeyCode) {}
+	virtual void OnKeyUp(int KeyCode);
 	CSceneGameKeyHandler(CScene *s) : CSceneKeyHandler(s) {};
 	
 };

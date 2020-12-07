@@ -11,7 +11,7 @@
 #define FREE_CAM_WIDTH 100
 #define FREE_CAM_HEIGHT 75
 
-#define MAX_FRAME_RATE 90
+#define MAX_FRAME_RATE 120
 
 #define GRID_CELL_HEIGHT 100
 #define GRID_CELL_WIDTH 150
@@ -20,7 +20,8 @@
 enum ObjectType {
 	TYPE_SOPHIA = 0,
 	TYPE_WALL = 1,
-	TYPE_ENEMY = 2
+	TYPE_ENEMY = 2,
+	TYPE_ENEMY_WORM = 3
 };
 
 enum TextureID

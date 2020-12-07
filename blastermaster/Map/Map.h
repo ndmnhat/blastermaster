@@ -10,7 +10,7 @@
 class CMap
 {
 private:
-	int mapWidth, mapHeight;
+	int mapColumnCount, mapRowCount;
 	int tileWidth, tileHeight;
 	int tileCount, tileColumn;
 	int tileMap[200][200];
@@ -21,6 +21,9 @@ public:
 	//void SetMapFile(LPCWSTR file);
 	void ReadMap();
 	void DrawMap(CCamera * cam);
+	int GetMapWidth() { return mapColumnCount * tileWidth; };
+	int GetMapHeight() { return mapRowCount * tileHeight; };
+
 };
 
 
