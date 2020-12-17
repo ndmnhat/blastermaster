@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <vector>
 
+class CGameObject;
 
 void DebugOut(wchar_t* fmt, ...);
 
@@ -18,3 +19,4 @@ std::wstring ToWSTR(std::string st);
 
 LPCWSTR ToLPCWSTR(std::string st);
 
+#define SAFE_DELETE(p) if ((p) != NULL) { delete (p); (p) = NULL; }

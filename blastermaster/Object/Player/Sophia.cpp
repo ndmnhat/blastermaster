@@ -3,6 +3,48 @@
 CSophia::CSophia()
 {
 	CSophia::SetState(SOPHIA_STATE_IDLE_RIGHT);
+	hasGun = true;
+	currentBulletType = BulletType::SophiaBullet;
+	ClipSize = 3;
+	reloadingTimeCount = GetTickCount();
+}
+
+void CSophia::Fire(float Direction)
+{
+	//No more bullet in clip
+	if (ClipSize < 1)
+		return;
+	ClipSize--;
+
+	LPBULLET bullet;
+	switch (currentBulletType)
+	{
+		case BulletType::SophiaBullet:
+			bullet = new CSophiaBullet();
+			break;
+		default:
+			bullet = new CSophiaBullet();
+			break;
+	}
+	float bulletX = this->x, bulletY = this->y;
+	if (isPressingUp == true)
+	{
+		if (nx > 0)
+			bulletX = x + 8;
+		else
+			bulletX = x + 10;
+		bulletY = y + 16;
+	}
+	else
+	{
+		if (nx > 0)
+		{
+			bulletX = x + 20;
+		}
+	}
+	bullet->SetPosition(bulletX, bulletY);
+	bullet->SetDirection(Direction);
+	CGrid::GetInstance()->addObject(bullet);
 }
 
 void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -23,6 +65,8 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if(coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
+			if (coObjects->at(i) == NULL)
+				continue;
 			if (coObjects->at(i)->type != TYPE_SOPHIA)
 				listObject->push_back(coObjects->at(i));
 		}
@@ -113,7 +157,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isFalling = true;
 	else
 		isFalling = false;
-	//Gun up handle
+	//Gun handle
 	if (isPressingUp == true && isGunUp == false)
 	{
 		isLiftingGun = true;
@@ -152,7 +196,17 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			}
 		}
 	}
-	DebugOut(L"%d, %d, %d\n", isLiftingGun, isGunUp, isLoweringGun);
+
+	//Reload gun
+	if (ClipSize < 3)
+	{
+		if (GetTickCount() - reloadingTimeCount > SOPHIA_RELOAD_TIME)
+		{
+			ClipSize++;
+			reloadingTimeCount = GetTickCount();
+		}
+	}
+
 }
 
 void CSophia::Render()
@@ -257,12 +311,11 @@ void CSophia::UpdateStateTime()
 		rotatingStart = 0;
 		isRotating = false;
 	}
-	//if (isLiftingGun && (GetTickCount() - gunUpStart > 150))
-	//{
-	//	gunUpStart = 0;
-	//	isLiftingGun = false;
-	//	isGunUp = true;
-	//}
+	if (isRotating && (GetTickCount() - rotatingStart > 200))
+	{
+		rotatingStart = 0;
+		isRotating = false;
+	}
 }
 
 void CSophia::GetBoundingBox(float &left, float &top, float &right, float &bottom)

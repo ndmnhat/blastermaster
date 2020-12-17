@@ -1,12 +1,15 @@
 #pragma once
 #include "..\GameObject.h"
 #include "..\..\Utils\Utils.h"
+#include "..\Bullet\Bullet.h"
+#include "..\Bullet\SophiaBullet.h"
+#include "..\..\Grid\Grid.h"
 
 #define SOPHIA_WALKING_SPEED 0.07f
 #define SOPHIA_JUMP_SPEED_Y 0.25f
 #define SOPHIA_GRAVITY 0.0005f
 #define SOPHIA_FRICTION 0.01f
-
+#define SOPHIA_RELOAD_TIME 100
 //STATE
 #define SOPHIA_STATE_IDLE_LEFT 0
 #define SOPHIA_STATE_IDLE_RIGHT 1
@@ -96,10 +99,13 @@
 
 class CSophia : public CGameObject
 {
+private:
 	DWORD untouchableStart;
 	DWORD rotatingStart;
-	DWORD gunUpStart;
+	DWORD reloadingTimeCount;
+	BulletType currentBulletType;
 	int currentAnimation;
+	int ClipSize;
 	void RenderWalkingLeft(int& ani);
 	void RenderWalkingRight(int& ani);
 	void RenderIdle(int& ani);
@@ -119,6 +125,7 @@ public:
 	bool isLoweringGun = false;
 	bool isPressingUp = false;
 	bool isJumping = false;
+	void Fire(float Direction);
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	void Render();
 	void SetState(int state);

@@ -15,8 +15,7 @@ class CSceneGame : public CScene
 {
 protected:
 	CMap *map;
-	CSophia *player;				
-	CGrid* grid;
+	CSophia *player;
 	vector<LPGAMEOBJECT> objects;
 
 	void _ParseSection_TEXTURES(std::string line);

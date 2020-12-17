@@ -3,11 +3,13 @@
 #include <Windows.h>
 #include <d3dx9.h>
 #include <vector>
+#include "..\Utils\Utils.h"
 #include "..\Animations\Animations.h"
 
+class CBullet; //forward declaration
+typedef CBullet* LPBULLET;
+
 #define ID_TEX_BBOX -1		// special texture to draw object bounding box
-
-
 
 
 using namespace std;
@@ -54,13 +56,16 @@ public:
 	float gravity;
 
 	bool isInCam = false;
+	bool isDestroyed = false;
 	DWORD dt;
 	ObjectType type;
 	LPANIMATION animation;
 
 	LPANIMATION_SET animation_set;
 
+
 public:
+	bool hasGun = false;
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	float GetX() { return this->x; }

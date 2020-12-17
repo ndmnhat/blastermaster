@@ -31,6 +31,10 @@
     <ClCompile Include="Object\GameObject.cpp" />
     <ClCompile Include="Scene\CSceneManager.cpp" />
     <ClCompile Include="Object\Wall.cpp" />
+    <ClCompile Include="Object\Bullet\Bullet.cpp" />
+    <ClCompile Include="Object\Bullet\SophiaBullet.cpp" />
+    <ClCompile Include="Object\Effect\Effect.cpp" />
+    <ClCompile Include="Object\Effect\SmallBulletExplosion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
@@ -63,6 +67,10 @@
     <ClInclude Include="Object\GameObject.h" />
     <ClInclude Include="Scene\CSceneManager.h" />
     <ClInclude Include="Object\Wall.h" />
+    <ClInclude Include="Object\Bullet\Bullet.h" />
+    <ClInclude Include="Object\Bullet\SophiaBullet.h" />
+    <ClInclude Include="Object\Effect\Effect.h" />
+    <ClInclude Include="Object\Effect\SmallBulletExplosion.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />

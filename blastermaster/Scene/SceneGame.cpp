@@ -18,7 +18,6 @@ CSceneGame::CSceneGame(int id, LPCWSTR filePath) :
 {
 	//map = new CMap();
 	key_handler = new CSceneGameKeyHandler(this);
-	grid = new CGrid();
 }
 
 CSceneGame::~CSceneGame()
@@ -182,7 +181,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 	
 	addObjectToGrid:
 	//objects.push_back(obj);
-	grid->addObject(obj);
+	CGrid::GetInstance()->addObject(obj);
 }
 
 void CSceneGame::Load()
@@ -249,25 +248,31 @@ void CSceneGame::Unload()
 void CSceneGame::Update(DWORD dt)
 {
 	objects.clear();
-	for (auto& GameObject : grid->ObjectsInCam(CCamera::GetInstance()))
-	{
-		objects.push_back(GameObject);
-	}
+	objects = CGrid::GetInstance()->ObjectsInCam(CCamera::GetInstance());
+
 	for (auto& GameObject : objects)
 	{
 		GameObject->Update(dt, &objects);
 	}
+	//for (int i = 0; i < objects.size(); ++i)
+	//{
+	//	if (objects[i]->isDestroyed == true)
+	//		SAFE_DELETE(objects[i]);
+	//}
 	CCamera::GetInstance()->Update(dt);
-	grid->updateObjects(objects);
+	CGrid::GetInstance()->updateObjects(objects);
+
 	//CCamera::GetInstance()->SetPosition(0.0f,2048.0f);
 }
 
 void CSceneGame::Render()
 {
 	map->DrawMap(CCamera::GetInstance());
-	for (auto& GameObject : objects)
+	vector<LPGAMEOBJECT> objectincam = CGrid::GetInstance()->ObjectsInCam(CCamera::GetInstance());
+	for (int i = 0; i < objectincam.size(); ++i)
 	{
-		GameObject->Render();
+		if(objectincam[i] != NULL)
+			objectincam[i]->Render();
 	}
 }
 
@@ -304,6 +309,15 @@ void CSceneGameKeyHandler::OnKeyDown(int KeyCode)
 		sophia->SetState(SOPHIA_STATE_JUMP);
 		break;
 	case DIK_A:
+		if(sophia->isPressingUp==true)
+			sophia->Fire(90);
+		else
+		{
+			if (sophia->nx > 0)
+				sophia->Fire(180);
+			else
+				sophia->Fire(0);
+		}
 		break;
 	}
 	return;

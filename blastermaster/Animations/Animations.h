@@ -33,6 +33,7 @@ public:
 	void Add(int spriteId, DWORD time = 0);
 	int GetCurrentFrame() { return currentFrame; }
 	CAnimationFrame* GetFrameAt(int index) { return frames[index]; }
+	int GetFramesSize() { return frames.size(); }
 	void SetCurrentFrame(int frame) { currentFrame = frame; }
 	DWORD GetPassedFrameTime() { return (GetTickCount() - lastFrameTime); }
 	void ResetFrameTime() { isResetinglastFrameTime = true; }

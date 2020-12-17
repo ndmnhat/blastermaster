@@ -1,5 +1,6 @@
 #pragma once
 #include <d3d9.h>
+#include <algorithm>
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"02 - Sprite animation"
@@ -21,7 +22,8 @@ enum ObjectType {
 	TYPE_SOPHIA = 0,
 	TYPE_WALL = 1,
 	TYPE_ENEMY = 2,
-	TYPE_ENEMY_WORM = 3
+	TYPE_ENEMY_WORM = 3,
+	TYPE_BULLET = 4
 };
 
 enum TextureID
@@ -29,4 +31,9 @@ enum TextureID
 	ID_TEX_SOPHIA = 0,
 	ID_TEX_ENEMY = 10,
 	ID_TEX_MAP = 30
+};
+
+enum class BulletType {
+	SophiaBullet,
+	FloaterBullet,
 };

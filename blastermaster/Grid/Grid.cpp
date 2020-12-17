@@ -1,13 +1,12 @@
 #include "Grid.h"
 #include "..\Utils\Utils.h"
 
-CGrid::CGrid()
-{
-
-}
+CGrid* CGrid::_instance = NULL;
 
 void CGrid::addObject(LPGAMEOBJECT object)
 {
+	if (object == NULL)
+		return;
 	float left, right, top, bottom;
 	object->GetBoundingBox(left, top, right, bottom);
 	int firstRow = top / GRID_CELL_HEIGHT;
@@ -31,16 +30,13 @@ void CGrid::removeObject(LPGAMEOBJECT object)
 	int lastRow = bottom / GRID_CELL_HEIGHT - 1;
 	int firstColumn = left / GRID_CELL_WIDTH - 1;
 	int lastColumn = right / GRID_CELL_WIDTH + 1;
-	for (int CellRowIndex = firstRow; CellRowIndex < lastRow; ++CellRowIndex)
+	for (int CellRowIndex = lastRow; CellRowIndex <= firstRow; ++CellRowIndex)
 	{
-		for (int CellColumnIndex = firstColumn; CellColumnIndex < lastColumn; ++CellColumnIndex)
+		for (int CellColumnIndex = firstColumn; CellColumnIndex <= lastColumn; ++CellColumnIndex)
 		{
 			for (int i = 0; i < Cell[CellRowIndex][CellColumnIndex].size(); ++i)
 			{
-				if (Cell[CellRowIndex][CellColumnIndex].at(i) == object)
-				{
-					Cell[CellRowIndex][CellColumnIndex].erase(Cell[CellRowIndex][CellColumnIndex].begin() + i);
-				}
+				Cell[CellRowIndex][CellColumnIndex].erase(std::remove(Cell[CellRowIndex][CellColumnIndex].begin(), Cell[CellRowIndex][CellColumnIndex].end(), object), Cell[CellRowIndex][CellColumnIndex].end());
 			}
 		}
 	}
@@ -52,6 +48,8 @@ void CGrid::updateObjects(vector<LPGAMEOBJECT> objects)
 	for (int i = 0; i < objects.size(); ++i)
 	{
 		removeObject(objects[i]);
+		if (objects[i]->isDestroyed == true)
+			SAFE_DELETE(objects[i]);
 		addObject(objects[i]);
 	}
 }

@@ -3,6 +3,7 @@
 0	textures\sophia.png	255	0	255
 30	textures\area2tiles.png	255	255	255
 50	textures\enemies.png	255	255	255
+70	textures\jason_items_bullets.png	181	165	213
 # id	left	top		right	bottom	texture_id
 [SPRITES]
 #Sophia
@@ -123,6 +124,25 @@
 20003	172	412	190	422	50
 20004	191	412	208	422	50
 
+#Sophia bullet
+#RIGHT
+30001	7	56	15	62	70
+30002	7	77	15	83	70
+#LEFT
+30003	28	56	36	62	70
+30004	28	77	36	83	70
+#UP
+30005	50	55	56	63	70
+30006	50	76	56	85	70
+#Jason bullet
+30007	135	183	139	187	70
+
+#EFFECT
+#Bullet explode
+40001	176	97	183	105	70
+40002	192	94	208	107	70
+40003	213	93	229	109	70
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 #SOPHIA_IDLE
@@ -211,6 +231,19 @@
 701	20004	250
 702	20001	250	20002	250
 703	20004	250	20003	250
+#BULLET
+#SOPHIA
+#LEFT
+801	30001	15	30002	15
+#RIGHT
+802	30003	15	30004	15
+#UP
+803	30005	15	30006	15
+#JASON
+804	30007	1000
+#EFFECT
+#Bullet explode
+901	40001	5	40002	5	40003	15	40002	5	40001	5
 #
 # id	ani1	ani2	ani3
 #
@@ -219,6 +252,9 @@
 100	400	401	402	403	404	405	406	407	408	409	410	411	412	413	414	415	416	417	418	419	420	421	422	423	500	501	502	503	504	505	506	507	508	509	601	602	603	604	605	606	607	608	609	610	611	612	613	614	615	616	617	618	619	620
 #WORM
 200	701	701	702	703
+#BULLET
+#SOPHIA
+101	801	802	803
 [OBJECTS]
 # type	x		y		ani_set_id	extra_settings per object type
 # type: 0 = Sophia , 1 = Wall, 2 = Enemy, 3 = Worm
@@ -263,6 +299,8 @@
 1	1024	736	0	800	32
 
 3	1188	900	200
+
+
 # --- SCENE PORTAL ---- 
 # type	l		t		ani_set_id	r		b		scene_id
 #50	300	98	0	316	150	2
