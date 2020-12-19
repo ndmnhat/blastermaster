@@ -5,7 +5,7 @@
 #include "..\..\Game\Game.h"
 
 #define WORM_WALKING_SPEED	0.025f
-#define WORM_GRAVITY		0.0005f
+#define WORM_GRAVITY		0.15f
 
 #define WORM_STATE_WALKING_LEFT		100
 #define WORM_STATE_WALKING_RIGHT	200

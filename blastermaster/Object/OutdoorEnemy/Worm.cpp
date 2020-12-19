@@ -3,6 +3,8 @@
 CWorm::CWorm() : COutdoorEnemy()
 {
 	enemyType = OutdoorEnemyType::Worm;
+	width = WORM_BBOX_WIDTH;
+	height = WORM_BBOX_HEIGHT;
 	this->x = x;
 	this->y = y;
 }
@@ -11,24 +13,21 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-//	simple fall down
-//	if (isFalling == true) 
-//	{
-	vy -= WORM_GRAVITY * dt;
-//	}
-//
+	vy = -WORM_GRAVITY;
+	vx = WORM_WALKING_SPEED * nx;
+
 	if (coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
 			if (coObjects->at(i)->type == TYPE_SOPHIA)
 			{
-				if (coObjects->at(i)->x < this->x) 
+				if (this->x - coObjects->at(i)->x >= 30)
 				{
-					this->vx = -WORM_WALKING_SPEED;
+					nx = -1;
 				}
-				else
+				else if (this->x - coObjects->at(i)->x < -30)
 				{
-					this->vx = WORM_WALKING_SPEED;
+					nx = 1;
 				}
 			}
 		}
@@ -65,15 +64,17 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			switch (e->obj->type)
 			{
-				case TYPE_WALL:
-				{
-					x += min_tx * dx + e->nx * 0.1f;
-					y += min_ty * dy + e->ny * 0.1f;
+			case TYPE_WALL:
+				x += min_tx * dx + e->nx * 0.1f;
+				y += min_ty * dy + e->ny * 0.1f;
 
-					if (e->nx != 0) vx = 0;
-					if (e->ny != 0) vy = 0;
-				}
+				if (e->nx != 0) vx = 0;
+				if (e->ny != 0) vy = 0;
+
 				break;
+			case TYPE_SOPHIA: case TYPE_ENEMY:
+				x += dx;
+				y += dy;
 			default:
 				break;
 			}
@@ -123,18 +124,26 @@ void CWorm::Render()
 	int ani;
 	//if (isFalling)
 	if (vx < 0)
+	{
 		ani = WORM_ANI_WALKING_LEFT;
-	else
+	}
+	else if (vx > 0) 
+	{
 		ani = WORM_ANI_WALKING_RIGHT;
+	}
+	else if(vx == 0)
+	{
+		if (nx > 0)
+			ani = WORM_ANI_FALLING_LEFT;
+		else
+			ani = WORM_ANI_FALLING_RIGHT;
+	}
+		 
 	animation_set->at(ani)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
  void CWorm::GetBoundingBox(float& left, float& top, float& right, float& bottom)
  {
-	 left = x;
-	 top = y;
-	 right = x + WORM_BBOX_WIDTH;
-	 bottom = y - WORM_BBOX_HEIGHT;
-	 //DebugOut(L"%f\n", bottom);
+	 COutdoorEnemy::GetBoundingBox(left, top, right, bottom);
  }

@@ -5,6 +5,10 @@
 #include "..\Object\Wall.h"
 #include "..\Object\OutdoorEnemy\OutdoorEnemy.h"
 #include "..\Object\OutdoorEnemy\Worm.h"
+#include "..\Object\OutdoorEnemy\Floater.h"
+#include "..\Object\OutdoorEnemy\Dome.h"
+#include "..\Object\OutdoorEnemy\Jumper.h"
+
 #include <fstream>
 #include "..\Map\Map.h"
 #include "..\Grid\Grid.h"

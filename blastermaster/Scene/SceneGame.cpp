@@ -115,6 +115,7 @@ void CSceneGame::_ParseSection_ANIMATION_SETS(std::string line)
 
 		LPANIMATION ani = animations->Get(ani_id);
 		s->push_back(ani);
+		//DebugOut(L"[INFO] Animation added: %d\n", ani_id);
 	}
 
 	CAnimationSets::GetInstance()->Add(ani_set_id, s);
@@ -148,7 +149,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		}
 		obj = new CSophia();
 		player = (CSophia*)obj;
-		CCamera::GetInstance()->SetFollow(obj);
+		//CCamera::GetInstance()->SetFollow(obj);
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 
@@ -169,7 +170,18 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		obj = new CWorm();
 		//CCamera::GetInstance()->SetFollow(obj);
 		break;
-
+	case TYPE_ENEMY_FLOATER:
+		obj = new CFloater();
+		//CCamera::GetInstance()->SetFollow(obj);
+		break;
+	case TYPE_ENEMY_DOME:
+		obj = new CDome();
+		CCamera::GetInstance()->SetFollow(obj);
+		break;
+	case TYPE_ENEMY_JUMPER:
+		obj = new CJumper();
+		//CCamera::GetInstance()->SetFollow(obj);
+		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
