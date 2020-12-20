@@ -18,15 +18,19 @@
 #define GRID_CELL_HEIGHT 100
 #define GRID_CELL_WIDTH 150
 
-
-enum ObjectType {
+enum ObjectType
+{
 	TYPE_SOPHIA = 0,
 	TYPE_WALL = 1,
 	TYPE_ENEMY = 2,
 	TYPE_ENEMY_WORM = 3,
 	TYPE_BULLET = 4,
 	TYPE_GATEWAY = 5,
-	TYPE_WALLIMAGE = 6
+	TYPE_WALLIMAGE = 6,
+	TYPE_ENEMY_FLOATER = 7,
+	TYPE_ENEMY_DOME = 8,
+	TYPE_ENEMY_JUMPER = 9,
+	TYPE_ENEMY_INSECT = 10
 };
 
 enum TextureID
@@ -36,16 +40,24 @@ enum TextureID
 	ID_TEX_MAP = 30
 };
 
-enum class BulletType {
+enum class BulletType
+{
 	SophiaBullet,
 	FloaterBullet,
 };
 
-class CGlobalVariable {
+class CGlobalVariable
+{
 private:
-	static CGlobalVariable* _instance;
+	static CGlobalVariable *_instance;
+
 public:
-	static CGlobalVariable* GetInstance() { if (_instance == NULL) _instance = new CGlobalVariable(); return _instance; }
+	static CGlobalVariable *GetInstance()
+	{
+		if (_instance == NULL)
+			_instance = new CGlobalVariable();
+		return _instance;
+	}
 	int ScreenHeight;
 	int ScreenWidth;
 };

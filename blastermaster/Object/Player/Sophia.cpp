@@ -96,7 +96,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// simple fall down
 	//if (isFalling == true) 
 	//{
-		vy -= SOPHIA_GRAVITY * dt;
+	vy -= SOPHIA_GRAVITY * dt;
 	//}
 
 	UpdateStateTime();
@@ -344,7 +344,7 @@ void CSophia::SetState(int state)
 		}
 		break;
 	case SOPHIA_STATE_ATTACKED:
-		vx = -0.1f * nx;
+		vx = -0.1 * nx;
 		StartUntouchable();
 		break;
 	case SOPHIA_STATE_IDLE_LEFT: case SOPHIA_STATE_IDLE_RIGHT:

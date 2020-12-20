@@ -7,6 +7,10 @@
 #include "..\Object\OutdoorEnemy\Worm.h"
 #include "..\Object\Gateway.h"
 #include "..\Object\WallImage.h"
+#include "..\Object\OutdoorEnemy\Floater.h"
+#include "..\Object\OutdoorEnemy\Dome.h"
+#include "..\Object\OutdoorEnemy\Jumper.h"
+
 #include <fstream>
 #include "..\Map\Map.h"
 #include "..\Grid\Grid.h"
@@ -37,7 +41,7 @@ public:
 	void Update(DWORD dt);
 	void Render();
 
-	CSophia * GetPlayer() { return player; }
+	CSophia *GetPlayer() { return player; }
 	~CSceneGame();
 	//friend class CPlayScenceKeyHandler;
 };
@@ -45,9 +49,8 @@ public:
 class CSceneGameKeyHandler : public CSceneKeyHandler
 {
 public:
-	virtual void KeyState(BYTE* states);
+	virtual void KeyState(BYTE *states);
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode);
-	CSceneGameKeyHandler(CScene *s) : CSceneKeyHandler(s) {};
-	
+	CSceneGameKeyHandler(CScene *s) : CSceneKeyHandler(s){};
 };
