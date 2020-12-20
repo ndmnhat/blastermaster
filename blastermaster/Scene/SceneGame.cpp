@@ -173,7 +173,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		}
 		obj = new CSophia();
 		player = (CSophia *)obj;
-		//CCamera::GetInstance()->SetFollow(obj);
+		CCamera::GetInstance()->SetFollow(obj);
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 
@@ -228,7 +228,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		break;
 	case TYPE_ENEMY_DOME:
 		obj = new CDome();
-		CCamera::GetInstance()->SetFollow(obj);
+		//CCamera::GetInstance()->SetFollow(obj);
 		break;
 	case TYPE_ENEMY_JUMPER:
 		obj = new CJumper();

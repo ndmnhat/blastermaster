@@ -19,7 +19,7 @@ void CSectionManager::ChangeSection(int id)
 	float left, top, right, bottom;
 	CurrentSection->GetSectionBoundary(left, top, right, bottom);
 	if(isSet)
-		CCamera::GetInstance()->SetCamBoundary(left, top, right-screen_width, bottom + screen_height);
+		CCamera::GetInstance()->SetCamBoundary(left, top, right - screen_width, bottom + screen_height);
 	else
 		CCamera::GetInstance()->MoveToSection(left, top, right - screen_width, bottom + screen_height);
 }
