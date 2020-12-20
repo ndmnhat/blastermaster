@@ -58,9 +58,10 @@ vector<LPGAMEOBJECT> CGrid::ObjectsInCam(CCamera* cam)
 {
 	int firstRow = cam->GetPosition().y / GRID_CELL_HEIGHT;
 	int firstColumn = cam->GetPosition().x / GRID_CELL_WIDTH;
-	int lastRow = firstRow - ceil((double)SCREEN_HEIGHT / GRID_CELL_HEIGHT);
-	int lastColumn = firstColumn + ceil((double)SCREEN_WIDTH / GRID_CELL_WIDTH);
+	int lastRow = firstRow - ceil((double)WINDOW_HEIGHT / GRID_CELL_HEIGHT);
+	int lastColumn = firstColumn + ceil((double)WINDOW_WIDTH / GRID_CELL_WIDTH);
 	vector<LPGAMEOBJECT> objects;
+	WallImageInCam.clear();
 	for (int i = lastRow; i <= firstRow; ++i)
 	{
 		for (int j = firstColumn; j <= lastColumn; ++j)
@@ -69,6 +70,8 @@ vector<LPGAMEOBJECT> CGrid::ObjectsInCam(CCamera* cam)
 			{
 				if (GameObject->isInCam == false)
 				{
+					if (GameObject->type == TYPE_WALLIMAGE)
+						WallImageInCam.push_back((CWallImage*)GameObject);
 					objects.push_back(GameObject);
 					GameObject->isInCam = true;
 				}

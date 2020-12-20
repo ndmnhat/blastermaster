@@ -3,7 +3,9 @@
 #include "..\..\Utils\Utils.h"
 #include "..\Bullet\Bullet.h"
 #include "..\Bullet\SophiaBullet.h"
+#include "..\Gateway.h"
 #include "..\..\Grid\Grid.h"
+#include "..\..\Map\Section.h"
 
 #define SOPHIA_WALKING_SPEED 0.07f
 #define SOPHIA_JUMP_SPEED_Y 0.25f
@@ -106,6 +108,9 @@ private:
 	BulletType currentBulletType;
 	int currentAnimation;
 	int ClipSize;
+	float AutoX;
+	float AutoY;
+	int backupSectionID;
 	void RenderWalkingLeft(int& ani);
 	void RenderWalkingRight(int& ani);
 	void RenderIdle(int& ani);
@@ -117,6 +122,7 @@ private:
 	void RenderLoweringGun(int& ani, float& xdraw, float& ydraw);
 	void RenderGunUp(int& ani, float& xdraw, float& ydraw);
 public:
+	bool isAutoGoX = false;
 	bool isRotating;
 	bool isUntouchable;
 	bool isFalling;

@@ -35,7 +35,7 @@ void CGameObject::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)t - (int)b;
 
-	CGame::GetInstance()->Draw(x,y,bbox,rect.left,rect.top,rect.right,rect.bottom,0);
+	CGame::GetInstance()->Draw(x,y,bbox,rect.left,rect.top,rect.right,rect.bottom,80);
 }
 
 LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)

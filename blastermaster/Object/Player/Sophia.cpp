@@ -49,6 +49,47 @@ void CSophia::Fire(float Direction)
 
 void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+#pragma region Auto go X handle
+	if (isAutoGoX == true)
+	{
+		float space;
+		int direction;
+		if(CCamera::GetInstance()->isMovingToNewSection == false)
+			for (int i = 0; i < coObjects->size(); ++i)
+				if (coObjects->at(i)->type == TYPE_WALLIMAGE)
+				{
+					//DebugOut(L"%f, %f\n", x + SOPHIA_BBOX_WIDTH, coObjects->at(i)->GetX());
+					if (isCollidingWith(coObjects->at(i), space, direction) == true)
+						CSectionManager::GetInstance()->ChangeSection(backupSectionID);
+				}
+		if (state == SOPHIA_STATE_WALKING_RIGHT || state == SOPHIA_STATE_IDLE_RIGHT)
+		{
+			if (x < AutoX)
+			{
+				vx = SOPHIA_WALKING_SPEED;
+				vy = 0;
+				x += vx * dt;
+				return;
+			}
+			else
+				isAutoGoX = false;
+		}
+		if (state == SOPHIA_STATE_WALKING_LEFT)
+		{
+			if (x > AutoX)
+			{
+				vx = -SOPHIA_WALKING_SPEED;
+				vy = 0;
+				x += vx * dt;
+				return;
+			}
+			else
+				isAutoGoX = false;
+		}
+	}
+
+#pragma endregion
+
 	//Calculate dx, dy
 	CGameObject::Update(dt);
 
@@ -59,6 +100,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	//}
 
 	UpdateStateTime();
+	
 
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
@@ -128,26 +170,41 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		}
 	}
 
-#pragma region Colliding with wall handle
+#pragma region Colliding with object handle
 
 	for (UINT i = 0; i < listObject->size(); i++)
 	{
-		if (listObject->at(i)->type == TYPE_WALL)
+		float space;
+		int direction;
+		if (isCollidingWith(listObject->at(i), space, direction))
 		{
-			float space;
-			int direction;
-			if (isCollidingWith(listObject->at(i), space, direction))
+			switch (listObject->at(i)->type)
 			{
-				if (direction == 0)
+				case TYPE_WALL:
 				{
-					y -= space;
-					vy = 0;
+					if (direction == 0)
+					{
+						y -= space;
+						vy = 0;
+					}
+					else
+					{
+						x -= space;
+						vx = 0;
+					}
 				}
-				else
+				break;
+				case TYPE_GATEWAY:
 				{
-					x -= space;
-					vx = 0;
+					if (isAutoGoX == false)
+					{
+						isAutoGoX = true;
+						((CGateway*)(listObject->at(i)))->GetDestination(AutoX, AutoY);
+						backupSectionID = ((CGateway*)(listObject->at(i)))->newSectionID;
+					}
 				}
+				break;
+				default: break;
 			}
 		}
 	}
@@ -157,6 +214,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isFalling = true;
 	else
 		isFalling = false;
+	
 	//Gun handle
 	if (isPressingUp == true && isGunUp == false)
 	{
@@ -257,12 +315,14 @@ void CSophia::Render()
 	if (ani != -1)
 		currentAnimation = ani;
 	animation_set->at(currentAnimation)->Render(xdraw, ydraw);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	//DebugOut(L"%d\n",isLiftingGun);
 }
 
 void CSophia::SetState(int state)
 {
+	if (isAutoGoX == true)
+		return;
 	CGameObject::SetState(state);
 	switch (state)
 	{

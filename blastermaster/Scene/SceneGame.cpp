@@ -9,6 +9,7 @@ using namespace std;
 #define SCENE_SECTION_ANIMATION_SETS	5
 #define SCENE_SECTION_OBJECTS	6
 #define SCENE_SECTION_MAP	7
+#define SCENE_SECTION_SECTION	8
 #define OBJECT_TYPE_SOPHIA	0
 
 #define MAX_SCENE_LINE 1024
@@ -50,6 +51,24 @@ void CSceneGame::_ParseSection_MAP(std::string line)
 	//map->ReadMap(L"map2.txt");
 	//map->SetMapFile(path.c_str());
 	map = new CMap(path, mapTexID);
+}
+
+void CSceneGame::_ParseSection_SECTION(std::string line)
+{
+	vector<std::string> tokens = split(line);
+	if (tokens.size() < 5) return; // skip invalid lines
+
+	int id = atoi(tokens[0].c_str());
+
+	float Left = atof(tokens[1].c_str());
+	float Top = atof(tokens[2].c_str());
+	float Right = atof(tokens[3].c_str());
+	float Bottom = atof(tokens[4].c_str());
+	
+	LPSECTION section = new CSection();
+	section->SetSectionBoundary(Left, Top, Right, Bottom);
+	
+	CSectionManager::GetInstance()->Add(id, section);
 }
 
 void CSceneGame::_ParseSection_SPRITES(std::string line)
@@ -168,7 +187,33 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		obj = new CWorm();
 		//CCamera::GetInstance()->SetFollow(obj);
 		break;
+	case TYPE_GATEWAY:
+	{
+		obj = new CGateway();
+		int width = atoi(tokens[4].c_str());
+		int height = atoi(tokens[5].c_str());
+		float DestinationX = atof(tokens[6].c_str());
+		float DestinationY = atof(tokens[7].c_str());
+		((CGateway*)obj)->SetSize(width, height);
+		((CGateway*)obj)->SetDestination(DestinationX, DestinationY);
+		((CGateway*)obj)->newSectionID = atoi(tokens[8].c_str());
+		obj->SetPosition(x, y);
 
+		goto addObjectToGrid;
+	}
+	case TYPE_WALLIMAGE:
+	{
+		obj = new CWallImage();
+		int sprite_id = atoi(tokens[3].c_str());
+		int width = atoi(tokens[4].c_str());
+		int height = atoi(tokens[5].c_str());
+		((CWallImage*)obj)->SetImage(CSprites::GetInstance()->Get(sprite_id));
+		((CWallImage*)obj)->SetSize(width, height);
+		obj->SetPosition(x, y);
+
+		goto addObjectToGrid;
+	}
+		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
@@ -217,6 +262,9 @@ void CSceneGame::Load()
 		if (line == "[MAP]") {
 			section = SCENE_SECTION_MAP; continue;
 		}
+		if (line == "[SECTION]") {
+			section = SCENE_SECTION_SECTION; continue;
+		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		//
@@ -230,14 +278,16 @@ void CSceneGame::Load()
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
 		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
 		case SCENE_SECTION_MAP: _ParseSection_MAP(line); break;
+		case SCENE_SECTION_SECTION: _ParseSection_SECTION(line); break;
 		}
 	}
 
 	f.close();
 
 	map->ReadMap();
+	CSectionManager::GetInstance()->ChangeSection(1);
 	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-	CCamera::GetInstance()->SetPosition(0.0f, 2048.0f); //Add cam position to scene.txt
+	//CCamera::GetInstance()->SetPosition(0.0f, 3024.0f); //Add cam position to scene.txt
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
 
@@ -261,7 +311,7 @@ void CSceneGame::Update(DWORD dt)
 	//}
 	CCamera::GetInstance()->Update(dt);
 	CGrid::GetInstance()->updateObjects(objects);
-
+	//DebugOut(L"%f\n",CCamera::GetInstance()->GetPosition().y);
 	//CCamera::GetInstance()->SetPosition(0.0f,2048.0f);
 }
 
@@ -273,6 +323,11 @@ void CSceneGame::Render()
 	{
 		if(objectincam[i] != NULL)
 			objectincam[i]->Render();
+	}
+	vector<CWallImage*> wallimages = CGrid::GetInstance()->WallImageInCam;
+	for (int i = 0; i < wallimages.size(); ++i)
+	{
+		wallimages.at(i)->Render();
 	}
 }
 

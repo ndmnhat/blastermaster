@@ -5,9 +5,12 @@
 #include "..\Object\Wall.h"
 #include "..\Object\OutdoorEnemy\OutdoorEnemy.h"
 #include "..\Object\OutdoorEnemy\Worm.h"
+#include "..\Object\Gateway.h"
+#include "..\Object\WallImage.h"
 #include <fstream>
 #include "..\Map\Map.h"
 #include "..\Grid\Grid.h"
+#include "..\Map\Section.h"
 
 using namespace std;
 class CMap; //forward declaration to temporarily fix circular include
@@ -17,14 +20,13 @@ protected:
 	CMap *map;
 	CSophia *player;
 	vector<LPGAMEOBJECT> objects;
-
 	void _ParseSection_TEXTURES(std::string line);
 	void _ParseSection_SPRITES(std::string line);
 	void _ParseSection_ANIMATIONS(std::string line);
 	void _ParseSection_ANIMATION_SETS(std::string line);
 	void _ParseSection_OBJECTS(std::string line);
 	void _ParseSection_MAP(std::string line);
-
+	void _ParseSection_SECTION(std::string line);
 	friend class CSceneGameKeyHandler;
 
 public:

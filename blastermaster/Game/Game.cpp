@@ -35,6 +35,12 @@ void CGame::Init(HWND hWnd)
 	screen_height = r.bottom + 1;
 	screen_width = r.right + 1;
 
+	CGlobalVariable::GetInstance()->ScreenHeight = screen_height;
+	CGlobalVariable::GetInstance()->ScreenWidth = screen_width;
+
+	//ScreenHeight = screen_height;
+	//ScreenWidth = screen_width;
+
 	d3d->CreateDevice(
 		D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,

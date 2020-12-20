@@ -6,6 +6,7 @@
 #include <math.h>
 #include "..\Camera\Camera.h"
 #include "..\Object\GameObject.h"
+#include "..\Object\WallImage.h"
 
 class CGrid
 {
@@ -18,5 +19,6 @@ public:
 	void removeObject(LPGAMEOBJECT object);
 	void updateObjects(vector<LPGAMEOBJECT> objects);
 	vector<LPGAMEOBJECT> ObjectsInCam(CCamera* cam);
+	vector<CWallImage*> WallImageInCam;
 };
 

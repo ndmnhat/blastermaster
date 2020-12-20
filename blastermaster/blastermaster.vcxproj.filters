@@ -35,6 +35,9 @@
     <ClCompile Include="Object\Bullet\SophiaBullet.cpp" />
     <ClCompile Include="Object\Effect\Effect.cpp" />
     <ClCompile Include="Object\Effect\SmallBulletExplosion.cpp" />
+    <ClCompile Include="Object\Gateway.cpp" />
+    <ClCompile Include="Map\Section.cpp" />
+    <ClCompile Include="Object\WallImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
@@ -71,6 +74,9 @@
     <ClInclude Include="Object\Bullet\SophiaBullet.h" />
     <ClInclude Include="Object\Effect\Effect.h" />
     <ClInclude Include="Object\Effect\SmallBulletExplosion.h" />
+    <ClInclude Include="Object\Gateway.h" />
+    <ClInclude Include="Map\Section.h" />
+    <ClInclude Include="Object\WallImage.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />

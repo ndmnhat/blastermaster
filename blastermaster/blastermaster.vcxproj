@@ -153,6 +153,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations\Animations.cpp" />
+    <ClCompile Include="Object\WallImage.cpp" />
+    <ClCompile Include="Object\Gateway.cpp" />
     <ClCompile Include="Object\Effect\Effect.cpp" />
     <ClCompile Include="Object\Bullet\Bullet.cpp" />
     <ClCompile Include="Scene\CSceneManager.cpp" />
@@ -184,11 +186,14 @@
     <ClCompile Include="Object\OutdoorEnemy\Worm.cpp" />
     <ClCompile Include="Object\Bullet\SophiaBullet.cpp" />
     <ClCompile Include="Object\Effect\SmallBulletExplosion.cpp" />
+    <ClCompile Include="Map\Section.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
     <ClCompile Include="Object\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\Animations.h" />
+    <ClInclude Include="Object\WallImage.h" />
+    <ClInclude Include="Object\Gateway.h" />
     <ClInclude Include="Object\Effect\Effect.h" />
     <ClInclude Include="Object\Bullet\Bullet.h" />
     <ClInclude Include="Scene\CSceneManager.h" />
@@ -220,6 +225,7 @@
     <ClInclude Include="Object\OutdoorEnemy\Worm.h" />
     <ClInclude Include="Object\Bullet\SophiaBullet.h" />
     <ClInclude Include="Object\Effect\SmallBulletExplosion.h" />
+    <ClInclude Include="Map\Section.h" />
     <ClInclude Include="Utils\Utils.h" />
     <ClInclude Include="Object\Wall.h" />
   </ItemGroup>
