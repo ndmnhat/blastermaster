@@ -3,9 +3,6 @@
 
 #define CANNON_ANI_LEFT 0
 #define CANNON_ANI_RIGHT 1
-//#define CANNON_ANI_SQUARE 2
-//#define CANNON_ANI_ATTACK_X 3
-//#define CANNON_ANI_ATTACK_Y 4
 
 #define CANNON_BBOX_HEIGHT	26	 
 #define CANNON_BBOX_WIDTH	26 
