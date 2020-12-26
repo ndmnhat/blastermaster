@@ -173,7 +173,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		}
 		obj = new CSophia();
 		player = (CSophia *)obj;
-		//CCamera::GetInstance()->SetFollow(obj);
+		CCamera::GetInstance()->SetFollow(obj);
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 
@@ -244,7 +244,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		break;
 	case TYPE_ENEMY_TELEPORTER:
 		obj = new CCannon();
-		CCamera::GetInstance()->SetFollow(obj);
+		//CCamera::GetInstance()->SetFollow(obj);
 		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
