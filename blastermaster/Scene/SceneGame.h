@@ -10,6 +10,10 @@
 #include "..\Object\OutdoorEnemy\Floater.h"
 #include "..\Object\OutdoorEnemy\Dome.h"
 #include "..\Object\OutdoorEnemy\Jumper.h"
+#include "..\Object\IndoorEnemy\Eyeball.h"
+#include "..\Object\IndoorEnemy\IndoorEnemy.h"
+#include "..\Object\IndoorEnemy\Teleporter.h"
+#include "..\Object\IndoorEnemy\Cannon.h"
 
 #include <fstream>
 #include "..\Map\Map.h"
