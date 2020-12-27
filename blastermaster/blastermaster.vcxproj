@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations\Animations.cpp" />
+    <ClCompile Include="Object\OutdoorEnemy\Orb2.cpp" />
     <ClCompile Include="Object\WallImage.cpp" />
     <ClCompile Include="Object\Gateway.cpp" />
     <ClCompile Include="Object\Effect\Effect.cpp" />
@@ -174,8 +175,7 @@
     <ClCompile Include="Grid\Grid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map\Map.cpp" />
-    <ClCompile Include="Object\OutdoorEnemy\Mine.cpp" />
-    <ClCompile Include="Object\OutdoorEnemy\Orb.cpp" />
+    <ClCompile Include="Object\OutdoorEnemy\Orb1.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Skull.cpp" />
     <ClCompile Include="Object\Player\Sophia.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
@@ -187,11 +187,13 @@
     <ClCompile Include="Object\Bullet\SophiaBullet.cpp" />
     <ClCompile Include="Object\Effect\SmallBulletExplosion.cpp" />
     <ClCompile Include="Map\Section.cpp" />
+    <ClCompile Include="Object\Bullet\SkullBullet.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
     <ClCompile Include="Object\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\Animations.h" />
+    <ClInclude Include="Object\OutdoorEnemy\Orb2.h" />
     <ClInclude Include="Object\WallImage.h" />
     <ClInclude Include="Object\Gateway.h" />
     <ClInclude Include="Object\Effect\Effect.h" />
@@ -213,8 +215,7 @@
     <ClInclude Include="Object\OutdoorEnemy\Jumper.h" />
     <ClInclude Include="Grid\Grid.h" />
     <ClInclude Include="Map\Map.h" />
-    <ClInclude Include="Object\OutdoorEnemy\Mine.h" />
-    <ClInclude Include="Object\OutdoorEnemy\Orb.h" />
+    <ClInclude Include="Object\OutdoorEnemy\Orb1.h" />
     <ClInclude Include="Object\OutdoorEnemy\Skull.h" />
     <ClInclude Include="Object\Player\Sophia.h" />
     <ClInclude Include="Scene\Scene.h" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Object\Bullet\SophiaBullet.h" />
     <ClInclude Include="Object\Effect\SmallBulletExplosion.h" />
     <ClInclude Include="Map\Section.h" />
+    <ClInclude Include="Object\Bullet\SkullBullet.h" />
     <ClInclude Include="Utils\Utils.h" />
     <ClInclude Include="Object\Wall.h" />
   </ItemGroup>

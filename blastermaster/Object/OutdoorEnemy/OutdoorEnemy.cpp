@@ -26,3 +26,18 @@ void COutdoorEnemy::SetState(int state)
 {
 	CGameObject::SetState(state);
 }
+
+int COutdoorEnemy::GetSophiaPosInCoobject(std::vector<LPGAMEOBJECT>* coObjects)
+{
+	if (coObjects != NULL)
+	{
+		for (UINT i = 0; i < coObjects->size(); i++)
+		{
+			if (coObjects->at(i)->type == TYPE_SOPHIA)
+			{
+				return i;
+			}
+		}
+	}
+	return -1;
+}

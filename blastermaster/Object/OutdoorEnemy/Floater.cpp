@@ -126,7 +126,3 @@ void CFloater::SetState(int state)
 {
 	CGameObject::SetState(state);
 }
-void CFloater::GetBoundingBox(float& left, float& top, float& right, float& bottom)
-{
-	COutdoorEnemy::GetBoundingBox(left, top, right, bottom);
-}

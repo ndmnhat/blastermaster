@@ -30,7 +30,14 @@ enum ObjectType
 	TYPE_ENEMY_FLOATER = 7,
 	TYPE_ENEMY_DOME = 8,
 	TYPE_ENEMY_JUMPER = 9,
-	TYPE_ENEMY_INSECT = 10
+	TYPE_ENEMY_INSECT = 10,
+	TYPE_ENEMY_SKULL = 11,
+	TYPE_ENEMY_ORB_1 = 12,
+	TYPE_ENEMY_CANNON = 13,
+	TYPE_ENEMY_EYEBALL = 14,
+	TYPE_ENEMY_TELEPORTER = 15,
+	TYPE_ENEMY_CRABULLUS = 16,
+	TYPE_ENEMY_ORB_2 = 17
 };
 
 enum TextureID
@@ -44,6 +51,7 @@ enum class BulletType
 {
 	SophiaBullet,
 	FloaterBullet,
+	SkullBullet
 };
 
 class CGlobalVariable

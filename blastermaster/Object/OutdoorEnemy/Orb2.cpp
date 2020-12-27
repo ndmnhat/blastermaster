@@ -1,32 +1,41 @@
-#include "Insect.h"
+#include "Orb2.h"
 
-CInsect::CInsect() : COutdoorEnemy()
+COrb2::COrb2()
 {
-	enemyType = OutdoorEnemyType::Insect;
-	width = INSECT_BBOX_WIDTH;
-	height = INSECT_BBOX_HEIGHT;
-	//ny = -1;
-	nx = -1;
-	velVariation = INSECT_SPEED_VARIATION;
-	
+	enemyType = OutdoorEnemyType::Orb2;
+	width = ORB_BBOX_WIDTH;
+	height = ORB_BBOX_HEIGHT;
+	nx = 1;
+	ny = 1;
 }
 
-void CInsect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void COrb2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vx = INSECT_FLYING_SPEED_X * nx;
-	//vy = INSECT_FLYING_UP_SPEED;
-	vy += velVariation;
-	if (vy >= INSECT_FLYING_UP_SPEED || vy <= -INSECT_FLYING_DOWN_SPEED) {
-		velVariation *= -1;
+	int i = GetSophiaPosInCoobject(coObjects);
+	if (abs(this->x - coObjects->at(i)->x) <= 30 && abs(this->y - coObjects->at(i)->y) <= 30) {
+		if (this->x < coObjects->at(i)->x)
+			nx = 1;
+		else if (this->x > coObjects->at(i)->x)
+			nx = -1;
+
+		if (this->y < coObjects->at(i)->y)
+			ny = 1;
+		else if (this->y > coObjects->at(i)->y)
+			ny = -1;
 	}
-	CGameObject::Update(dt);
 	
+
+	vy = ORB_MOVING_SPEED * ny;
+	vx = ORB_MOVING_SPEED * nx;
+
+	CGameObject::Update(dt);
+
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
 	if (coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
-			if (coObjects->at(i)->type != TYPE_ENEMY_INSECT)
+			if (coObjects->at(i)->type != TYPE_ENEMY_ORB_2)
 				listObject->push_back(coObjects->at(i));
 		}
 
@@ -58,16 +67,28 @@ void CInsect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				x += min_tx * dx + e->nx * 0.1f;
 				y += min_ty * dy + e->ny * 0.1f;
 
-				if (e->nx != 0)
-						this->nx *= -1;
-				if (e->ny != 0) vy = 0;
+				if (e->nx != 0) {
+					if (e->nx < 0)
+						this->nx = -1;
+					else
+						this->nx = 1;
+				}
+				if (e->ny != 0)
+					if (e->ny < 0)
+						this->ny = -1;
+					else
+						this->ny = 1;
 			}
 			break;
-			case TYPE_SOPHIA: case TYPE_ENEMY:
+			case TYPE_ENEMY:
 				x += dx;
 				y += dy;
 				break;
-			default:
+			case TYPE_SOPHIA:
+				this->isDestroyed = true;
+				CSmallBulletExplosion* explosion = new CSmallBulletExplosion();
+				explosion->SetPosition(x, y);
+				CGrid::GetInstance()->addObject(explosion);
 				break;
 			}
 		}
@@ -97,21 +118,17 @@ void CInsect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
-	//DebugOut(L"Insect x: %f y: %f\n", this->x, this->y);
 }
 
-void CInsect::Render()
+void COrb2::Render()
 {
 	int ani;
-	if (nx > 0)
-		ani = INSECT_ANI_FLYING_RIGHT;
-	else 
-		ani = INSECT_ANI_FLYING_LEFT;
-	animation_set->at(ani)->Render(x, y);
+	if (vx != 0 || vy != 0)
+		ani = ORB_ANI_SPINNING;
+	animation_set->at(0)->Render(x, y);
 	//RenderBoundingBox();
 }
 
-void CInsect::SetState(int state)
+void COrb2::SetState(int state)
 {
-	CGameObject::SetState(state);
 }

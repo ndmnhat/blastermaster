@@ -8,7 +8,8 @@ enum OutdoorEnemyType {
 	Insect,
 	Jumper,
 	Mine,
-	Orb,
+	Orb1,
+	Orb2,
 	Skull,
 	Worm
 };
@@ -23,5 +24,6 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void SetState(int state);
+	virtual int GetSophiaPosInCoobject(std::vector<LPGAMEOBJECT>* coObjects);
 };
 

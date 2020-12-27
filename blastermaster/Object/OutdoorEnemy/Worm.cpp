@@ -16,21 +16,15 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy = -WORM_GRAVITY;
 	vx = WORM_WALKING_SPEED * nx;
 
-	if (coObjects != NULL)
-		for (UINT i = 0; i < coObjects->size(); i++)
-		{
-			if (coObjects->at(i)->type == TYPE_SOPHIA)
-			{
-				if (this->x - coObjects->at(i)->x >= 30)
-				{
-					nx = -1;
-				}
-				else if (this->x - coObjects->at(i)->x < -30)
-				{
-					nx = 1;
-				}
-			}
-		}
+	int i = GetSophiaPosInCoobject(coObjects);
+	if (this->x - coObjects->at(i)->x >= 30)
+	{
+		nx = -1;
+	}
+	else if (this->x - coObjects->at(i)->x < -30)
+	{
+		nx = 1;
+	}
 
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
@@ -142,8 +136,3 @@ void CWorm::Render()
 	animation_set->at(ani)->Render(x, y);
 	//RenderBoundingBox();
 }
-
- void CWorm::GetBoundingBox(float& left, float& top, float& right, float& bottom)
- {
-	 COutdoorEnemy::GetBoundingBox(left, top, right, bottom);
- }
