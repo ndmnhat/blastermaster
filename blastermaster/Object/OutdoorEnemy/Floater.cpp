@@ -5,6 +5,8 @@ CFloater::CFloater() : COutdoorEnemy()
 	enemyType = OutdoorEnemyType::Floater;
 	width = FLOATER_BBOX_WIDTH;
 	height = FLOATER_BBOX_HEIGHT;
+	health = FLOATER_HEALTH;
+	damage = FLOATER_DAMAGE;
 	nx = 1;
 	ny = 1;
 }

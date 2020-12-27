@@ -5,6 +5,8 @@ COrb1::COrb1() : COutdoorEnemy()
 	enemyType = OutdoorEnemyType::Orb1;
 	width = ORB_BBOX_WIDTH;
 	height = ORB_BBOX_HEIGHT;
+	health = ORB_HEALTH;
+	damage = ORB_DAMAGE;
 	nx = -1;
 	SetState(ORB_STATE_MOVING);
 	startWaiting = GetTickCount();

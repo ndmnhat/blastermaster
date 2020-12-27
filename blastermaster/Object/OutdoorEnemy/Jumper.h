@@ -1,6 +1,9 @@
 #pragma once
 #include "OutdoorEnemy.h"
 
+#define JUMPER_HEALTH				100
+#define JUMPER_DAMAGE				100
+
 #define JUMPER_WALKING_SPEED	0.05f
 #define JUMPER_JUMPING_SPEED	0.2f
 #define JUMPER_GRAVITY			0.0005f

@@ -6,6 +6,8 @@ CSkull::CSkull() : COutdoorEnemy()
 	currentBulletType = BulletType::SkullBullet;
 	width = SKULL_BBOX_WIDTH;
 	height = SKULL_BBOX_HEIGHT;
+	health = SKULL_HEALTH;
+	damage = SKULL_DAMAGE;
 	nx = -1;
 	SetState(SKULL_STATE_MOVING);
 }

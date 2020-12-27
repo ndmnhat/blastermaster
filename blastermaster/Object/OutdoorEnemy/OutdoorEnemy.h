@@ -18,6 +18,8 @@ class COutdoorEnemy : public CGameObject
 {
 public:
 	OutdoorEnemyType enemyType;
+	int health;
+	int damage;
 
 	COutdoorEnemy();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

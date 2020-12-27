@@ -5,7 +5,8 @@ CInsect::CInsect() : COutdoorEnemy()
 	enemyType = OutdoorEnemyType::Insect;
 	width = INSECT_BBOX_WIDTH;
 	height = INSECT_BBOX_HEIGHT;
-	//ny = -1;
+	health = INSECT_HEALTH;
+	damage = INSECT_DAMAGE;
 	nx = -1;
 	velVariation = INSECT_SPEED_VARIATION;
 	

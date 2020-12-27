@@ -6,6 +6,8 @@ CDome::CDome() : COutdoorEnemy()
 	width = DOME_BBOX_WIDTH;
 	height = DOME_BBOX_HEIGHT;
 	state = DOME_STATE_ATTACK_Y;
+	health = DOME_HEALTH;
+	damage = DOME_DAMAGE;
 	nx = -1;
 	ny = 1;
 }

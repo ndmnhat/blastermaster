@@ -5,6 +5,8 @@ COrb2::COrb2()
 	enemyType = OutdoorEnemyType::Orb2;
 	width = ORB_BBOX_WIDTH;
 	height = ORB_BBOX_HEIGHT;
+	health = ORB_HEALTH;
+	damage = ORB_DAMAGE;
 	nx = 1;
 	ny = 1;
 }

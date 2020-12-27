@@ -1,11 +1,13 @@
 #pragma once
 #include "OutdoorEnemy.h"
 
+#define INSECT_HEALTH				100
+#define INSECT_DAMAGE				100
+
 #define INSECT_FLYING_SPEED_X		0.02f
 #define INSECT_FLYING_DOWN_SPEED	0.04f
 #define INSECT_FLYING_UP_SPEED		0.045f
 #define INSECT_SPEED_VARIATION		0.001f
-
 
 #define INSECT_ANI_FLYING_LEFT		0
 #define INSECT_ANI_FLYING_RIGHT		1

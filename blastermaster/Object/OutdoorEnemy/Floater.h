@@ -1,6 +1,9 @@
 #pragma once
 #include "OutdoorEnemy.h"
 
+#define FLOATER_HEALTH				100
+#define FLOATER_DAMAGE				100
+
 #define FLOATER_FLYING_SPEED_X	0.09f
 #define FLOATER_FLYING_SPEED_Y	0.09f
 

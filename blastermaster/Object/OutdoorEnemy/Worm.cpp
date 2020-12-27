@@ -7,6 +7,8 @@ CWorm::CWorm() : COutdoorEnemy()
 	height = WORM_BBOX_HEIGHT;
 	this->x = x;
 	this->y = y;
+	health = WORM_HEALTH;
+	damage = WORM_DAMAGE;
 }
 
 void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

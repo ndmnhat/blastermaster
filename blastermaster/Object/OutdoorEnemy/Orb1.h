@@ -1,6 +1,9 @@
 #pragma once
 #include "OutdoorEnemy.h"
 
+#define ORB_HEALTH				100
+#define ORB_DAMAGE				100
+
 #define ORB_MOVING_SPEED		0.1f
 #define ORB_TURNING_TIME		150
 #define ORB_SPINNING_TIME		200

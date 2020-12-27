@@ -5,6 +5,8 @@ CJumper::CJumper() : COutdoorEnemy()
 	enemyType = OutdoorEnemyType::Jumper;
 	width = JUMPER_BBOX_WIDTH;
 	height = JUMPER_BBOX_HEIGHT;
+	health = JUMPER_HEALTH;
+	damage = JUMPER_DAMAGE;
 	nx = -1;
 }
 

@@ -3,6 +3,9 @@
 #include "..\Effect\SmallBulletExplosion.h"
 #include "..\..\Grid\Grid.h"
 
+#define ORB_HEALTH				100
+#define ORB_DAMAGE				100
+
 #define ORB_MOVING_SPEED		0.05f
 
 #define ORB_ANI_SPINNING		0

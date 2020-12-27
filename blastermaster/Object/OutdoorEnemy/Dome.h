@@ -2,9 +2,14 @@
 #include "OutdoorEnemy.h"
 #include "..\..\Utils\Utils.h"
 #include "..\..\Camera\Camera.h"
+
+#define DOME_HEALTH				100
+#define DOME_DAMAGE				100
+
 #define DOME_CHARGING_SPEED		0.15f
 #define DOME_MOVING_SPEED		0.025f
 #define DOME_GRAVITY			0.001f
+
 #define DOME_ANI_CRAWLING_LEFT			0	//di qua trai tren tran
 #define DOME_ANI_CRAWLING_RIGHT			1	//di qua phai tren tran
 #define DOME_ANI_CRAWLING_DOWN_LEFT		2	//di xuong duoi ben trai tuong
