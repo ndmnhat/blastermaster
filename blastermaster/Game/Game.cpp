@@ -72,7 +72,7 @@ void CGame::Draw(D3DXVECTOR3 p, LPDIRECT3DTEXTURE9 texture, RECT rect, int alpha
 	spriteHandler->Draw(texture, &rect, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 }
 
-void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
+void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha, int R, int G, int B, D3DXVECTOR3* pCenter)
 {
 	D3DXVECTOR3 p = CCamera::GetInstance()->Transform(D3DXVECTOR3(x, y, 0));
 	RECT r;
@@ -80,7 +80,7 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	r.top = top;
 	r.right = right;
 	r.bottom = bottom;
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	spriteHandler->Draw(texture, &r, pCenter, &p, D3DCOLOR_ARGB(alpha, R, G, B));
 }
 
 int CGame::IsKeyDown(int KeyCode)

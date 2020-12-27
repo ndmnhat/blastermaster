@@ -7,13 +7,13 @@
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(255, 255, 255)
 
-#define WINDOW_WIDTH 272
-#define WINDOW_HEIGHT 264
+#define WINDOW_WIDTH 270
+#define WINDOW_HEIGHT 263
 
 #define FREE_CAM_WIDTH 100
 #define FREE_CAM_HEIGHT 75
 
-#define MAX_FRAME_RATE 120
+#define MAX_FRAME_RATE 200
 
 #define GRID_CELL_HEIGHT 100
 #define GRID_CELL_WIDTH 150
@@ -30,7 +30,11 @@ enum ObjectType
 	TYPE_ENEMY_FLOATER = 7,
 	TYPE_ENEMY_DOME = 8,
 	TYPE_ENEMY_JUMPER = 9,
-	TYPE_ENEMY_INSECT = 10
+	TYPE_ENEMY_INSECT = 10,
+	TYPE_JASON = 11,
+	TYPE_BIGJASON = 21,
+	TYPE_ITEM = 22,
+	TYPE_PORTAL = 23,
 };
 
 enum TextureID
@@ -44,6 +48,8 @@ enum class BulletType
 {
 	SophiaBullet,
 	FloaterBullet,
+	JasonBullet,
+	BigJasonBullet
 };
 
 class CGlobalVariable

@@ -18,11 +18,15 @@ class CSectionManager
 {
 private:
 	static CSectionManager* _instance;
-	LPSECTION CurrentSection = NULL;
-	unordered_map<int,LPSECTION> Sections;
 public:
+	LPSECTION CurrentSection = NULL;
+	int CurrentSectionID;
+	unordered_map<int, LPSECTION> Sections;
 	static CSectionManager* GetInstance() { if (_instance == NULL) _instance = new CSectionManager(); return _instance; }
 	void Add(int id, LPSECTION Section);
-	void ChangeSection(int id);
+	int GetObjectSectionID(LPGAMEOBJECT Object);
+	void ChangeSection(int id, bool isSet = false);
+	unordered_map<int, LPSECTION> getAllSections() { return Sections; }
+	void clearSections() {_instance = NULL;}
 	LPSECTION Get(unsigned int id);
 };

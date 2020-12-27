@@ -147,7 +147,7 @@ void CDome::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	float left, top, right, bottom;
 	GetBoundingBox(left, top, right, bottom);
 	//DebugOut(L"Wall: l: %f, t: %f, r: %f, b: %f\n", wallPosition.left, wallPosition.top, wallPosition.right, wallPosition.bottom);
-	DebugOut(L"Dome: x: %f, y: %f\n", x, y);
+	//DebugOut(L"Dome: x: %f, y: %f\n", x, y);
 	//DebugOut(L"%d\n", this->ny);
 #pragma region Colliding with wall handle
 

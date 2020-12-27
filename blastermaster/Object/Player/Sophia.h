@@ -1,17 +1,14 @@
 #pragma once
-#include "..\GameObject.h"
-#include "..\..\Utils\Utils.h"
-#include "..\Bullet\Bullet.h"
+#include "Player.h"
 #include "..\Bullet\SophiaBullet.h"
-#include "..\Gateway.h"
-#include "..\..\Grid\Grid.h"
-#include "..\..\Map\Section.h"
+#include "..\..\Animations\RenderEffect.h"
 
 #define SOPHIA_WALKING_SPEED 0.07f
 #define SOPHIA_JUMP_SPEED_Y 0.25f
 #define SOPHIA_GRAVITY 0.0005f
 #define SOPHIA_FRICTION 0.01f
 #define SOPHIA_RELOAD_TIME 100
+#define SOPHIA_MAX_HEALTH 100
 //STATE
 #define SOPHIA_STATE_IDLE_LEFT 0
 #define SOPHIA_STATE_IDLE_RIGHT 1
@@ -93,39 +90,39 @@
 #define SOPHIA_ANI_LOWERING_RIGHT 52
 #define SOPHIA_ANI_LOWERING_LEFT 53
 
+#define SOPHIA_ANI_OPENING_RIGHT 54
+#define SOPHIA_ANI_OPENING_LEFT 55
+
 #define SOPHIA_UNTOUCHABLE_TIME 1000
+#define SOPHIA_ROTATING_TIME 200
+#define SOPHIA_OPENING_TIME 250
 
 #define SOPHIA_BBOX_WIDTH 26
 #define SOPHIA_BBOX_HEIGHT 18
 
 
-class CSophia : public CGameObject
+class CSophia : public CPlayer
 {
 private:
-	DWORD untouchableStart;
-	DWORD rotatingStart;
-	DWORD reloadingTimeCount;
-	BulletType currentBulletType;
-	int currentAnimation;
-	int ClipSize;
-	float AutoX;
-	float AutoY;
-	int backupSectionID;
+	DWORD openingStart;
+	CRenderEffect* untouchableEffect;
 	void RenderWalkingLeft(int& ani);
 	void RenderWalkingRight(int& ani);
 	void RenderIdle(int& ani);
 	void RenderRotating(int& ani);
 	void RenderJumping(int& ani);
 	void RenderFalling(int& ani);
+	void RenderOpening(int& ani, float &ydraw);
 	void RenderRotatingWhileJumping(int& ani);
 	void RenderLiftingGun(int& ani, float& xdraw, float& ydraw);
 	void RenderLoweringGun(int& ani, float& xdraw, float& ydraw);
 	void RenderGunUp(int& ani, float& xdraw, float& ydraw);
 public:
-	bool isAutoGoX = false;
-	bool isRotating;
-	bool isUntouchable;
-	bool isFalling;
+	void StartOpening() { isOpening = true; openingStart = GetTickCount(); }
+	bool isHavingJason = true;
+	bool isOpening = false;
+	bool isRotating = false;
+	bool isFalling = false;
 	bool isGunUp = false;
 	bool isLiftingGun = false;
 	bool isLoweringGun = false;
@@ -135,8 +132,7 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	void Render();
 	void SetState(int state);
-	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void UpdateStateTime();
-	void StartUntouchable() { isUntouchable = true; untouchableStart = GetTickCount(); }
 	CSophia();
 };

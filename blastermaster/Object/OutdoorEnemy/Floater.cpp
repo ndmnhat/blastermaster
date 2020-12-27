@@ -5,6 +5,8 @@ CFloater::CFloater() : COutdoorEnemy()
 	enemyType = OutdoorEnemyType::Floater;
 	width = FLOATER_BBOX_WIDTH;
 	height = FLOATER_BBOX_HEIGHT;
+	ClipSize = FLOATER_BULLET_CLIPSIZE;
+	reloadingTimeCount = GetTickCount();
 	nx = 1;
 	ny = 1;
 }
@@ -21,8 +23,19 @@ void CFloater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
-			if (coObjects->at(i)->type != TYPE_ENEMY_FLOATER)
+			if (coObjects->at(i)->type != TYPE_ENEMY)
 				listObject->push_back(coObjects->at(i));
+			if (coObjects->at(i)->type == TYPE_SOPHIA || coObjects->at(i)->type == TYPE_SOPHIA)
+			{
+				if (coObjects->at(i)->y < this->y)
+				{
+				float coX = coObjects->at(i)->x - this->x;
+				float coY = coObjects->at(i)->y - this->y;
+				float angle = acos((-coX) / sqrt(coX * coX + coY * coY));
+				//DebugOut(L"%f\n", (angle * 180 / PI) - (angle * 180 / PI) * 2);
+				Fire((angle * 180 / PI) - (angle * 180 / PI)*2);
+				}
+			}
 		}
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -66,7 +79,7 @@ void CFloater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 								this->ny = 1;
 					}
 					break;
-				case TYPE_SOPHIA:
+				case TYPE_SOPHIA: case TYPE_JASON:
 					x += dx;
 					y += dy;
 					break;
@@ -109,6 +122,14 @@ void CFloater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (vx > 0 && x > 290) x = 290;
 		if (vx < 0 && x < 0) x = 0;*/
 		//DebugOut(L"Pos: %.2f ,%.2f\n", x, y);
+	if (ClipSize < 1)
+	{
+		if (GetTickCount() - reloadingTimeCount > FLOATER_BULLET_RELOADTIME)
+		{
+			ClipSize++;
+			reloadingTimeCount = GetTickCount();
+		}
+	}
 }
 
 void CFloater::Render()
@@ -120,6 +141,21 @@ void CFloater::Render()
 		ani = FLOATER_ANI_FLYING_LEFT;
 	animation_set->at(0)->Render(x, y);
 	//RenderBoundingBox();
+}
+
+void CFloater::Fire(int Direction)
+{
+//No more bullet in clip
+if (ClipSize < 1)
+	return;
+ClipSize--;
+
+LPBULLET bullet = new CFloaterBullet();
+float bulletX = this->x + FLOATER_BBOX_WIDTH/2, bulletY = this->y - FLOATER_BBOX_HEIGHT;
+
+bullet->SetPosition(bulletX, bulletY);
+bullet->SetDirection(Direction);
+CGrid::GetInstance()->addObject(bullet);
 }
 
 void CFloater::SetState(int state)

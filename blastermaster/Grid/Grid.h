@@ -17,7 +17,11 @@ public:
 	static CGrid* GetInstance() { if (_instance == NULL) _instance = new CGrid(); return _instance; }
 	void addObject(LPGAMEOBJECT object);
 	void removeObject(LPGAMEOBJECT object);
+	void safeRemoveObject(LPGAMEOBJECT object);
 	void updateObjects(vector<LPGAMEOBJECT> objects);
+	void clearGrid();
+	vector<LPGAMEOBJECT> getAllObjects(int MapWidth,int MapHeight);
+	vector<LPGAMEOBJECT> ObjectsToRender();
 	vector<LPGAMEOBJECT> ObjectsInCam(CCamera* cam);
 	vector<CWallImage*> WallImageInCam;
 };

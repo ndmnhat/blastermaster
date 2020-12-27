@@ -153,10 +153,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations\Animations.cpp" />
+    <ClCompile Include="HUD\HealthBar.cpp" />
+    <ClCompile Include="Object\Bullet\FloaterBullet.cpp" />
+    <ClCompile Include="Object\Item\Item.cpp" />
+    <ClCompile Include="Object\Bullet\BigJasonBullet.cpp" />
+    <ClCompile Include="Object\Player\BigJason.cpp" />
+    <ClCompile Include="Object\Bullet\JasonBullet.cpp" />
+    <ClCompile Include="Object\Player\Jason.cpp" />
     <ClCompile Include="Object\WallImage.cpp" />
     <ClCompile Include="Object\Gateway.cpp" />
     <ClCompile Include="Object\Effect\Effect.cpp" />
     <ClCompile Include="Object\Bullet\Bullet.cpp" />
+    <ClCompile Include="Object\Player\Player.cpp" />
+    <ClCompile Include="Animations\RenderEffect.cpp" />
+    <ClCompile Include="Object\Item\Power.cpp" />
+    <ClCompile Include="Object\Portal.cpp" />
     <ClCompile Include="Scene\CSceneManager.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\BossCrabullus.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Cannon.cpp" />
@@ -192,10 +203,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\Animations.h" />
+    <ClInclude Include="HUD\HealthBar.h" />
+    <ClInclude Include="Object\Bullet\FloaterBullet.h" />
+    <ClInclude Include="Object\Item\Item.h" />
+    <ClInclude Include="Object\Bullet\BigJasonBullet.h" />
+    <ClInclude Include="Object\Player\BigJason.h" />
+    <ClInclude Include="Object\Bullet\JasonBullet.h" />
+    <ClInclude Include="Object\Player\Jason.h" />
     <ClInclude Include="Object\WallImage.h" />
     <ClInclude Include="Object\Gateway.h" />
     <ClInclude Include="Object\Effect\Effect.h" />
     <ClInclude Include="Object\Bullet\Bullet.h" />
+    <ClInclude Include="Object\Player\Player.h" />
+    <ClInclude Include="Animations\RenderEffect.h" />
+    <ClInclude Include="Object\Item\Power.h" />
+    <ClInclude Include="Object\Portal.h" />
     <ClInclude Include="Scene\CSceneManager.h" />
     <ClInclude Include="Scene\KeyEventHandler.h" />
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
@@ -234,6 +256,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </Text>
     <Text Include="Scene\scene.txt" />
+    <Text Include="Scene\scene2.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />

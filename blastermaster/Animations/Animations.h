@@ -37,7 +37,7 @@ public:
 	void SetCurrentFrame(int frame) { currentFrame = frame; }
 	DWORD GetPassedFrameTime() { return (GetTickCount() - lastFrameTime); }
 	void ResetFrameTime() { isResetinglastFrameTime = true; }
-	void Render(float x, float y, int alpha = 255);
+	void Render(float x, float y, int alpha = 255, int r = 255, int g = 255, int b = 255, D3DXVECTOR3* pCenter = NULL);
 };
 
 typedef CAnimation* LPANIMATION;

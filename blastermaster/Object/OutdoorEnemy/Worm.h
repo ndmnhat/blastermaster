@@ -2,6 +2,7 @@
 #include "OutdoorEnemy.h"
 #include "..\Player\Sophia.h"
 #include "..\..\Scene\SceneGame.h"
+#include "..\Bullet\JasonBullet.h"
 #include "..\..\Game\Game.h"
 
 #define WORM_WALKING_SPEED	0.025f

@@ -35,6 +35,9 @@ struct CCollisionEvent
 
 class CGameObject
 {
+protected:
+	int Health;
+	int Damage;
 public:
 	float x; 
 	float y;
@@ -57,6 +60,7 @@ public:
 
 	bool isInCam = false;
 	bool isDestroyed = false;
+	bool isAttacked;
 	DWORD dt;
 	ObjectType type;
 	LPANIMATION animation;
@@ -65,6 +69,8 @@ public:
 
 
 public:
+	bool isEnabled = true;
+	bool isFreezing = false;
 	bool hasGun = false;
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
@@ -89,8 +95,11 @@ public:
 		float& min_ty,
 		float& nx,
 		float& ny);
-
-
+	void SetHealth(int health) { this->Health = health; }
+	int GetHealth() { return this->Health; }
+	void SetDamage(int damage) { this->Damage = damage; }
+	void Attack(LPGAMEOBJECT object) { object->Attacked(this->Damage); }
+	void Attacked(int damage) { this->Health -= damage; isAttacked = true; }
 	CGameObject();
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;

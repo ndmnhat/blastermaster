@@ -35,9 +35,9 @@ void CMap::DrawMap(CCamera * cam)
 	int firstRow = ((GetMapHeight() - camPosition.y) / tileHeight);
 	//DebugOut(L"%d\n", firstRow);
 	int firstColumn = camPosition.x / tileWidth;
-	for (int i = 0; i < WINDOW_HEIGHT / tileHeight; i++)
+	for (int i = 0; i <= WINDOW_HEIGHT / tileHeight; i++)
 	{
-		for (int j = 0; j < WINDOW_WIDTH / tileWidth; j++)
+		for (int j = 0; j <= WINDOW_WIDTH / tileWidth; j++)
 		{
 			int currentRow = firstRow + i;
 			int currentColumn = firstColumn + j;

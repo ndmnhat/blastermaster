@@ -75,6 +75,18 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			case TYPE_SOPHIA: case TYPE_ENEMY:
 				x += dx;
 				y += dy;
+			case TYPE_BULLET:
+				if (dynamic_cast<CJasonBullet*>(e->obj))
+				{
+					this->isDestroyed = true;
+					if (rand() % 3 == 1)
+					{
+					CPower* power = new CPower();
+					power->SetPosition(x, y);
+					CGrid::GetInstance()->addObject(power);
+					}
+				}
+				break;
 			default:
 				break;
 			}
