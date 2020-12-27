@@ -13,6 +13,11 @@
 #include "..\Object\OutdoorEnemy\Jumper.h"
 #include "..\Object\Player\BigJason.h"
 #include "CSceneManager.h"
+#include "..\Object\OutdoorEnemy\Insect.h"
+#include "..\Object\OutdoorEnemy\Skull.h"
+#include "..\Object\OutdoorEnemy\Orb1.h"
+#include "..\Object\OutdoorEnemy\Orb2.h"
+
 #include <fstream>
 #include "..\Map\Map.h"
 #include "..\Grid\Grid.h"
@@ -28,7 +33,7 @@ protected:
 	unordered_map<int, LPSECTION> backupSections;
 	vector<LPGAMEOBJECT> backupObjects;
 	CMap *map;
-	CHealthBar* healthbar;
+	CHealthBar *healthbar;
 	//CSophia *sophia;
 	//CJason* jason;
 	//CPlayer* currentPlayer;
@@ -43,9 +48,9 @@ protected:
 	friend class CSceneGameKeyHandler;
 
 public:
-	CPlayer* currentPlayer;
+	CPlayer *currentPlayer;
 	CSceneGame(int id, LPCWSTR filePath);
-	CPlayer* GetPlayer() { return currentPlayer; }
+	CPlayer *GetPlayer() { return currentPlayer; }
 	void Load();
 	void Unload();
 	void Update(DWORD dt);

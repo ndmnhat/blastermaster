@@ -213,10 +213,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		goto addObjectToGrid;
 	}
 	break;
-	case TYPE_ENEMY_WORM:
-		obj = new CWorm();
-		//CCamera::GetInstance()->SetFollow(obj);
-		break;
+	
 	case TYPE_GATEWAY:
 	{
 		obj = new CGateway();
@@ -250,16 +247,36 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		goto addObjectToGrid;
 	}
 	break;
-	case TYPE_ENEMY_FLOATER:
-		obj = new CFloater();
-		//CCamera::GetInstance()->SetFollow(obj);
-		break;
-	case TYPE_ENEMY_DOME:
+	//case TYPE_ENEMY_WORM:
+	//	obj = new CWorm();
+	//	//CCamera::GetInstance()->SetFollow(obj);
+	//	break;
+	//case TYPE_ENEMY_FLOATER:
+	//	obj = new CFloater();
+	//	//CCamera::GetInstance()->SetFollow(obj);
+	//	break;
+	/*case TYPE_ENEMY_DOME:
 		obj = new CDome();
-		//CCamera::GetInstance()->SetFollow(obj);
-		break;
+		CCamera::GetInstance()->SetFollow(obj);
+		break;*/
 	case TYPE_ENEMY_JUMPER:
 		obj = new CJumper();
+		//CCamera::GetInstance()->SetFollow(obj);
+		break;
+	//case TYPE_ENEMY_INSECT:
+	//	obj = new CInsect();
+	//	//CCamera::GetInstance()->SetFollow(obj);
+	//	break;
+	/*case TYPE_ENEMY_ORB_1:
+		obj = new COrb1();
+		CCamera::GetInstance()->SetFollow(obj);
+		break;*/
+	//case TYPE_ENEMY_ORB_2:
+	//	obj = new COrb2();
+	//	//CCamera::GetInstance()->SetFollow(obj);
+	//	break;
+	case TYPE_ENEMY_SKULL:
+		obj = new CSkull();
 		//CCamera::GetInstance()->SetFollow(obj);
 		break;
 	default:

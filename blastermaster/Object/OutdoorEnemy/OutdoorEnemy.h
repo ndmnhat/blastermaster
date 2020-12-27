@@ -9,7 +9,8 @@ enum OutdoorEnemyType {
 	Insect,
 	Jumper,
 	Mine,
-	Orb,
+	Orb1,
+	Orb2,
 	Skull,
 	Worm
 };
@@ -18,11 +19,14 @@ class COutdoorEnemy : public CGameObject
 {
 public:
 	OutdoorEnemyType enemyType;
+	int health;
+	int damage;
 
 	COutdoorEnemy();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void SetState(int state);
+	virtual int GetSophiaPosInCoobject(std::vector<LPGAMEOBJECT>* coObjects);
 };
 

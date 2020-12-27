@@ -1,6 +1,9 @@
 #pragma once
 #include "OutdoorEnemy.h"
 
+#define JUMPER_HEALTH				100
+#define JUMPER_DAMAGE				100
+
 #define JUMPER_WALKING_SPEED	0.05f
 #define JUMPER_JUMPING_SPEED	0.2f
 #define JUMPER_GRAVITY			0.0005f
@@ -17,12 +20,10 @@ class CJumper : public COutdoorEnemy
 {
 public:
 	bool isJumping = false;
-	int jumpingHeight;
 	CJumper();
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void SetState(int state);
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };
 

@@ -20,8 +20,8 @@
 
 enum ObjectType
 {
-	TYPE_SOPHIA = 0,
-	TYPE_WALL = 1,
+	TYPE_WALL = 0,
+	TYPE_SOPHIA = 1,
 	TYPE_ENEMY = 2,
 	TYPE_ENEMY_WORM = 3,
 	TYPE_BULLET = 4,
@@ -31,10 +31,18 @@ enum ObjectType
 	TYPE_ENEMY_DOME = 8,
 	TYPE_ENEMY_JUMPER = 9,
 	TYPE_ENEMY_INSECT = 10,
-	TYPE_JASON = 11,
+	TYPE_JASON = 24,
 	TYPE_BIGJASON = 21,
 	TYPE_ITEM = 22,
 	TYPE_PORTAL = 23,
+	TYPE_ENEMY_SKULL = 11,
+	TYPE_ENEMY_ORB_1 = 12,
+	TYPE_ENEMY_CANNON = 13,
+	TYPE_ENEMY_EYEBALL = 14,
+	TYPE_ENEMY_TELEPORTER = 15,
+	TYPE_ENEMY_CRABULLUS = 16,
+	TYPE_ENEMY_ORB_2 = 17,
+	TYPE_EFFECT = 25
 };
 
 enum TextureID
@@ -49,7 +57,8 @@ enum class BulletType
 	SophiaBullet,
 	FloaterBullet,
 	JasonBullet,
-	BigJasonBullet
+	BigJasonBullet,
+	SkullBullet
 };
 
 class CGlobalVariable
