@@ -93,7 +93,7 @@ void CDome::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		vy = DOME_CHARGING_SPEED * ny;
 		break;
 	}
-	DebugOut(L"DOME Vx: %f Vy: %f\n", this->vx, this->vy);
+	//DebugOut(L"DOME Vx: %f Vy: %f\n", this->vx, this->vy);
 	CGameObject::Update(dt);
 
 	vector<LPGAMEOBJECT> *listObject = new vector<LPGAMEOBJECT>();
@@ -246,7 +246,7 @@ void CDome::Render()
 			ani = DOME_ANI_CHARGING_DOWN;
 		break;
 	}
-	DebugOut(L"Dome ani: %d\n", ani);
+	//DebugOut(L"Dome ani: %d\n", ani);
 	animation_set->at(ani)->Render(x, y);
 	//RenderBoundingBox();
 }

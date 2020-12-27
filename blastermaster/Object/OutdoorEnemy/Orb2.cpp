@@ -14,6 +14,8 @@ COrb2::COrb2()
 void COrb2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	int i = GetSophiaPosInCoobject(coObjects);
+	if (i != -1)
+	{
 	if (abs(this->x - coObjects->at(i)->x) <= 30 && abs(this->y - coObjects->at(i)->y) <= 30) {
 		if (this->x < coObjects->at(i)->x)
 			nx = 1;
@@ -24,6 +26,7 @@ void COrb2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			ny = 1;
 		else if (this->y > coObjects->at(i)->y)
 			ny = -1;
+	}
 	}
 	
 

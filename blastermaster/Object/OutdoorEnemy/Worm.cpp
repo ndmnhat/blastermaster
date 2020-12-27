@@ -19,6 +19,8 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vx = WORM_WALKING_SPEED * nx;
 
 	int i = GetSophiaPosInCoobject(coObjects);
+	if (i != -1)
+	{
 	if (this->x - coObjects->at(i)->x >= 30)
 	{
 		nx = -1;
@@ -26,6 +28,7 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else if (this->x - coObjects->at(i)->x < -30)
 	{
 		nx = 1;
+	}
 	}
 
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();

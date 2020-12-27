@@ -2,6 +2,7 @@
 
 CSophia::CSophia()
 {
+	type = TYPE_SOPHIA;
 	CSophia::SetState(SOPHIA_STATE_IDLE_RIGHT);
 	hasGun = true;
 	currentBulletType = BulletType::SophiaBullet;
@@ -288,7 +289,6 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			reloadingTimeCount = GetTickCount();
 		}
 	}
-
 }
 
 void CSophia::Render()

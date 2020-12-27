@@ -16,6 +16,8 @@ void CSkull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	if (state == SKULL_STATE_MOVING) {
 		int i = GetSophiaPosInCoobject(coObjects);
+		if (i != -1)
+		{
 		if (nx < 0) {
 			if (int(this->x) == int(coObjects->at(i)->x) + 18) {
 				SetState(SKULL_STATE_ATTACKING);
@@ -23,6 +25,7 @@ void CSkull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else if (int(this->x) == int(coObjects->at(i)->x)) {
 				SetState(SKULL_STATE_ATTACKING);
+		}
 		}
 	}
 	

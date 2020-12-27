@@ -13,7 +13,7 @@
 #define JASON_BULLET_BBOX_WIDTH 4
 #define JASON_BULLET_BBOX_HEIGHT 4
 
-#define JASON_BULLET_ANIMATION_SET_ID 102
+#define JASON_BULLET_ANIMATION_SET_ID 42
 
 class CJasonBullet : public CBullet
 {
