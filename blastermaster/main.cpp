@@ -13,18 +13,17 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "debug.h"
-#include "Game.h"
-#include "GameObject.h"
-#include "Textures.h"
-#include "Define.h"
+#include ".\Game\Game.h"
+#include ".\Object\GameObject.h"
+#include ".\Animations\Animations.h"
 
-#include "Object\Player\Sophia.h"
-#include "Object\OutdoorEnemy\OutdoorEnemy.h"
+#include ".\Object\Player\Sophia.h"
+#include ".\Object\OutdoorEnemy\OutdoorEnemy.h"
 
-#include "Map.h"
-#include "Camera.h"
+//#include ".\Map\Map.h"
+//#include ".\Camera\Camera.h"
 
+#include ".\Scene\CSceneManager.h"
 
 #define ID_TEX_PLAYER 0
 #define ID_TEX_ENEMY 10
@@ -36,45 +35,46 @@ CSophia *sophia;
 //COutdoorEnemy* e1, * e2, * e3;
 CCamera* cam = CCamera::GetInstance();
 
-CMap m;
+//CMap m;
 
-class CSampleKeyHander: public CKeyEventHandler
-{
-	virtual void KeyState(BYTE *states);
-	virtual void OnKeyDown(int KeyCode);
-	virtual void OnKeyUp(int KeyCode);
-};
-
-CSampleKeyHander * keyHandler; 
-
-void CSampleKeyHander::OnKeyDown(int KeyCode)
-{
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-	switch (KeyCode)
-	{
-	case DIK_SPACE:
-		sophia->SetState(SOPHIA_STATE_JUMP);
-		break;
-	case DIK_DOWN:
-		break;
-	}
-}
-
-void CSampleKeyHander::OnKeyUp(int KeyCode)
-{
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
-}
-
-void CSampleKeyHander::KeyState(BYTE *states)
-{
-	if (game->IsKeyDown(DIK_RIGHT))
-		sophia->SetState(SOPHIA_STATE_WALKING_RIGHT);
-	else if (game->IsKeyDown(DIK_LEFT))
-		sophia->SetState(SOPHIA_STATE_WALKING_LEFT);
-	else if (game->IsKeyDown(DIK_SPACE))
-		sophia->SetState(SOPHIA_STATE_JUMP);
-	else sophia->SetState(SOPHIA_STATE_IDLE);
-}
+CScene* scenegame = new CSceneGame(1, L"Scene\\scene.txt");
+//class CSampleKeyHander: public CKeyEventHandler
+//{
+//	virtual void KeyState(BYTE *states);
+//	virtual void OnKeyDown(int KeyCode);
+//	virtual void OnKeyUp(int KeyCode);
+//};
+//
+//CSampleKeyHander * keyHandler; 
+//
+//void CSampleKeyHander::OnKeyDown(int KeyCode)
+//{
+//	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+//	switch (KeyCode)
+//	{
+//	case DIK_SPACE:
+//		sophia->SetState(SOPHIA_STATE_JUMP);
+//		break;
+//	case DIK_DOWN:
+//		break;
+//	}
+//}
+//
+//void CSampleKeyHander::OnKeyUp(int KeyCode)
+//{
+//	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+//}
+//
+//void CSampleKeyHander::KeyState(BYTE *states)
+//{
+//	if (game->IsKeyDown(DIK_RIGHT))
+//		sophia->SetState(SOPHIA_STATE_WALKING_RIGHT);
+//	else if (game->IsKeyDown(DIK_LEFT))
+//		sophia->SetState(SOPHIA_STATE_WALKING_LEFT);
+//	else if (game->IsKeyDown(DIK_SPACE))
+//		sophia->SetState(SOPHIA_STATE_JUMP);
+//	else sophia->SetState(SOPHIA_STATE_IDLE);
+//}
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -101,7 +101,7 @@ void LoadResources()
 	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_ARGB(0,0,0,0));
 	textures->Add(ID_TEX_MAP, L"textures\\tiles.png", D3DCOLOR_XRGB(0, 0, 0));
 	
-	m.ReadMap("map2.txt");
+	//m.ReadMap(L".\\Map\\map2.txt");
 
 
 	CSprites * sprites = CSprites::GetInstance();
@@ -199,11 +199,11 @@ void LoadResources()
 	animations->Add(801, ani);
 
 
-	sophia = new CSophia();
-	sophia->AddAnimation(400);		// idle left
-	sophia->AddAnimation(401);		// idle right
-	sophia->AddAnimation(500);		// walk left
-	sophia->AddAnimation(501);		// walk right
+	//sophia = new CSophia();
+	//sophia->AddAnimation(400);		// idle left
+	//sophia->AddAnimation(401);		// idle right
+	//sophia->AddAnimation(500);		// walk left
+	//sophia->AddAnimation(501);		// walk right
 
 	/*e1 = new CEnemy1();
 	e1->AddAnimation(600);
@@ -217,13 +217,13 @@ void LoadResources()
 	e3->AddAnimation(800);
 	e3->AddAnimation(801);*/
 
-	sophia->SetPosition(1080.0f, 1180.0f);
+	//sophia->SetPosition(1080.0f, 1180.0f);
 	/*e1->SetPosition(999.0f, 1215.0f);
 	e2->SetPosition(999.0f, 1215.0f);
 	e3->SetPosition(999.0f, 1215.0f);*/
 	//cam->SetPosition(1024.0f, 1040.0f);
 	cam->SetPosition(0.0f, 0.0f);
-	cam->SetFollow(sophia);
+	//cam->SetFollow(sophia);
 }
 
 /*
@@ -232,11 +232,12 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	sophia->Update(dt, &onCamObjects);
+	//sophia->Update(dt);
 	/*e1->Update(dt);
 	e2->Update(dt);
 	e3->Update(dt);*/
-	cam->Update(dt);
+	//cam->Update(dt);
+	//scenegame->Update(dt);
 }
 
 /*
@@ -255,9 +256,9 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		m.DrawMap(cam);
+		scenegame->Render();
 
-		sophia->Render();
+		//sophia->Render();
 		/*e1->Render();
 		e2->Render();
 		e3->Render();*/
@@ -345,8 +346,11 @@ int Run()
 
 			game->ProcessKeyboard();
 			
-			Update(dt);
-			Render();
+			//Update(dt);
+			//Render();
+
+			CSceneManager::GetInstance()->Update(dt);
+			CSceneManager::GetInstance()->Render();
 		}
 		else
 			Sleep(tickPerFrame - dt);	
@@ -357,15 +361,15 @@ int Run()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
+	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	game = CGame::GetInstance();
 	game->Init(hWnd);
-
-	keyHandler = new CSampleKeyHander();
-	game->InitKeyboard(keyHandler);
-
-	LoadResources();
+	game->InitKeyboard();
+	//scenegame->Load();
+	CSceneManager::GetInstance()->AddScene(scenegame);
+	CSceneManager::GetInstance()->SetScene(1);
+	//LoadResources();
 	Run();
 
 

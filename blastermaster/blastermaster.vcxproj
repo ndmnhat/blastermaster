@@ -23,13 +23,13 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{1b6d1c51-a351-428e-895d-2753d64cb2e5}</ProjectGuid>
     <RootNamespace>blastermaster</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -72,11 +72,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);G:\DirectX\Include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;G:\DirectX\Lib\x86</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath);G:\DirectX\Include</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath);G:\DirectX\Lib\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -92,10 +94,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>NotSet</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
       <AdditionalDependencies>d3dx9.lib;d3d9.lib;dxguid.lib;dxerr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -106,14 +111,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3dx9.lib;d3d9.lib;dxguid.lib;dxerr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -145,80 +152,94 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animations\Animations.cpp" />
+    <ClCompile Include="Object\WallImage.cpp" />
+    <ClCompile Include="Object\Gateway.cpp" />
+    <ClCompile Include="Object\Effect\Effect.cpp" />
+    <ClCompile Include="Object\Bullet\Bullet.cpp" />
+    <ClCompile Include="Scene\CSceneManager.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\BossCrabullus.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Plutonium.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Cannon.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Dasher.cpp" />
-    <ClCompile Include="debug.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Dome.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\OutdoorEnemy.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Define.cpp" />
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Define\Define.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Eyeball.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Floater.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Object\GameObject.cpp" />
     <ClCompile Include="Object\IndoorEnemy\IndoorEnemy.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Insect.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Jumper.cpp" />
-    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Grid\Grid.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Mine.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Orb.cpp" />
-    <ClCompile Include="Object\OutdoorEnemy\Ship.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Skull.cpp" />
     <ClCompile Include="Object\Player\Sophia.cpp" />
-    <ClCompile Include="Scence.cpp" />
-    <ClCompile Include="ScenceGame.cpp" />
-    <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\SceneGame.cpp" />
+    <ClCompile Include="Animations\Sprites.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Teleporter.cpp" />
-    <ClCompile Include="Textures.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\UnderworldLord.cpp" />
-    <ClCompile Include="Object\IndoorEnemy\Waver.cpp" />
+    <ClCompile Include="Animations\Textures.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Worm.cpp" />
+    <ClCompile Include="Object\Bullet\SophiaBullet.cpp" />
+    <ClCompile Include="Object\Effect\SmallBulletExplosion.cpp" />
+    <ClCompile Include="Map\Section.cpp" />
+    <ClCompile Include="Utils\Utils.cpp" />
+    <ClCompile Include="Object\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animations\Animations.h" />
+    <ClInclude Include="Object\WallImage.h" />
+    <ClInclude Include="Object\Gateway.h" />
+    <ClInclude Include="Object\Effect\Effect.h" />
+    <ClInclude Include="Object\Bullet\Bullet.h" />
+    <ClInclude Include="Scene\CSceneManager.h" />
+    <ClInclude Include="Scene\KeyEventHandler.h" />
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
-    <ClInclude Include="Object\IndoorEnemy\Plutonium.h" />
     <ClInclude Include="Object\IndoorEnemy\Cannon.h" />
-    <ClInclude Include="Object\IndoorEnemy\Dasher.h" />
-    <ClInclude Include="debug.h" />
     <ClInclude Include="Object\OutdoorEnemy\Dome.h" />
     <ClInclude Include="Object\OutdoorEnemy\OutdoorEnemy.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Define.h" />
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Define\Define.h" />
     <ClInclude Include="Object\IndoorEnemy\Eyeball.h" />
     <ClInclude Include="Object\OutdoorEnemy\Floater.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Object\GameObject.h" />
     <ClInclude Include="Object\IndoorEnemy\IndoorEnemy.h" />
     <ClInclude Include="Object\OutdoorEnemy\Insect.h" />
     <ClInclude Include="Object\OutdoorEnemy\Jumper.h" />
-    <ClInclude Include="Grid.h" />
-    <ClInclude Include="Map.h" />
+    <ClInclude Include="Grid\Grid.h" />
+    <ClInclude Include="Map\Map.h" />
     <ClInclude Include="Object\OutdoorEnemy\Mine.h" />
     <ClInclude Include="Object\OutdoorEnemy\Orb.h" />
-    <ClInclude Include="Object\OutdoorEnemy\Ship.h" />
     <ClInclude Include="Object\OutdoorEnemy\Skull.h" />
     <ClInclude Include="Object\Player\Sophia.h" />
-    <ClInclude Include="Scence.h" />
-    <ClInclude Include="ScenceGame.h" />
-    <ClInclude Include="Sprites.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneGame.h" />
+    <ClInclude Include="Animations\Sprites.h" />
     <ClInclude Include="Object\IndoorEnemy\Teleporter.h" />
-    <ClInclude Include="Textures.h" />
-    <ClInclude Include="Object\IndoorEnemy\UnderworldLord.h" />
-    <ClInclude Include="Object\IndoorEnemy\Waver.h" />
+    <ClInclude Include="Animations\Textures.h" />
     <ClInclude Include="Object\OutdoorEnemy\Worm.h" />
+    <ClInclude Include="Object\Bullet\SophiaBullet.h" />
+    <ClInclude Include="Object\Effect\SmallBulletExplosion.h" />
+    <ClInclude Include="Map\Section.h" />
+    <ClInclude Include="Utils\Utils.h" />
+    <ClInclude Include="Object\Wall.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="map2.txt">
+    <Text Include="Map\map2.txt">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </Text>
+    <Text Include="Scene\scene.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />
-    <Image Include="textures\enemies.png" />
+    <Image Include="textures\enemies.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </Image>
     <Image Include="textures\tiles.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
