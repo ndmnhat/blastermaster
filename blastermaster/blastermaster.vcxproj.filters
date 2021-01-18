@@ -1,14 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\BossCrabullus.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Dome.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Floater.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Insect.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Jumper.cpp" />
-    <ClCompile Include="Object\OutdoorEnemy\Mine.cpp" />
-    <ClCompile Include="Object\OutdoorEnemy\Orb.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\OutdoorEnemy.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Skull.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Worm.cpp" />
@@ -38,6 +35,21 @@
     <ClCompile Include="Object\Gateway.cpp" />
     <ClCompile Include="Map\Section.cpp" />
     <ClCompile Include="Object\WallImage.cpp" />
+    <ClCompile Include="Object\Player\Player.cpp" />
+    <ClCompile Include="Object\Player\Jason.cpp" />
+    <ClCompile Include="Object\Bullet\JasonBullet.cpp" />
+    <ClCompile Include="Animations\RenderEffect.cpp" />
+    <ClCompile Include="Object\Player\BigJason.cpp" />
+    <ClCompile Include="Object\Bullet\BigJasonBullet.cpp" />
+    <ClCompile Include="Object\Item\Item.cpp" />
+    <ClCompile Include="Object\Item\Power.cpp" />
+    <ClCompile Include="Object\Portal.cpp" />
+    <ClCompile Include="Object\Bullet\FloaterBullet.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="HUD\HealthBar.cpp" />
+    <ClCompile Include="Object\OutdoorEnemy\Orb1.cpp" />
+    <ClCompile Include="Object\OutdoorEnemy\Orb2.cpp" />
+    <ClCompile Include="Object\Bullet\SkullBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
@@ -45,8 +57,6 @@
     <ClInclude Include="Object\OutdoorEnemy\Floater.h" />
     <ClInclude Include="Object\OutdoorEnemy\Insect.h" />
     <ClInclude Include="Object\OutdoorEnemy\Jumper.h" />
-    <ClInclude Include="Object\OutdoorEnemy\Mine.h" />
-    <ClInclude Include="Object\OutdoorEnemy\Orb.h" />
     <ClInclude Include="Object\OutdoorEnemy\OutdoorEnemy.h" />
     <ClInclude Include="Object\OutdoorEnemy\Skull.h" />
     <ClInclude Include="Object\OutdoorEnemy\Worm.h" />
@@ -77,6 +87,20 @@
     <ClInclude Include="Object\Gateway.h" />
     <ClInclude Include="Map\Section.h" />
     <ClInclude Include="Object\WallImage.h" />
+    <ClInclude Include="Object\Player\Player.h" />
+    <ClInclude Include="Object\Player\Jason.h" />
+    <ClInclude Include="Object\Bullet\JasonBullet.h" />
+    <ClInclude Include="Animations\RenderEffect.h" />
+    <ClInclude Include="Object\Player\BigJason.h" />
+    <ClInclude Include="Object\Bullet\BigJasonBullet.h" />
+    <ClInclude Include="Object\Item\Item.h" />
+    <ClInclude Include="Object\Item\Power.h" />
+    <ClInclude Include="Object\Portal.h" />
+    <ClInclude Include="Object\Bullet\FloaterBullet.h" />
+    <ClInclude Include="HUD\HealthBar.h" />
+    <ClInclude Include="Object\OutdoorEnemy\Orb1.h" />
+    <ClInclude Include="Object\OutdoorEnemy\Orb2.h" />
+    <ClInclude Include="Object\Bullet\SkullBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />
@@ -86,5 +110,6 @@
   <ItemGroup>
     <Text Include="Map\map2.txt" />
     <Text Include="Scene\scene.txt" />
+    <Text Include="Scene\scene2.txt" />
   </ItemGroup>
 </Project>

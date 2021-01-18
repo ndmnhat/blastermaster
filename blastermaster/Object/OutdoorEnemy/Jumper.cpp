@@ -5,8 +5,9 @@ CJumper::CJumper() : COutdoorEnemy()
 	enemyType = OutdoorEnemyType::Jumper;
 	width = JUMPER_BBOX_WIDTH;
 	height = JUMPER_BBOX_HEIGHT;
+	health = JUMPER_HEALTH;
+	damage = JUMPER_DAMAGE;
 	nx = -1;
-	jumpingHeight = 0.0f;
 }
 
 void CJumper::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -79,9 +80,7 @@ void CJumper::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->nx != 0) vx = 0;
 				if (e->ny != 0)
 				{
-					if (vy < 0)
 						isJumping = false;
-					vy = 0;
 				}
 				break;
 			case TYPE_SOPHIA: case TYPE_ENEMY:
@@ -144,9 +143,4 @@ void CJumper::Render()
 void CJumper::SetState(int state)
 {
 	CGameObject::SetState(state);
-}
-
-void CJumper::GetBoundingBox(float& left, float& top, float& right, float& bottom)
-{
-	COutdoorEnemy::GetBoundingBox(left, top, right, bottom);
 }

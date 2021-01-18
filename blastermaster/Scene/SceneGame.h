@@ -2,6 +2,7 @@
 #include "..\Animations\Animations.h"
 #include "Scene.h"
 #include "..\Object\Player\Sophia.h"
+#include "..\Object\Player\Jason.h"
 #include "..\Object\Wall.h"
 #include "..\Object\OutdoorEnemy\OutdoorEnemy.h"
 #include "..\Object\OutdoorEnemy\Worm.h"
@@ -14,19 +15,32 @@
 #include "..\Object\IndoorEnemy\IndoorEnemy.h"
 #include "..\Object\IndoorEnemy\Teleporter.h"
 #include "..\Object\IndoorEnemy\Cannon.h"
+#include "..\Object\Player\BigJason.h"
+#include "CSceneManager.h"
+#include "..\Object\OutdoorEnemy\Insect.h"
+#include "..\Object\OutdoorEnemy\Skull.h"
+#include "..\Object\OutdoorEnemy\Orb1.h"
+#include "..\Object\OutdoorEnemy\Orb2.h"
 
 #include <fstream>
 #include "..\Map\Map.h"
 #include "..\Grid\Grid.h"
 #include "..\Map\Section.h"
+#include "..\HUD\HealthBar.h"
 
 using namespace std;
 class CMap; //forward declaration to temporarily fix circular include
 class CSceneGame : public CScene
 {
 protected:
+	bool isLoaded = false;
+	unordered_map<int, LPSECTION> backupSections;
+	vector<LPGAMEOBJECT> backupObjects;
 	CMap *map;
-	CSophia *player;
+	CHealthBar *healthbar;
+	//CSophia *sophia;
+	//CJason* jason;
+	//CPlayer* currentPlayer;
 	vector<LPGAMEOBJECT> objects;
 	void _ParseSection_TEXTURES(std::string line);
 	void _ParseSection_SPRITES(std::string line);
@@ -38,14 +52,13 @@ protected:
 	friend class CSceneGameKeyHandler;
 
 public:
+	CPlayer *currentPlayer;
 	CSceneGame(int id, LPCWSTR filePath);
-
+	CPlayer *GetPlayer() { return currentPlayer; }
 	void Load();
 	void Unload();
 	void Update(DWORD dt);
 	void Render();
-
-	CSophia *GetPlayer() { return player; }
 	~CSceneGame();
 	//friend class CPlayScenceKeyHandler;
 };

@@ -1,5 +1,5 @@
 #include "Section.h"
-
+#include <stdexcept>
 CSectionManager* CSectionManager::_instance = NULL;
 
 void CSectionManager::Add(int id, LPSECTION Section)
@@ -7,15 +7,42 @@ void CSectionManager::Add(int id, LPSECTION Section)
 	Sections[id] = Section;
 }
 
-void CSectionManager::ChangeSection(int id)
+int CSectionManager::GetObjectSectionID(LPGAMEOBJECT Object)
 {
-	bool isSet = false;
+	if (Object != NULL)
+	{
+		for (int i = 0; i < Sections.size(); ++i)
+		{
+			try
+			{
+				if (Sections.at(i) != NULL)
+				{
+					float left, top, right, bottom;
+					float Oleft, Otop, Oright, Obottom;
+					Sections.at(i)->GetSectionBoundary(left, top, right, bottom);
+					Object->GetBoundingBox(Oleft, Otop, Oright, Obottom);
+					if (!(Oleft >= right || Oright <= left || Otop <= bottom || Obottom >= top))
+						return i;
+				}
+			}
+			catch (const std::out_of_range& e)
+			{
+				continue;
+			}
+		}
+	}
+	return 0;
+}
+
+void CSectionManager::ChangeSection(int id, bool isSet)
+{
 	if (CurrentSection == NULL)
 		isSet = true;
 	int screen_height = CGlobalVariable::GetInstance()->ScreenHeight;
 	int screen_width = CGlobalVariable::GetInstance()->ScreenWidth;
 
 	CurrentSection = Sections[id];
+	CurrentSectionID = id;
 	float left, top, right, bottom;
 	CurrentSection->GetSectionBoundary(left, top, right, bottom);
 	if(isSet)
@@ -34,4 +61,5 @@ LPSECTION CSectionManager::Get(unsigned int id)
 
 CSection::CSection()
 {
+
 }

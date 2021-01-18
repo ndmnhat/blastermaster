@@ -21,13 +21,16 @@ void CSmallBulletExplosion::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (animation->GetCurrentFrame() == animation->GetFramesSize() - 1)
 	{
-		SAFE_DELETE(animation);
 		this->isDestroyed = true;
 	}
 }
 
 void CSmallBulletExplosion::Render()
 {
+	int width = SMALL_BULLET_EXLOSION_BBOX_WIDTH;
+	int height = SMALL_BULLET_EXLOSION_BBOX_HEIGHT
+	float centerx = (float)width / 2;
+	float centery = (float)height / 2;
 	if(!isDestroyed)
-		this->animation->Render(x, y);
+		this->animation->Render(x, y,255,255,255,255,&D3DXVECTOR3(centerx,centery,0.0f));
 }

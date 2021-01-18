@@ -4,13 +4,16 @@ using System.IO.Enumeration;
 using System.Xml.Linq;
 using System.Linq;
 using System.Security.Principal;
-
+using System.Collections.Generic;
 namespace tmxtotxt
 {
     class Program
     {
         static void Main(string[] args)
         {
+            args[0] = "tiled.tmx";
+            args[1] = "0";
+            args[2] = "tiled.txt";
             string fileName = args[0];
             string txtFile = args[2];
 
@@ -27,6 +30,8 @@ namespace tmxtotxt
             var mapHeight = Convert.ToInt32(xDoc.Root.Attribute("height").Value);
             var tileWidth = Convert.ToInt32(xDoc.Root.Attribute("tilewidth").Value);
             var tileHeight = Convert.ToInt32(xDoc.Root.Attribute("tileheight").Value);
+            List<XElement> xElements = xDoc.Root.Elements().ToList();
+            List<XAttribute> xA = xElements[0].Attributes().ToList();
             var tilecount = Convert.ToInt32(xDoc.Root.Element("tileset").Attribute("tilecount").Value);
             var tilecolumn = Convert.ToInt32(xDoc.Root.Element("tileset").Attribute("columns").Value);
             sw.WriteLine("{0} {1} {2} {3} {4}", mapWidth, mapHeight, tileWidth, tileHeight, tilecount, tilecolumn);

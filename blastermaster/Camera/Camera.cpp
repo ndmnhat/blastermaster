@@ -43,27 +43,13 @@ void CCamera::Update(DWORD dt)
 	int screen_width = CGlobalVariable::GetInstance()->ScreenWidth;
 	if (isMovingToNewSection)
 	{
-		if (backupLeftBoundary < LeftBoundary) // Move to left
+		if (this->xCam < LeftBoundary) 
 		{
-			if (this->xCam < LeftBoundary) //Still moving
-			{
-				this->xCam += CAMERA_MOVE_SECTION_SPEED * dt;
-			}
-			else //Moving done
-			{
-				this->isMovingToNewSection = false;
-			}
+			this->xCam += CAMERA_MOVE_SECTION_SPEED * dt;
 		}
-		else // Move to right
+		if (this->xCam > RightBoundary)
 		{
-			if (this->xCam > RightBoundary) //Still moving
-			{
-				this->xCam -= CAMERA_MOVE_SECTION_SPEED * dt;
-			}
-			else //Moving done
-			{
-				this->isMovingToNewSection = false;
-			}
+			this->xCam -= CAMERA_MOVE_SECTION_SPEED * dt;
 		}
 		if (this->yCam>TopBoundary)
 		{
@@ -73,6 +59,8 @@ void CCamera::Update(DWORD dt)
 		{
 			this->yCam += CAMERA_MOVE_SECTION_SPEED * dt;
 		}
+		if (this->yCam <= TopBoundary && this->yCam >= BottomBoundary && this->xCam >= LeftBoundary && this->xCam <= RightBoundary)
+			this->isMovingToNewSection = false;
 		return;
 	}
 	//Follow object
