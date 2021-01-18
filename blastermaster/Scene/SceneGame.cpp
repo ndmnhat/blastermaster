@@ -263,6 +263,17 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		obj = new CJumper();
 		//CCamera::GetInstance()->SetFollow(obj);
 		break;
+	case TYPE_ENEMY_EYEBALL:
+		obj = new CEyeball();
+		//CCamera::GetInstance()->SetFollow(obj);
+		break;
+	case TYPE_ENEMY_CANNON:
+		obj = new CCannon();
+		//CCamera::GetInstance()->SetFollow(obj);
+		break;
+	case TYPE_ENEMY_TELEPORTER:
+		obj = new CCannon();
+    break;
 	case TYPE_ENEMY_INSECT:
 		obj = new CInsect();
 	//	//CCamera::GetInstance()->SetFollow(obj);

@@ -11,7 +11,15 @@ enum IndoorEnemyType {
 class CIndoorEnemy : public CGameObject
 {
 public:
-	CIndoorEnemy() : CGameObject() {};
+	//CIndoorEnemy() : CGameObject() {};
+
+	IndoorEnemyType enemyType;
+
+	CIndoorEnemy();
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void Render();
+	virtual void SetState(int state);
 };
 
 
