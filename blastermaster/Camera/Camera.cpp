@@ -22,6 +22,16 @@ D3DXVECTOR3 CCamera::Transform(D3DXVECTOR3 mapPosition)
 	return result;
 }
 
+void CCamera::MoveToSection(float left, float top, float right, float bottom)
+{
+	isMovingToNewSection = true;
+	backupLeftBoundary = LeftBoundary;
+	LeftBoundary = left;
+	TopBoundary = top;
+	RightBoundary = right;
+	BottomBoundary = bottom;
+}
+
 void CCamera::SetFollow(CGameObject* gameobject)
 {
 	this->objectToFollow = gameobject;
@@ -29,34 +39,59 @@ void CCamera::SetFollow(CGameObject* gameobject)
 
 void CCamera::Update(DWORD dt)
 {
+	int screen_height = CGlobalVariable::GetInstance()->ScreenHeight;
+	int screen_width = CGlobalVariable::GetInstance()->ScreenWidth;
+	if (isMovingToNewSection)
+	{
+		if (this->xCam < LeftBoundary) 
+		{
+			this->xCam += CAMERA_MOVE_SECTION_SPEED * dt;
+		}
+		if (this->xCam > RightBoundary)
+		{
+			this->xCam -= CAMERA_MOVE_SECTION_SPEED * dt;
+		}
+		if (this->yCam>TopBoundary)
+		{
+			this->yCam -= CAMERA_MOVE_SECTION_SPEED * dt;
+		}
+		if (this->yCam < BottomBoundary)
+		{
+			this->yCam += CAMERA_MOVE_SECTION_SPEED * dt;
+		}
+		if (this->yCam <= TopBoundary && this->yCam >= BottomBoundary && this->xCam >= LeftBoundary && this->xCam <= RightBoundary)
+			this->isMovingToNewSection = false;
+		return;
+	}
 	//Follow object
 	if (objectToFollow != NULL)
 	{
-		if (objectToFollow->GetX() < xCam + (SCREEN_WIDTH - freeCamWidth) / 2)
-			this->xCam = objectToFollow->GetX() - (SCREEN_WIDTH - freeCamWidth) / 2;
+		if (objectToFollow->GetX() < xCam + (screen_width - freeCamWidth) / 2)
+			this->xCam = objectToFollow->GetX() - (screen_width - freeCamWidth) / 2;
 
-		if (objectToFollow->GetX() > xCam + (SCREEN_WIDTH + freeCamWidth) / 2 - 30)
-			this->xCam = objectToFollow->GetX() - (SCREEN_WIDTH + freeCamWidth) / 2 + 30;
+		if (objectToFollow->GetX() > xCam + (screen_width + freeCamWidth) / 2 - 30)
+			this->xCam = objectToFollow->GetX() - (screen_width + freeCamWidth) / 2 + 30;
 
-		if (objectToFollow->GetY() > yCam - (SCREEN_HEIGHT - freeCamHeight) / 2)
-			this->yCam = objectToFollow->GetY() + (SCREEN_HEIGHT - freeCamHeight) / 2;
+		if (objectToFollow->GetY() > yCam - (screen_height - freeCamHeight) / 2)
+			this->yCam = objectToFollow->GetY() + (screen_height - freeCamHeight) / 2;
 
-		if (objectToFollow->GetY() < yCam - (SCREEN_HEIGHT + freeCamHeight) / 2)
-			this->yCam = objectToFollow->GetY() + (SCREEN_HEIGHT + freeCamHeight) / 2;
+		if (objectToFollow->GetY() < yCam - (screen_height + freeCamHeight) / 2)
+			this->yCam = objectToFollow->GetY() + (screen_height + freeCamHeight) / 2;
 	}
 
-	//this->xCam = objectToFollow->GetX() - SCREEN_WIDTH/2;
-	//this->yCam = objectToFollow->GetY() + SCREEN_HEIGHT/2;
+	//this->xCam = objectToFollow->GetX() - WINDOW_WIDTH/2;
+	//this->yCam = objectToFollow->GetY() + WINDOW_HEIGHT/2;
 	
 	//Check boundary
-	if (this->xCam < 0)
-		this->xCam = 0;
-	if (this->xCam > this->RightBoundary)
-		this->xCam = this->RightBoundary;
-	if (this->yCam > this->TopBoundary)
-		this->yCam = this->TopBoundary;
-	if (this->yCam < SCREEN_HEIGHT)
-		this->yCam = SCREEN_HEIGHT;
+	if (this->xCam < LeftBoundary)
+		this->xCam = LeftBoundary;
+	if (this->xCam > RightBoundary)
+		this->xCam = RightBoundary;
+	if (this->yCam > TopBoundary)
+		this->yCam = TopBoundary;
+	if (this->yCam < BottomBoundary)
+		this->yCam = BottomBoundary;
+	//DebugOut(L"%f, %f, %f\n",this->yCam, TopBoundary, BottomBoundary);
 }
 
 CCamera* CCamera::GetInstance()

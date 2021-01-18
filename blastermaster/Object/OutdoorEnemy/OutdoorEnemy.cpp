@@ -9,8 +9,8 @@ void COutdoorEnemy::GetBoundingBox(float& left, float& top, float& right, float&
 {
 	left = x;
 	right = left + width;
-	bottom = y;
-	top = bottom + height;
+	top = y;
+	bottom = top - height;
 }
 
 void COutdoorEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -25,4 +25,19 @@ void COutdoorEnemy::Render()
 void COutdoorEnemy::SetState(int state)
 {
 	CGameObject::SetState(state);
+}
+
+int COutdoorEnemy::GetSophiaPosInCoobject(std::vector<LPGAMEOBJECT>* coObjects)
+{
+	if (coObjects != NULL)
+	{
+		for (UINT i = 0; i < coObjects->size(); i++)
+		{
+			if (coObjects->at(i)->type == TYPE_SOPHIA)
+			{
+				return i;
+			}
+		}
+	}
+	return -1;
 }

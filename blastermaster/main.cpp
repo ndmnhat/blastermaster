@@ -38,6 +38,7 @@ CCamera* cam = CCamera::GetInstance();
 //CMap m;
 
 CScene* scenegame = new CSceneGame(1, L"Scene\\scene.txt");
+CScene* scenegame2 = new CSceneGame(2, L"Scene\\scene2.txt");
 //class CSampleKeyHander: public CKeyEventHandler
 //{
 //	virtual void KeyState(BYTE *states);
@@ -361,15 +362,19 @@ int Run()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
+	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	game = CGame::GetInstance();
 	game->Init(hWnd);
 	game->InitKeyboard();
 	//scenegame->Load();
 	CSceneManager::GetInstance()->AddScene(scenegame);
+	CSceneManager::GetInstance()->AddScene(scenegame2);
 	CSceneManager::GetInstance()->SetScene(1);
 	//LoadResources();
+
+	SetWindowPos(hWnd, 0, 0, 0, WINDOW_WIDTH * 2, WINDOW_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+
 	Run();
 
 
