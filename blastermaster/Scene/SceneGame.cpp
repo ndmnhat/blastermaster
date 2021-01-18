@@ -197,7 +197,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		obj = new CBigJason();
 		CSceneManager::GetInstance()->BigJason = (CBigJason*)obj;
 		currentPlayer = CSceneManager::GetInstance()->BigJason;
-		CCamera::GetInstance()->SetFollow(obj); 
+		//CCamera::GetInstance()->SetFollow(obj); 
 		DebugOut(L"[INFO] Bigjason object created!\n");
 		break;
 	case TYPE_WALL:
@@ -269,7 +269,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		break;
 	case TYPE_ENEMY_CANNON:
 		obj = new CCannon();
-		//CCamera::GetInstance()->SetFollow(obj);
+		CCamera::GetInstance()->SetFollow(obj);
 		break;
 	case TYPE_ENEMY_TELEPORTER:
 		obj = new CCannon();

@@ -81,10 +81,7 @@ void COrb1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (e->nx != 0) {
 					this->SetState(ORB_STATE_TURNING);
-					if (e->nx > 0)
-						this->nx = 1;
-					if (e->nx < 0)
-						this->nx = -1;
+					this->nx *= -1;
 				}
 
 				if (e->ny != 0) vy = 0;

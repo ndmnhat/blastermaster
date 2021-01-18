@@ -13,7 +13,7 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt);
 	vx = 0;
 
-	if (coObjects != NULL)
+	/*if (coObjects != NULL){
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
 			if (coObjects->at(i)->type == TYPE_SOPHIA)
@@ -28,6 +28,7 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 		}
+	}*/
 
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
@@ -120,7 +121,7 @@ void CCannon::Render()
 		ani = CANNON_ANI_LEFT;
 	}
 
-	animation_set->at(ani)->Render(x, y);
+	animation_set->at(0)->Render(x, y);
 	//RenderBoundingBox();
 }
 
