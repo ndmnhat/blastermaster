@@ -50,6 +50,7 @@
     <ClCompile Include="Object\OutdoorEnemy\Orb1.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Orb2.cpp" />
     <ClCompile Include="Object\Bullet\SkullBullet.cpp" />
+    <ClCompile Include="Object\Bullet\EyeballBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
@@ -101,6 +102,7 @@
     <ClInclude Include="Object\OutdoorEnemy\Orb1.h" />
     <ClInclude Include="Object\OutdoorEnemy\Orb2.h" />
     <ClInclude Include="Object\Bullet\SkullBullet.h" />
+    <ClInclude Include="Object\Bullet\EyeballBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />

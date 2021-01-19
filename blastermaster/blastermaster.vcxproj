@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClCompile Include="Animations\Animations.cpp" />
     <ClCompile Include="HUD\HealthBar.cpp" />
+    <ClCompile Include="Object\Bullet\EyeballBullet.cpp" />
     <ClCompile Include="Object\Bullet\FloaterBullet.cpp" />
     <ClCompile Include="Object\Item\Item.cpp" />
     <ClCompile Include="Object\Bullet\BigJasonBullet.cpp" />
@@ -205,6 +206,7 @@
   <ItemGroup>
     <ClInclude Include="Animations\Animations.h" />
     <ClInclude Include="HUD\HealthBar.h" />
+    <ClInclude Include="Object\Bullet\EyeballBullet.h" />
     <ClInclude Include="Object\Bullet\FloaterBullet.h" />
     <ClInclude Include="Object\Item\Item.h" />
     <ClInclude Include="Object\Bullet\BigJasonBullet.h" />

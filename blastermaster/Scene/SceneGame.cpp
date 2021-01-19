@@ -272,7 +272,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		CCamera::GetInstance()->SetFollow(obj);
 		break;
 	case TYPE_ENEMY_TELEPORTER:
-		obj = new CCannon();
+		obj = new CTeleporter();
     break;
 	case TYPE_ENEMY_INSECT:
 		obj = new CInsect();

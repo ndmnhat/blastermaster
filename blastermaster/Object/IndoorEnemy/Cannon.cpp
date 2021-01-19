@@ -5,37 +5,34 @@ CCannon::CCannon()
 	enemyType = IndoorEnemyType::Cannon;
 	width = CANNON_BBOX_WIDTH;
 	height = CANNON_BBOX_HEIGHT;
-	ny = 1;
+	ClipSize = CANNON_BULLET_CLIPSIZE;
+	reloadingTimeCount = GetTickCount();
+	health = CANNON_HEALTH;
+	damage = CANNON_DAMAGE;
+	isShootingVertically = true;
 }
 
 void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt);
-	vx = 0;
-
-	/*if (coObjects != NULL){
-		for (UINT i = 0; i < coObjects->size(); i++)
-		{
-			if (coObjects->at(i)->type == TYPE_SOPHIA)
-			{
-				if (this->x - coObjects->at(i)->x >= 30)
-				{
-					nx = -1;
-				}
-				else if (this->x - coObjects->at(i)->x < -30)
-				{
-					nx = 1;
-				}
-			}
+	if (ClipSize > 0) {
+		if (isShootingVertically == true) {
+			Fire(90);
+			Fire(270);
+			isShootingVertically = false;
 		}
-	}*/
-
+		else {
+			Fire(0);
+			Fire(180);
+			isShootingVertically = true;
+		}
+	}
+	
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
 	if (coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
-			if (coObjects->at(i)->type != TYPE_ENEMY_CANNON)
+			if (coObjects->at(i)->type != TYPE_ENEMY)
 				listObject->push_back(coObjects->at(i));
 		}
 
@@ -46,13 +43,7 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	CalcPotentialCollisions(listObject, coEvents);
 
-	if (coEvents.size() == 0)
-	{
-		x += dx;
-		y += dy;
-	}
-
-	else
+	if (coEvents.size() != 0)
 	{
 		float min_tx, min_ty, nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
@@ -70,7 +61,7 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny != 0) vy = 0;
 
 				break;
-			case TYPE_SOPHIA: case TYPE_ENEMY:
+			case TYPE_SOPHIA:
 				x += dx;
 				y += dy;
 			default:
@@ -103,6 +94,14 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
+	if (ClipSize == 0)
+	{
+		if (GetTickCount() - reloadingTimeCount > CANNON_BULLET_RELOADTIME)
+		{
+			ClipSize = CANNON_BULLET_CLIPSIZE;
+			reloadingTimeCount = GetTickCount();
+		}
+	}
 }
 
 void CCannon::SetState(int state)
@@ -113,14 +112,6 @@ void CCannon::SetState(int state)
 void CCannon::Render()
 {
 	int ani;
-	if (nx > 0) {
-		ani = CANNON_ANI_RIGHT;
-	}
-	else
-	{
-		ani = CANNON_ANI_LEFT;
-	}
-
 	animation_set->at(0)->Render(x, y);
 	//RenderBoundingBox();
 }
@@ -128,4 +119,30 @@ void CCannon::Render()
 void CCannon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	CIndoorEnemy::GetBoundingBox(left, top, right, bottom);
+}
+
+void CCannon::Fire(int Direction)
+{
+	//No more bullet in clip
+	if (ClipSize == 0)
+		return;
+	ClipSize--;
+
+	LPBULLET bullet = new CEyeballBullet();
+	float bulletX, bulletY;
+
+	if (Direction == 0 || Direction == 180) {
+		bulletY = this->y - CANNON_BBOX_HEIGHT / 2 + 5;
+		if (Direction == 0)		bulletX = this->x;
+		if (Direction == 180)	bulletX = this->x + CANNON_BBOX_WIDTH;
+	}
+	if (Direction == 90 || Direction == 270) {
+		bulletX = this->x + (CANNON_BBOX_WIDTH / 2 - 5);
+		if (Direction == 90)	bulletY = this->y;
+		if (Direction == 270)	bulletY = this->y - CANNON_BBOX_HEIGHT;
+	}
+
+	bullet->SetPosition(bulletX, bulletY);
+	bullet->SetDirection(Direction);
+	CGrid::GetInstance()->addObject(bullet);
 }

@@ -14,6 +14,8 @@ public:
 	//CIndoorEnemy() : CGameObject() {};
 
 	IndoorEnemyType enemyType;
+	int health;
+	int damage;
 
 	CIndoorEnemy();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

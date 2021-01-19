@@ -1,7 +1,9 @@
-#include "FloaterBullet.h"
 #include "..\Player\Sophia.h"
 #include "..\Player\Jason.h"
-void CFloaterBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+#include "..\Player\BigJason.h"
+#include "EyeballBullet.h"
+
+void CEyeballBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vx = -cos(DirectioninRad) * Speed;
 	vy = sin(DirectioninRad) * Speed;
@@ -67,8 +69,13 @@ void CFloaterBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				((CSophia*)(e->obj))->SetState(SOPHIA_STATE_ATTACKED);
 			}
 			break;
-			default: 
+			case TYPE_BIGJASON:
+			{
+				this->isDestroyed = true;
+				((CBigJason*)(e->obj))->SetState(BIGJASON_STATE_ATTACKED);
+			}
 			break;
+			default: break;
 
 			}
 		}
@@ -105,25 +112,25 @@ void CFloaterBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->isDestroyed = true;
 }
 
-void CFloaterBullet::Render()
+void CEyeballBullet::Render()
 {
-	animation_set->at(0)->Render(x, y);
+	animation_set->at(1)->Render(x, y);
 }
 
-void CFloaterBullet::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+void CEyeballBullet::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
 	top = y;
-	right = left + FLOATER_BULLET_BBOX_WIDTH;
-	bottom = top - FLOATER_BULLET_BBOX_HEIGHT;
+	right = left + EYEBALL_BULLET_BBOX_WIDTH;
+	bottom = top - EYEBALL_BULLET_BBOX_HEIGHT;
 }
 
-CFloaterBullet::CFloaterBullet()
+CEyeballBullet::CEyeballBullet()
 {
-	this->Speed =    FLOATER_BULLET_SPEED;
-	this->Damage =   FLOATER_BULLET_DAMAGE;
-	this->LifeTime = FLOATER_BULLET_LIFETIME;
-	LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(FLOATER_BULLET_ANIMATION_SET_ID);
+	this->Speed = EYEBALL_BULLET_SPEED;
+	this->Damage = EYEBALL_BULLET_DAMAGE;
+	this->LifeTime = EYEBALL_BULLET_LIFETIME;
+	LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(EYEBALL_BULLET_ANIMATION_SET_ID);
 	this->SetAnimationSet(ani_set);
 	this->lifeTimeStart = GetTickCount();
 }

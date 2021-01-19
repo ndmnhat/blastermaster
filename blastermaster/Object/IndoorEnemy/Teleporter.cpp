@@ -7,38 +7,36 @@ CTeleporter::CTeleporter()
 	height = TELEPORTER_BBOX_HEIGHT;
 	this->x = x;
 	this->y = y;
+	SetState(TELEPORTER_STATE_IDLE);
+	idleTimeCount = GetTickCount();
+	srand(time(NULL));
 }
 
 void CTeleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt);
-
-	//vy = -WORM_GRAVITY;
-	//vx = WORM_WALKING_SPEED * nx;
-
-	if (coObjects != NULL)
-		for (UINT i = 0; i < coObjects->size(); i++)
-		{
-			if (coObjects->at(i)->type == TYPE_SOPHIA)
-			{
-				if (this->x - coObjects->at(i)->x >= 30)
-				{
-					nx = -1;
-				}
-				else if (this->x - coObjects->at(i)->x < -30)
-				{
-					nx = 1;
-				}
-			}
-		}
+	if (state == TELEPORTER_STATE_TELEPORT && teleportCount != 0) {
+		teleportCount--;
+		teleportGapTimeCount = GetTickCount();
+		dx = rand() % 10 - 5;
+		dy = rand() % 10 - 5;
+		x += dx;
+		y += dy;
+	}
 
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
 	if (coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
-			if (coObjects->at(i)->type != TYPE_ENEMY_TELEPORTER)
+			if (coObjects->at(i)->type != TYPE_ENEMY)
 				listObject->push_back(coObjects->at(i));
+			if (coObjects->at(i)->type == TYPE_BIGJASON)
+			{
+				if (state == TELEPORTER_STATE_IDLE && GetTickCount() - idleTimeCount > TELEPORTER_IDLE_TIME) {
+					SetState(TELEPORTER_STATE_TRANSFORM);
+					transformTimeCount = GetTickCount();
+				}
+			}
 		}
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -72,9 +70,6 @@ void CTeleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny != 0) vy = 0;
 
 				break;
-			case TYPE_SOPHIA: case TYPE_ENEMY:
-				x += dx;
-				y += dy;
 			default:
 				break;
 			}
@@ -105,13 +100,42 @@ void CTeleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
+
+	if (state == TELEPORTER_STATE_TRANSFORM) {
+		if (GetTickCount() - transformTimeCount > TELEPORTER_TRANSFORMING_TIME) {
+			SetState(TELEPORTER_STATE_TELEPORT);
+			teleportTimeCount = GetTickCount();
+		}
+	}
+
+	if (state == TELEPORTER_STATE_TELEPORT) {
+		if (GetTickCount() - teleportTimeCount > TELEPORTER_TELEPORTING_TIME) {
+			SetState(TELEPORTER_STATE_IDLE);
+			idleTimeCount = GetTickCount();
+		}
+	}
+
+	if (teleportCount == 0) {
+		if (GetTickCount() - teleportGapTimeCount > TELEPORTER_TELEPORTING_GAP_TIME) {
+			teleportCount = 1;
+		}
+	}
+	DebugOut(L"TELEPORTER STATE: %d\n", state);
 }
 
 void CTeleporter::Render()
 {
 	int ani;
-	if (nx > 0) {
+	switch (state) {
+	case TELEPORTER_STATE_IDLE:
+		ani = TELEPORTER_ANI_IDLE;
+		break;
+	case TELEPORTER_STATE_TRANSFORM:
 		ani = TELEPORTER_ANI_TRANSFORM;
+		break;
+	case TELEPORTER_STATE_TELEPORT:
+		ani = TELEPORTER_ANI_TELEPORT;
+		break;
 	}
 	animation_set->at(ani)->Render(x, y);
 }
@@ -119,6 +143,10 @@ void CTeleporter::Render()
 void CTeleporter::SetState(int state)
 {
 	CGameObject::SetState(state);
+	if (state == TELEPORTER_ANI_IDLE) {
+		dx = 0;
+		dy = 0;
+	}
 }
 
 void CTeleporter::GetBoundingBox(float & left, float & top, float & right, float & bottom)

@@ -18,14 +18,14 @@ void CSkull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		int i = GetSophiaPosInCoobject(coObjects);
 		if (i != -1)
 		{
-		if (nx < 0) {
-			if (int(this->x) == int(coObjects->at(i)->x) + 18) {
-				SetState(SKULL_STATE_ATTACKING);
+			if (nx < 0) {
+				if (int(this->x) == int(coObjects->at(i)->x) + 18) {
+					SetState(SKULL_STATE_ATTACKING);
+				}
 			}
-		}
-		else if (int(this->x) == int(coObjects->at(i)->x)) {
-				SetState(SKULL_STATE_ATTACKING);
-		}
+			else if (int(this->x) == int(coObjects->at(i)->x)) {
+					SetState(SKULL_STATE_ATTACKING);
+			}
 		}
 	}
 	
@@ -55,7 +55,7 @@ void CSkull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
-			if (coObjects->at(i)->type != TYPE_ENEMY_SKULL)
+			if (coObjects->at(i)->type != TYPE_ENEMY)
 				listObject->push_back(coObjects->at(i));
 		}
 
@@ -90,7 +90,7 @@ void CSkull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny != 0) vy = 0;
 
 				break;
-			case TYPE_SOPHIA: case TYPE_ENEMY:
+			case TYPE_SOPHIA:
 				x += dx;
 				y += dy;
 			default:
