@@ -120,7 +120,6 @@ void CTeleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			teleportCount = 1;
 		}
 	}
-	DebugOut(L"TELEPORTER STATE: %d\n", state);
 }
 
 void CTeleporter::Render()

@@ -92,7 +92,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
@@ -102,7 +102,7 @@
       <SubSystem>
       </SubSystem>
       <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
-      <AdditionalDependencies>d3dx9.lib;d3d9.lib;dxguid.lib;dxerr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxerr.lib;dsound.lib;dxguid.lib;winmm.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -153,6 +153,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations\Animations.cpp" />
+    <ClCompile Include="Sound\DSutil.cpp" />
+    <ClCompile Include="Sound\dxutil.cpp" />
     <ClCompile Include="HUD\HealthBar.cpp" />
     <ClCompile Include="Object\Bullet\EyeballBullet.cpp" />
     <ClCompile Include="Object\Bullet\FloaterBullet.cpp" />
@@ -200,11 +202,14 @@
     <ClCompile Include="Object\Effect\SmallBulletExplosion.cpp" />
     <ClCompile Include="Map\Section.cpp" />
     <ClCompile Include="Object\Bullet\SkullBullet.cpp" />
+    <ClCompile Include="Sound\Sound.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
     <ClCompile Include="Object\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\Animations.h" />
+    <ClInclude Include="Sound\DSutil.h" />
+    <ClInclude Include="Sound\dxutil.h" />
     <ClInclude Include="HUD\HealthBar.h" />
     <ClInclude Include="Object\Bullet\EyeballBullet.h" />
     <ClInclude Include="Object\Bullet\FloaterBullet.h" />
@@ -252,6 +257,7 @@
     <ClInclude Include="Object\Effect\SmallBulletExplosion.h" />
     <ClInclude Include="Map\Section.h" />
     <ClInclude Include="Object\Bullet\SkullBullet.h" />
+    <ClInclude Include="Sound\Sound.h" />
     <ClInclude Include="Utils\Utils.h" />
     <ClInclude Include="Object\Wall.h" />
   </ItemGroup>
@@ -268,6 +274,40 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </Image>
     <Image Include="textures\tiles.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\sound\Area2.wav" />
+    <Media Include="Resources\sound\CollectItem.wav" />
+    <Media Include="Resources\sound\EnemyDestroyed.wav" />
+    <Media Include="Resources\sound\Intro.wav" />
+    <Media Include="Resources\sound\JumperJump.wav" />
+    <Media Include="Resources\sound\Outro.wav" />
+    <Media Include="Resources\sound\SkullBombDrop.wav" />
+    <Media Include="Resources\sound\SkullBombExplosion.wav" />
+    <Media Include="Resources\sound\SophiaBulletExplosion.wav" />
+    <Media Include="Resources\sound\SophiaDamaged.wav" />
+    <Media Include="Resources\sound\SophiaGroundTouch.wav" />
+    <Media Include="Resources\sound\SophiaLongJump.wav" />
+    <Media Include="Resources\sound\SophiaShoot.wav" />
+    <Media Include="Resources\sound\TeleporterTransform.wav" />
+    <Media Include="Resources\sound\WormCrawl.wav" />
+    <Media Include="Sound\sound\Area2.wav" />
+    <Media Include="Sound\sound\CollectItem.wav" />
+    <Media Include="Sound\sound\EnemyDestroyed.wav" />
+    <Media Include="Sound\sound\Intro.wav" />
+    <Media Include="Sound\sound\JumperJump.wav" />
+    <Media Include="Sound\sound\Outro.wav" />
+    <Media Include="Sound\sound\SkullBombDrop.wav" />
+    <Media Include="Sound\sound\SkullBombExplosion.wav" />
+    <Media Include="Sound\sound\SophiaBulletExplosion.wav" />
+    <Media Include="Sound\sound\SophiaDamaged.wav" />
+    <Media Include="Sound\sound\SophiaGroundTouch.wav" />
+    <Media Include="Sound\sound\SophiaLongJump.wav" />
+    <Media Include="Sound\sound\SophiaShoot.wav">
+      <DeploymentContent>true</DeploymentContent>
+    </Media>
+    <Media Include="Sound\sound\TeleporterTransform.wav" />
+    <Media Include="Sound\sound\WormCrawl.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

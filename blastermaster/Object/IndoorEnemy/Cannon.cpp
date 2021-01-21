@@ -9,7 +9,7 @@ CCannon::CCannon()
 	reloadingTimeCount = GetTickCount();
 	health = CANNON_HEALTH;
 	damage = CANNON_DAMAGE;
-	isShootingVertically = true;
+	isShootingVertically = false;
 }
 
 void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

@@ -12,7 +12,7 @@
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
-
+#include "Sound/Sound.h"
 #include ".\Game\Game.h"
 #include ".\Object\GameObject.h"
 #include ".\Animations\Animations.h"
@@ -314,8 +314,8 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
-
 	return hWnd;
+
 }
 
 int Run()
@@ -374,9 +374,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//LoadResources();
 
 	SetWindowPos(hWnd, 0, 0, 0, WINDOW_WIDTH * 2, WINDOW_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-
+	Sound::GetInstance()->Init();
+	Sound::GetInstance()->Play(eSound::soundIntro, true, 0);
 	Run();
-
 
 	return 0;
 }

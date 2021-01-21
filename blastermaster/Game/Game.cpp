@@ -322,6 +322,11 @@ CGame* CGame::GetInstance()
 	return __instance;
 }
 
+HWND CGame::GetWindowHandle()
+{
+	return HWND();
+}
+
 #define MAX_GAME_LINE 1024
 
 

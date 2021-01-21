@@ -1,4 +1,5 @@
 #include "BigJason.h"
+#include "../../Sound/Sound.h"
 
 void CBigJason::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -29,6 +30,7 @@ CBigJason::CBigJason()
 void CBigJason::Fire(float Direction)
 {
 	//No more bullet in clip
+	Sound::GetInstance()->Play(eSound::soundSophiaShoot);
 	if (ClipSize < 1)
 		return;
 	ClipSize--;

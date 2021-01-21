@@ -77,3 +77,13 @@ public:
 	int ScreenHeight;
 	int ScreenWidth;
 };
+
+#ifndef SAFE_DELETE
+#define SAFE_DELETE(ptr) \
+if(ptr) \
+{\
+	delete (ptr); \
+	ptr = nullptr; \
+} \
+
+#endif

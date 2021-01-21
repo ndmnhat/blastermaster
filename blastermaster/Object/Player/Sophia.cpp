@@ -1,4 +1,5 @@
 #include "Sophia.h"
+#include "../../Sound/Sound.h"
 
 CSophia::CSophia()
 {

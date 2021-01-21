@@ -51,6 +51,9 @@
     <ClCompile Include="Object\OutdoorEnemy\Orb2.cpp" />
     <ClCompile Include="Object\Bullet\SkullBullet.cpp" />
     <ClCompile Include="Object\Bullet\EyeballBullet.cpp" />
+    <ClCompile Include="Sound\Sound.cpp" />
+    <ClCompile Include="Sound\dxutil.cpp" />
+    <ClCompile Include="Sound\DSutil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
@@ -103,6 +106,9 @@
     <ClInclude Include="Object\OutdoorEnemy\Orb2.h" />
     <ClInclude Include="Object\Bullet\SkullBullet.h" />
     <ClInclude Include="Object\Bullet\EyeballBullet.h" />
+    <ClInclude Include="Sound\Sound.h" />
+    <ClInclude Include="Sound\dxutil.h" />
+    <ClInclude Include="Sound\DSutil.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />
@@ -113,5 +119,37 @@
     <Text Include="Map\map2.txt" />
     <Text Include="Scene\scene.txt" />
     <Text Include="Scene\scene2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\sound\Area2.wav" />
+    <Media Include="Resources\sound\CollectItem.wav" />
+    <Media Include="Resources\sound\EnemyDestroyed.wav" />
+    <Media Include="Resources\sound\JumperJump.wav" />
+    <Media Include="Resources\sound\Intro.wav" />
+    <Media Include="Resources\sound\Outro.wav" />
+    <Media Include="Resources\sound\SkullBombDrop.wav" />
+    <Media Include="Resources\sound\SkullBombExplosion.wav" />
+    <Media Include="Resources\sound\SophiaBulletExplosion.wav" />
+    <Media Include="Resources\sound\SophiaDamaged.wav" />
+    <Media Include="Resources\sound\SophiaGroundTouch.wav" />
+    <Media Include="Resources\sound\SophiaLongJump.wav" />
+    <Media Include="Resources\sound\SophiaShoot.wav" />
+    <Media Include="Resources\sound\TeleporterTransform.wav" />
+    <Media Include="Resources\sound\WormCrawl.wav" />
+    <Media Include="Sound\sound\WormCrawl.wav" />
+    <Media Include="Sound\sound\TeleporterTransform.wav" />
+    <Media Include="Sound\sound\SophiaShoot.wav" />
+    <Media Include="Sound\sound\SophiaLongJump.wav" />
+    <Media Include="Sound\sound\SophiaGroundTouch.wav" />
+    <Media Include="Sound\sound\SophiaDamaged.wav" />
+    <Media Include="Sound\sound\SophiaBulletExplosion.wav" />
+    <Media Include="Sound\sound\SkullBombExplosion.wav" />
+    <Media Include="Sound\sound\SkullBombDrop.wav" />
+    <Media Include="Sound\sound\Outro.wav" />
+    <Media Include="Sound\sound\JumperJump.wav" />
+    <Media Include="Sound\sound\Intro.wav" />
+    <Media Include="Sound\sound\EnemyDestroyed.wav" />
+    <Media Include="Sound\sound\CollectItem.wav" />
+    <Media Include="Sound\sound\Area2.wav" />
   </ItemGroup>
 </Project>
