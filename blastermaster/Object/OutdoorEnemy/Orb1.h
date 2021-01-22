@@ -1,6 +1,6 @@
 #pragma once
 #include "OutdoorEnemy.h"
-
+#include "..\Bullet\JasonBullet.h"
 #define ORB_HEALTH				100
 #define ORB_DAMAGE				100
 

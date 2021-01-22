@@ -5,8 +5,8 @@ COrb2::COrb2()
 	enemyType = OutdoorEnemyType::Orb2;
 	width = ORB_BBOX_WIDTH;
 	height = ORB_BBOX_HEIGHT;
-	health = ORB_HEALTH;
-	damage = ORB_DAMAGE;
+	Health = ORB_HEALTH;
+	Damage = ORB_DAMAGE;
 	nx = 1;
 	ny = 1;
 }
@@ -16,19 +16,19 @@ void COrb2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	int i = GetSophiaPosInCoobject(coObjects);
 	if (i != -1)
 	{
-	if (abs(this->x - coObjects->at(i)->x) <= 30 && abs(this->y - coObjects->at(i)->y) <= 30) {
-		if (this->x < coObjects->at(i)->x)
-			nx = 1;
-		else if (this->x > coObjects->at(i)->x)
-			nx = -1;
+		if (abs(this->x - coObjects->at(i)->x) <= 30 && abs(this->y - coObjects->at(i)->y) <= 30) {
+			if (this->x < coObjects->at(i)->x)
+				nx = 1;
+			else if (this->x > coObjects->at(i)->x)
+				nx = -1;
 
-		if (this->y < coObjects->at(i)->y)
-			ny = 1;
-		else if (this->y > coObjects->at(i)->y)
-			ny = -1;
+			if (this->y < coObjects->at(i)->y)
+				ny = 1;
+			else if (this->y > coObjects->at(i)->y)
+				ny = -1;
+		}
 	}
-	}
-	
+
 
 	vy = ORB_MOVING_SPEED * ny;
 	vx = ORB_MOVING_SPEED * nx;
@@ -90,10 +90,32 @@ void COrb2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				y += dy;
 				break;
 			case TYPE_SOPHIA:
+			{
 				this->isDestroyed = true;
 				CSmallBulletExplosion* explosion = new CSmallBulletExplosion();
 				explosion->SetPosition(x, y);
 				CGrid::GetInstance()->addObject(explosion);
+			}
+
+			break;
+			case TYPE_BULLET:
+			{
+				if (dynamic_cast<CJasonBullet*>(e->obj) || dynamic_cast<CSophiaBullet*>(e->obj))
+				{
+					if (this->Health <= 0) {
+						this->isDestroyed = true;
+						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+						if (rand() % 3 == 1)
+						{
+							CPower* power = new CPower();
+							power->SetPosition(x, y);
+							CGrid::GetInstance()->addObject(power);
+						}
+					}
+				}
+			}
+			break;
+			default:
 				break;
 			}
 		}

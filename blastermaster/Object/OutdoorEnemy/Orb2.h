@@ -2,7 +2,7 @@
 #include "OutdoorEnemy.h"
 #include "..\Effect\SmallBulletExplosion.h"
 #include "..\..\Grid\Grid.h"
-
+#include "..\Bullet\JasonBullet.h"
 #define ORB_HEALTH				100
 #define ORB_DAMAGE				100
 

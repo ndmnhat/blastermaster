@@ -1,7 +1,7 @@
 #pragma once
 #include "OutdoorEnemy.h"
 #include "..\Bullet\FloaterBullet.h"
-
+#include "..\Bullet\JasonBullet.h"
 #define FLOATER_HEALTH 100
 #define FLOATER_DAMAGE 100
 

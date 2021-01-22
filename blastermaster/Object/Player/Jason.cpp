@@ -52,6 +52,7 @@ void CJason::Fire(float Direction)
 	bullet->SetPosition(bulletX, bulletY);
 	bullet->SetDirection(Direction);
 	CGrid::GetInstance()->addObject(bullet);
+	Sound::GetInstance()->Play(eSound::soundSophiaShoot);
 }
 
 void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -168,8 +169,8 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			case TYPE_PORTAL:
 				x += dx;
 				y += dy;
-			CSceneManager::GetInstance()->SetScene(((CPortal*)(e->obj))->SceneID);
-			break;
+				CSceneManager::GetInstance()->SetScene(((CPortal*)(e->obj))->SceneID);
+				break;
 			default: break;
 			}
 		}
@@ -225,8 +226,10 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//Set falling flag
 	if (round(vy * 10) / 10 < 0.0f)
 		isFalling = true;
-	else
+	else {
 		isFalling = false;
+		Sound::GetInstance()->Play(eSound::soundSophiaGroundTouch);
+	}
 
 	//Reload gun
 	if (ClipSize < 3)
@@ -288,12 +291,13 @@ void CJason::SetState(int state)
 		nx = -1;
 		break;
 	case JASON_STATE_JUMP:
-		if (!isJumping&&!isFalling)
-	{
-		vy = JASON_JUMP_SPEED_Y;
-		isJumping = true;
-	}
-	break;
+		if (!isJumping && !isFalling)
+		{
+			vy = JASON_JUMP_SPEED_Y;
+			isJumping = true;
+			Sound::GetInstance()->Play(eSound::soundSophiaLongJump);
+		}
+		break;
 	case JASON_STATE_ATTACKED:
 		vx = -0.1f * nx;
 		StartUntouchable();
@@ -303,6 +307,7 @@ void CJason::SetState(int state)
 		{
 			vy = JASON_JUMPIN_SPEED_Y;
 			isJumpingIn = true;
+			Sound::GetInstance()->Play(eSound::soundSophiaLongJump);
 		}
 	case JASON_STATE_IDLE_LEFT: case JASON_STATE_IDLE_RIGHT:
 		if (vx != 0)

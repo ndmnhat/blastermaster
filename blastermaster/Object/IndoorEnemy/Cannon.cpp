@@ -7,8 +7,8 @@ CCannon::CCannon()
 	height = CANNON_BBOX_HEIGHT;
 	ClipSize = CANNON_BULLET_CLIPSIZE;
 	reloadingTimeCount = GetTickCount();
-	health = CANNON_HEALTH;
-	damage = CANNON_DAMAGE;
+	Health = CANNON_HEALTH;
+	Damage = CANNON_DAMAGE;
 	isShootingVertically = false;
 }
 
@@ -26,7 +26,7 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isShootingVertically = true;
 		}
 	}
-	
+
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
 	if (coObjects != NULL)
@@ -61,9 +61,22 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny != 0) vy = 0;
 
 				break;
-			case TYPE_SOPHIA:
-				x += dx;
-				y += dy;
+			case TYPE_BULLET:
+				if (dynamic_cast<CBigJasonBullet*>(e->obj))
+				{
+					if (this->Health <= 0)
+					{
+						this->isDestroyed = true;
+						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+						if (rand() % 3 == 1)
+						{
+							CPower* power = new CPower();
+							power->SetPosition(x, y);
+							CGrid::GetInstance()->addObject(power);
+						}
+					}
+				}
+				break;
 			default:
 				break;
 			}

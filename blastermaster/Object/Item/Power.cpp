@@ -18,8 +18,6 @@ void CPower::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			if (coObjects->at(i) == NULL)
 				continue;
-			if (coObjects->at(i)->type != TYPE_JASON)
-				listObject->push_back(coObjects->at(i));
 		}
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -53,6 +51,10 @@ void CPower::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny != 0) vy = 0;
 			}
 			break;
+			case TYPE_JASON: case TYPE_BIGJASON: case TYPE_SOPHIA:
+				//Sound::GetInstance()->Play(eSound::soundCollectItem);
+				this->isDestroyed = true;
+				break;
 			default: break;
 			}
 		}

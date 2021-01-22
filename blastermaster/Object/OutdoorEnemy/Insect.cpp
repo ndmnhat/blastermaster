@@ -5,11 +5,11 @@ CInsect::CInsect() : COutdoorEnemy()
 	enemyType = OutdoorEnemyType::Insect;
 	width = INSECT_BBOX_WIDTH;
 	height = INSECT_BBOX_HEIGHT;
-	health = INSECT_HEALTH;
-	damage = INSECT_DAMAGE;
+	Health = INSECT_HEALTH;
+	Damage = INSECT_DAMAGE;
 	nx = -1;
 	velVariation = INSECT_SPEED_VARIATION;
-	
+
 }
 
 void CInsect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -21,7 +21,7 @@ void CInsect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		velVariation *= -1;
 	}
 	CGameObject::Update(dt);
-	
+
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
 	if (coObjects != NULL)
@@ -60,13 +60,28 @@ void CInsect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				y += min_ty * dy + e->ny * 0.1f;
 
 				if (e->nx != 0)
-						this->nx *= -1;
+					this->nx *= -1;
 				if (e->ny != 0) vy = 0;
 			}
 			break;
 			case TYPE_SOPHIA: case TYPE_ENEMY:
 				x += dx;
 				y += dy;
+				break;
+			case TYPE_BULLET:
+				if (dynamic_cast<CJasonBullet*>(e->obj) || dynamic_cast<CSophiaBullet*>(e->obj))
+				{
+					if (this->Health <= 0) {
+						this->isDestroyed = true;
+						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+						if (rand() % 3 == 1)
+						{
+							CPower* power = new CPower();
+							power->SetPosition(x, y);
+							CGrid::GetInstance()->addObject(power);
+						}
+					}
+				}
 				break;
 			default:
 				break;
@@ -106,7 +121,7 @@ void CInsect::Render()
 	int ani;
 	if (nx > 0)
 		ani = INSECT_ANI_FLYING_RIGHT;
-	else 
+	else
 		ani = INSECT_ANI_FLYING_LEFT;
 	animation_set->at(ani)->Render(x, y);
 	//RenderBoundingBox();

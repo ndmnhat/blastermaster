@@ -2,7 +2,7 @@
 #include "OutdoorEnemy.h"
 #include "..\..\Utils\Utils.h"
 #include "..\..\Camera\Camera.h"
-
+#include "..\Bullet\JasonBullet.h"
 #define DOME_HEALTH				100
 #define DOME_DAMAGE				100
 

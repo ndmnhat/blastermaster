@@ -5,6 +5,7 @@
 #include "..\Gateway.h"
 #include "..\..\Grid\Grid.h"
 #include "..\..\Map\Section.h"
+//#include "..\..\Sound\Sound.h"
 class CPlayer : public CGameObject
 {
 protected:
@@ -18,7 +19,7 @@ protected:
 	float AutoY;
 	int backupSectionID;
 	bool isUntouchable = false;
-	void StartUntouchable() { this->isUntouchable = true; untouchableStart = GetTickCount(); }
+	void StartUntouchable() { this->isUntouchable = true; untouchableStart = GetTickCount(); /*Sound::GetInstance()->Play(eSound::soundSophiaDamaged);*/ }
 public:
 	bool isDead = false;
 	bool isAutoGoX = false;

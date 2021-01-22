@@ -1,7 +1,7 @@
 #pragma once
 #include "IndoorEnemy.h"
 #include "..\Bullet\EyeballBullet.h"
-
+#include "..\Bullet\BigJasonBullet.h"
 #define CANNON_BULLET_CLIPSIZE		2
 #define CANNON_BULLET_RELOADTIME	800
 

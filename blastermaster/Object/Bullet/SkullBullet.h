@@ -2,6 +2,8 @@
 #include "Bullet.h"
 #include "..\Effect\SmallBulletExplosion.h"
 #include "..\..\Grid\Grid.h"
+#include "..\..\Sound\Sound.h"
+
 #define SKULL_BULLET_SPEED				0.05f
 #define SKULL_BULLET_DAMAGE				10
 #define SKULL_BULLET_LIFETIME			1000

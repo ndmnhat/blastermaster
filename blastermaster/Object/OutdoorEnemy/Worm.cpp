@@ -7,8 +7,8 @@ CWorm::CWorm() : COutdoorEnemy()
 	height = WORM_BBOX_HEIGHT;
 	this->x = x;
 	this->y = y;
-	health = WORM_HEALTH;
-	damage = WORM_DAMAGE;
+	Health = WORM_HEALTH;
+	Damage = WORM_DAMAGE;
 }
 
 void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -21,14 +21,14 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	int i = GetSophiaPosInCoobject(coObjects);
 	if (i != -1)
 	{
-	if (this->x - coObjects->at(i)->x >= 30)
-	{
-		nx = -1;
-	}
-	else if (this->x - coObjects->at(i)->x < -30)
-	{
-		nx = 1;
-	}
+		if (this->x - coObjects->at(i)->x >= 30)
+		{
+			nx = -1;
+		}
+		else if (this->x - coObjects->at(i)->x < -30)
+		{
+			nx = 1;
+		}
 	}
 
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
@@ -51,6 +51,7 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		x += dx;
 		y += dy;
+		Sound::GetInstance()->Play(eSound::soundWormCrawl);
 	}
 
 	else
@@ -74,15 +75,19 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			case TYPE_SOPHIA: case TYPE_ENEMY:
 				x += dx;
 				y += dy;
+				break;
 			case TYPE_BULLET:
 				if (dynamic_cast<CJasonBullet*>(e->obj))
 				{
-					this->isDestroyed = true;
-					if (rand() % 3 == 1)
-					{
-					CPower* power = new CPower();
-					power->SetPosition(x, y);
-					CGrid::GetInstance()->addObject(power);
+					if (this->Health <= 0) {
+						this->isDestroyed = true;
+						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+						if (rand() % 3 == 1)
+						{
+							CPower* power = new CPower();
+							power->SetPosition(x, y);
+							CGrid::GetInstance()->addObject(power);
+						}
 					}
 				}
 				break;
@@ -117,12 +122,12 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-//#pragma endregion
-//
-	/* simple screen edge collision!!!
-	if (vx > 0 && x > 290) x = 290;
-	if (vx < 0 && x < 0) x = 0;*/
-	//DebugOut(L"Pos: %.2f ,%.2f\n", x, y);
+	//#pragma endregion
+	//
+		/* simple screen edge collision!!!
+		if (vx > 0 && x > 290) x = 290;
+		if (vx < 0 && x < 0) x = 0;*/
+		//DebugOut(L"Pos: %.2f ,%.2f\n", x, y);
 }
 
 void CWorm::SetState(int state)
@@ -138,18 +143,18 @@ void CWorm::Render()
 	{
 		ani = WORM_ANI_WALKING_LEFT;
 	}
-	else if (vx > 0) 
+	else if (vx > 0)
 	{
 		ani = WORM_ANI_WALKING_RIGHT;
 	}
-	else if(vx == 0)
+	else if (vx == 0)
 	{
 		if (nx > 0)
 			ani = WORM_ANI_FALLING_LEFT;
 		else
 			ani = WORM_ANI_FALLING_RIGHT;
 	}
-		 
+
 	animation_set->at(ani)->Render(x, y);
 	//RenderBoundingBox();
 }

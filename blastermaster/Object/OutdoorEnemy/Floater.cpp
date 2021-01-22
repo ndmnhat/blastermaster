@@ -7,19 +7,19 @@ CFloater::CFloater() : COutdoorEnemy()
 	height = FLOATER_BBOX_HEIGHT;
 	ClipSize = FLOATER_BULLET_CLIPSIZE;
 	reloadingTimeCount = GetTickCount();
-	health = FLOATER_HEALTH;
-	damage = FLOATER_DAMAGE;
+	Health = FLOATER_HEALTH;
+	Damage = FLOATER_DAMAGE;
 	nx = 1;
 	ny = 1;
 }
 
-void CFloater::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void CFloater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 	vy = FLOATER_FLYING_SPEED_Y * ny;
 	vx = FLOATER_FLYING_SPEED_X * nx;
 
-	vector<LPGAMEOBJECT> *listObject = new vector<LPGAMEOBJECT>();
+	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
 	if (coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
@@ -81,10 +81,24 @@ void CFloater::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						this->ny = 1;
 			}
 			break;
-			case TYPE_SOPHIA:
-			case TYPE_JASON:
+			case TYPE_SOPHIA: case TYPE_JASON:
 				x += dx;
 				y += dy;
+				break;
+			case TYPE_BULLET:
+				if (dynamic_cast<CJasonBullet*>(e->obj) || dynamic_cast<CSophiaBullet*>(e->obj))
+				{
+					if (this->Health <= 0) {
+						this->isDestroyed = true;
+						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+						if (rand() % 3 == 1)
+						{
+							CPower* power = new CPower();
+							power->SetPosition(x, y);
+							CGrid::GetInstance()->addObject(power);
+						}
+					}
+				}
 				break;
 			default:
 				break;
@@ -123,7 +137,7 @@ void CFloater::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	/* simple screen edge collision!!!
 		if (vx > 0 && x > 290) x = 290;
 		if (vx < 0 && x < 0) x = 0;*/
-	//DebugOut(L"Pos: %.2f ,%.2f\n", x, y);
+		//DebugOut(L"Pos: %.2f ,%.2f\n", x, y);
 	if (ClipSize < 1)
 	{
 		if (GetTickCount() - reloadingTimeCount > FLOATER_BULLET_RELOADTIME)

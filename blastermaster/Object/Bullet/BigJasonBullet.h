@@ -2,7 +2,7 @@
 #include "Bullet.h"
 #include "..\Effect\SmallBulletExplosion.h"
 #include "..\..\Grid\Grid.h"
-
+#include "..\..\Sound\Sound.h"
 #define BIGJASON_BULLET_SPEED 0.12f
 #define BIGJASON_BULLET_DAMAGE 10
 #define BIGJASON_BULLET_RELOADTIME 1000

@@ -374,8 +374,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//LoadResources();
 
 	SetWindowPos(hWnd, 0, 0, 0, WINDOW_WIDTH * 2, WINDOW_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	Sound::GetInstance()->Init();
-	Sound::GetInstance()->Play(eSound::soundIntro, true, 0);
+	//Sound::GetInstance()->Play(eSound::soundIntro, true, 0);
 	Run();
 
 	return 0;

@@ -82,14 +82,17 @@ void CSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vx = 0;
 				}
 				this->isDestroyed = true;
+				Sound::GetInstance()->Play(eSound::soundSophiaBulletExplosion);
 				CSmallBulletExplosion* explosion = new CSmallBulletExplosion();
 				explosion->SetPosition(x, y);
 				CGrid::GetInstance()->addObject(explosion);
 			}
 		}
 	}
-	if (LifeTime < GetTickCount() - lifeTimeStart)
+	if (LifeTime < GetTickCount() - lifeTimeStart) {
 		this->isDestroyed = true;
+		Sound::GetInstance()->Play(eSound::soundSophiaBulletExplosion);
+	}
 }
 
 void CSophiaBullet::Render()
