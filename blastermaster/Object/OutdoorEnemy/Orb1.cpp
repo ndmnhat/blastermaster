@@ -92,6 +92,7 @@ void COrb1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				y += dy;
 				break;
 			case TYPE_BULLET:
+				e->obj->isDestroyed = true;
 				if (dynamic_cast<CJasonBullet*>(e->obj) || dynamic_cast<CSophiaBullet*>(e->obj))
 				{
 					if (this->Health <= 0) {
@@ -104,6 +105,7 @@ void COrb1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							CGrid::GetInstance()->addObject(power);
 						}
 					}
+					else this->Health -= (e->obj->Damage);
 				}
 				break;
 			default:

@@ -14,7 +14,6 @@ protected:
 	float Direction;
 	float Speed;
 	DWORD LifeTime;
-	int Damage;
 	float DirectioninRad;
 	DWORD lifeTimeStart;
 public:

@@ -2,7 +2,7 @@
 #include "OutdoorEnemy.h"
 #include "..\Bullet\JasonBullet.h"
 #define INSECT_HEALTH				100
-#define INSECT_DAMAGE				100
+#define INSECT_DAMAGE				10
 
 #define INSECT_FLYING_SPEED_X		0.02f
 #define INSECT_FLYING_DOWN_SPEED	0.04f

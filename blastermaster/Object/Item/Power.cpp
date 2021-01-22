@@ -9,7 +9,7 @@ CPower::CPower()
 void CPower::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-	vy -= POWER_GRAVITY * dt;
+	//vy -= POWER_GRAVITY * dt;
 
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
@@ -51,10 +51,6 @@ void CPower::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny != 0) vy = 0;
 			}
 			break;
-			case TYPE_JASON: case TYPE_BIGJASON: case TYPE_SOPHIA:
-				//Sound::GetInstance()->Play(eSound::soundCollectItem);
-				this->isDestroyed = true;
-				break;
 			default: break;
 			}
 		}

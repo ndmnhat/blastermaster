@@ -2,7 +2,7 @@
 #include "OutdoorEnemy.h"
 #include "..\Bullet\JasonBullet.h"
 #define ORB_HEALTH				100
-#define ORB_DAMAGE				100
+#define ORB_DAMAGE				10
 
 #define ORB_MOVING_SPEED		0.1f
 #define ORB_TURNING_TIME		150

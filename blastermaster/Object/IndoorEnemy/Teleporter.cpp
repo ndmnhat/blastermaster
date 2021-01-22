@@ -73,18 +73,21 @@ void CTeleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				break;
 			case TYPE_BULLET:
-				if (dynamic_cast<CBigJasonBullet*>(e->obj))
-				{
-					if (this->Health <= 0)
+				e->obj->isDestroyed = true;
+				if (state != TELEPORTER_STATE_IDLE) {
+					if (dynamic_cast<CBigJasonBullet*>(e->obj))
 					{
-						this->isDestroyed = true;
-						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
-						if (rand() % 3 == 1)
-						{
-							CPower* power = new CPower();
-							power->SetPosition(x, y);
-							CGrid::GetInstance()->addObject(power);
+						if (this->Health <= 0) {
+							this->isDestroyed = true;
+							Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+							if (rand() % 3 == 1)
+							{
+								CPower* power = new CPower();
+								power->SetPosition(x, y);
+								CGrid::GetInstance()->addObject(power);
+							}
 						}
+						else this->Health -= (e->obj->Damage);
 					}
 				}
 				break;

@@ -162,14 +162,45 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (e->ny != 0)
 						y += dy;
 				}
-				else
+				else {
 					SetState(JASON_STATE_ATTACKED);
+					this->Health -= e->obj->Damage;
+				}
 			}
 			break;
+			case TYPE_BULLET:
+				if (dynamic_cast<CFloaterBullet*>(e->obj) || dynamic_cast<CSkullBullet*>(e->obj) || dynamic_cast<CEyeballBullet*>(e->obj))
+				{
+					if (isUntouchable) {
+						if (e->nx != 0)
+						{
+							x += dx;
+						}
+						if (e->ny != 0)
+							y += dy;
+					}
+					else {
+						if (this->Health <= 0) {
+							this->isDestroyed = true;
+						}
+						else {
+							this->SetState(JASON_STATE_ATTACKED);
+							this->Health -= e->obj->Damage;
+						}
+					}
+				}
+				break;
 			case TYPE_PORTAL:
 				x += dx;
 				y += dy;
 				CSceneManager::GetInstance()->SetScene(((CPortal*)(e->obj))->SceneID);
+				break;
+			case TYPE_ITEM:
+				this->x += dx;
+				this->y += dy;
+				e->obj->isDestroyed = true;
+				Sound::GetInstance()->Play(eSound::soundCollectItem);
+				this->Health += 20;
 				break;
 			default: break;
 			}

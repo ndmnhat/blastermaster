@@ -6,7 +6,7 @@
 #include "..\..\Game\Game.h"
 
 #define WORM_HEALTH				100
-#define WORM_DAMAGE				100
+#define WORM_DAMAGE				10
 
 #define WORM_WALKING_SPEED	0.025f
 #define WORM_GRAVITY		0.15f

@@ -40,7 +40,7 @@ void COrb2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
-			if (coObjects->at(i)->type != TYPE_ENEMY_ORB_2)
+			if (coObjects->at(i)->type != TYPE_ENEMY)
 				listObject->push_back(coObjects->at(i));
 		}
 
@@ -99,7 +99,7 @@ void COrb2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			break;
 			case TYPE_BULLET:
-			{
+				e->obj->isDestroyed = true;
 				if (dynamic_cast<CJasonBullet*>(e->obj) || dynamic_cast<CSophiaBullet*>(e->obj))
 				{
 					if (this->Health <= 0) {
@@ -112,9 +112,9 @@ void COrb2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							CGrid::GetInstance()->addObject(power);
 						}
 					}
+					else this->Health -= (e->obj->Damage);
 				}
-			}
-			break;
+				break;
 			default:
 				break;
 			}

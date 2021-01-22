@@ -35,10 +35,10 @@ struct CCollisionEvent
 
 class CGameObject
 {
-protected:
+public:
 	int Health;
 	int Damage;
-public:
+
 	float x; 
 	float y;
 

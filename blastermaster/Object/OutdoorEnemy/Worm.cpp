@@ -77,7 +77,8 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				y += dy;
 				break;
 			case TYPE_BULLET:
-				if (dynamic_cast<CJasonBullet*>(e->obj))
+				e->obj->isDestroyed = true;
+				if (dynamic_cast<CJasonBullet*>(e->obj) || dynamic_cast<CSophiaBullet*>(e->obj))
 				{
 					if (this->Health <= 0) {
 						this->isDestroyed = true;
@@ -89,6 +90,7 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							CGrid::GetInstance()->addObject(power);
 						}
 					}
+					else this->Health -= (e->obj->Damage);
 				}
 				break;
 			default:

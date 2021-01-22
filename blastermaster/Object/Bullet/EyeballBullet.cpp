@@ -61,18 +61,21 @@ void CEyeballBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				this->isDestroyed = true;
 				((CJason*)(e->obj))->SetState(JASON_STATE_ATTACKED);
+				e->obj->Health -= this->Damage;
 			}
 			break;
 			case TYPE_SOPHIA:
 			{
 				this->isDestroyed = true;
 				((CSophia*)(e->obj))->SetState(SOPHIA_STATE_ATTACKED);
+				e->obj->Health -= this->Damage;
 			}
 			break;
 			case TYPE_BIGJASON:
 			{
 				this->isDestroyed = true;
 				((CBigJason*)(e->obj))->SetState(BIGJASON_STATE_ATTACKED);
+				e->obj->Health -= this->Damage;
 			}
 			break;
 			default: break;

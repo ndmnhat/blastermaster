@@ -5,7 +5,7 @@
 #include "..\Bullet\SkullBullet.h"
 
 #define SKULL_HEALTH				100
-#define SKULL_DAMAGE				100
+#define SKULL_DAMAGE				10
 
 #define SKULL_MOVING_SPEED			0.08f
 #define SKULL_ATTACKING_TIME		1000

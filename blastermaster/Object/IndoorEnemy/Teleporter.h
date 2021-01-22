@@ -4,7 +4,7 @@
 #include <time.h>       /* time */
 #include "..\Bullet\BigJasonBullet.h"
 #define TELEPORTER_HEALTH	100
-#define TELEPORTER_DAMAGE	100
+#define TELEPORTER_DAMAGE	10
 
 
 #define TELEPORTER_BBOX_HEIGHT	32

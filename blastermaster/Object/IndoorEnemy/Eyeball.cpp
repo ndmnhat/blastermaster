@@ -97,10 +97,10 @@ void CEyeball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				y += dy;
 				break;
 			case TYPE_BULLET:
+				e->obj->isDestroyed = true;
 				if (dynamic_cast<CBigJasonBullet*>(e->obj))
 				{
-					if (this->Health <= 0)
-					{
+					if (this->Health <= 0) {
 						this->isDestroyed = true;
 						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
 						if (rand() % 3 == 1)
@@ -110,6 +110,8 @@ void CEyeball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							CGrid::GetInstance()->addObject(power);
 						}
 					}
+					else 
+						this->Health -= (e->obj->Damage);
 				}
 				break;
 			default:
