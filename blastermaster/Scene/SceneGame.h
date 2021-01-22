@@ -21,6 +21,7 @@
 #include "..\Object\OutdoorEnemy\Skull.h"
 #include "..\Object\OutdoorEnemy\Orb1.h"
 #include "..\Object\OutdoorEnemy\Orb2.h"
+#include "..\IntroScene.h"
 
 #include <fstream>
 #include "..\Map\Map.h"

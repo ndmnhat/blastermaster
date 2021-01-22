@@ -174,7 +174,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		obj = new CSophia();
 		CSceneManager::GetInstance()->Sophia = (CSophia*)obj;
 		currentPlayer = CSceneManager::GetInstance()->Sophia;
-		CCamera::GetInstance()->SetFollow(obj);
+		//CCamera::GetInstance()->SetFollow(obj);
 		DebugOut(L"[INFO] Sophia object created!\n");
 		break;
 
@@ -290,6 +290,9 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		obj = new CSkull();
 		//CCamera::GetInstance()->SetFollow(obj);
 		break;
+	/*case TYPE_INTRO_OPENING:
+		obj = new IntroScene();
+		CCamera::GetInstance()->SetFollow(obj);*/
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;

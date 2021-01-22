@@ -1,0 +1,21 @@
+# id	file_path	transparent_color_r	g	b
+
+[TEXTURES]
+140	textures\Ending_Cutscene.png	255	0	255
+
+[SPRITES]
+#Ending
+28001	2	2	513	226	140
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+#Ending
+2800	28001	5000
+
+[ANIMATION_SETS]
+#Ending
+280	2800
+
+[OBJECTS]
+#Ending
+28	0	0	280

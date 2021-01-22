@@ -50,6 +50,8 @@
     <ClCompile Include="Object\OutdoorEnemy\Orb1.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\Orb2.cpp" />
     <ClCompile Include="Object\Bullet\SkullBullet.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
+    <ClCompile Include="OpeningScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
@@ -101,6 +103,8 @@
     <ClInclude Include="Object\OutdoorEnemy\Orb1.h" />
     <ClInclude Include="Object\OutdoorEnemy\Orb2.h" />
     <ClInclude Include="Object\Bullet\SkullBullet.h" />
+    <ClInclude Include="IntroScene.h" />
+    <ClInclude Include="OpeningScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />
@@ -111,5 +115,9 @@
     <Text Include="Map\map2.txt" />
     <Text Include="Scene\scene.txt" />
     <Text Include="Scene\scene2.txt" />
+    <Text Include="Scene\intro.txt" />
+    <Text Include="Map\area2map.txt" />
+    <Text Include="Map\area2overmap.txt" />
+    <Text Include="Scene\ending.txt" />
   </ItemGroup>
 </Project>
