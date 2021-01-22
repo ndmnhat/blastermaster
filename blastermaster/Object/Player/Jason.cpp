@@ -165,15 +165,15 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					SetState(JASON_STATE_ATTACKED);
 			}
 			break;
-			case TYPE_PORTAL:
+			case TYPE_PORTAL: case TYPE_LAVA: case TYPE_FENCE:
 				x += dx;
 				y += dy;
-			CSceneManager::GetInstance()->SetScene(((CPortal*)(e->obj))->SceneID);
 			break;
 			default: break;
 			}
 		}
 	}
+	DebugOut(L"%d\n", isPressingDown);
 #pragma region Colliding with object handle
 
 	for (UINT i = 0; i < listObject->size(); i++)
@@ -206,6 +206,26 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					((CGateway*)(listObject->at(i)))->GetDestination(AutoX, AutoY);
 					backupSectionID = ((CGateway*)(listObject->at(i)))->newSectionID;
 				}
+			}
+			break;
+			case TYPE_PORTAL:
+			{
+				if (isPressingDown)
+				{
+					isPressingDown = false;
+					CSceneManager::GetInstance()->SetScene((((CPortal*)listObject->at(i)))->SceneID);
+				}
+			}
+			break;
+			case TYPE_LAVA:
+			{
+				vy += JASON_GRAVITY / 2;
+				StartUntouchable();
+			}
+			break;
+			case TYPE_FENCE:
+			{
+				StartUntouchable();
 			}
 			break;
 			default: break;

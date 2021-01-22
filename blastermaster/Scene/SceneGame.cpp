@@ -231,7 +231,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 	break;
 	case TYPE_PORTAL:
 		obj = new CPortal();
-		((CPortal*)obj)->SceneID = atoi(tokens[4].c_str());
+		((CPortal*)obj)->SceneID = atoi(tokens[3].c_str());
 		obj->SetPosition(x, y);
 		goto addObjectToGrid;
 	case TYPE_WALLIMAGE:
@@ -289,6 +289,9 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 	case TYPE_ENEMY_SKULL:
 		obj = new CSkull();
 		//CCamera::GetInstance()->SetFollow(obj);
+		break;
+	case TYPE_ENEMY_CRABULLUS:
+		obj = new CCrabullus();
 		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
@@ -447,6 +450,7 @@ void CSceneGame::Update(DWORD dt)
 	CCamera::GetInstance()->Update(dt);
 	CGrid::GetInstance()->updateObjects(objects);
 	healthbar->Update(currentPlayer);
+	map->Update(dt);
 	//DebugOut(L"%d\n", CSectionManager::GetInstance()->CurrentSectionID);
 	//DebugOut(L"%f\n",CCamera::GetInstance()->GetPosition().y);
 	//CCamera::GetInstance()->SetPosition(0.0f,2048.0f);
@@ -468,6 +472,25 @@ void CSceneGame::Render()
 		wallimages.at(i)->Render();
 	}
 	healthbar->Render();
+}
+
+void CSceneGame::StartBossStage()
+{
+	map->StartBossStage();
+}
+
+void CSceneGame::BossStageStarted()
+{
+	objects.clear();
+	objects = CGrid::GetInstance()->ObjectsInCam(CCamera::GetInstance());
+
+	for (auto& GameObject : objects)
+	{
+		if (GameObject->type == TYPE_ENEMY_CRABULLUS)
+			GameObject->isEnabled = true;
+		if (GameObject->type != TYPE_ENEMY_CRABULLUS && GameObject->type != TYPE_BIGJASON && GameObject->type != TYPE_WALL && GameObject->type != TYPE_BOSSWALL)
+			GameObject->isDestroyed = true;
+	}
 }
 
 void CSceneGameKeyHandler::KeyState(BYTE *states)
@@ -558,6 +581,17 @@ void CSceneGameKeyHandler::KeyState(BYTE *states)
 			else
 				bigjason->SetState(BIGJASON_STATE_IDLE_DOWN);
 		}
+		if (game->IsKeyDown(DIK_A))
+		{
+			if (nx > 0)
+				bigjason->Fire(180);
+			else if (nx < 0)
+				bigjason->Fire(0);
+			else if (ny > 0)
+				bigjason->Fire(90);
+			else if (ny < 0)
+				bigjason->Fire(-90);
+		}
 		/*else
 		{
 
@@ -581,6 +615,10 @@ void CSceneGameKeyHandler::OnKeyDown(int KeyCode)
 			CSceneManager::GetInstance()->SetScene(2);
 		else
 			CSceneManager::GetInstance()->SetScene(1);
+	}
+	if (KeyCode == DIK_Y)
+	{
+		((CSceneGame*)scence)->map->StartBossStage();
 	}
 	switch (((CSceneGame*)scence)->currentPlayer->type)
 	{
@@ -637,11 +675,16 @@ void CSceneGameKeyHandler::OnKeyDown(int KeyCode)
 						jason->Fire(0);
 				break;
 			case DIK_Q:
+			{
 				CSophia* sophia = CSceneManager::GetInstance()->Sophia;
 				int direction;
 				float space;
 				if (jason->isCollidingWith(sophia, space, direction))
 					jason->SetState(JASON_STATE_JUMPIN);
+				break;
+			}
+			case DIK_DOWN:
+				jason->isPressingDown = true;
 				break;
 			}
 			return;
@@ -660,16 +703,16 @@ void CSceneGameKeyHandler::OnKeyDown(int KeyCode)
 		{
 		case DIK_S:
 			break;
-		case DIK_A:
-			if (nx > 0)
-				bigjason->Fire(180);
-			else if (nx < 0)
-				bigjason->Fire(0);
-			else if (ny > 0)
-				bigjason->Fire(90);
-			else if (ny < 0)
-				bigjason->Fire(-90);
-			break;
+		//case DIK_A:
+		//	if (nx > 0)
+		//		bigjason->Fire(180);
+		//	else if (nx < 0)
+		//		bigjason->Fire(0);
+		//	else if (ny > 0)
+		//		bigjason->Fire(90);
+		//	else if (ny < 0)
+		//		bigjason->Fire(-90);
+		//	break;
 		case DIK_Q:
 			bigjason->SetState(BIGJASON_STATE_DIE);
 			break;
@@ -698,6 +741,13 @@ void CSceneGameKeyHandler::OnKeyUp(int KeyCode)
 	}
 	break;
 	case TYPE_JASON:
+		CJason* jason = (CJason*)(((CSceneGame*)scence)->currentPlayer);
+		switch (KeyCode)
+		{
+		case DIK_DOWN:
+			jason->isPressingDown = false;
+		}
+		return;
 	break;
 	}
 

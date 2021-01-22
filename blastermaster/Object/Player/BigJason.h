@@ -3,11 +3,11 @@
 #include "..\..\Animations\RenderEffect.h"
 #include "..\Bullet\BigJasonBullet.h"
 #define BIGJASON_WALKING_SPEED 0.08f
-#define BIGJASON_RELOAD_TIME 100
+#define BIGJASON_RELOAD_TIME 250
 #define BIGJASON_UNTOUCHABLE_TIME 1000
 #define BIGJASON_MAX_HEALTH 100
 #define BIGJASON_BBOX_HEIGHT	32
-#define BIGJASON_BBOX_WIDTH	24
+#define BIGJASON_BBOX_WIDTH	24 
 
 #define BIGJASON_STATE_IDLE_DOWN	0
 #define BIGJASON_STATE_IDLE_UP	1

@@ -130,7 +130,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			if (coObjects->at(i) == NULL)
 				continue;
-			if (coObjects->at(i)->type != TYPE_SOPHIA)
+			if (coObjects->at(i)->type != TYPE_SOPHIA && coObjects->at(i)->type != TYPE_PORTAL)
 				listObject->push_back(coObjects->at(i));
 		}
 
@@ -373,7 +373,7 @@ void CSophia::SetState(int state)
 		nx = -1;
 		break;
 	case SOPHIA_STATE_JUMP:
-		//if (!isJumping&&!isFalling)
+		if (!isJumping&&!isFalling)
 		{
 			vy = SOPHIA_JUMP_SPEED_Y;
 			isJumping = true;

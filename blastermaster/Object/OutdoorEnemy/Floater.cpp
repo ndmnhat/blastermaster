@@ -26,7 +26,7 @@ void CFloater::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			if (coObjects->at(i)->type != TYPE_ENEMY)
 				listObject->push_back(coObjects->at(i));
-			if (coObjects->at(i)->type == TYPE_SOPHIA || coObjects->at(i)->type == TYPE_SOPHIA)
+			if (coObjects->at(i)->type == TYPE_SOPHIA || coObjects->at(i)->type == TYPE_JASON)
 			{
 				if (coObjects->at(i)->y < this->y)
 				{

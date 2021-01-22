@@ -27,6 +27,31 @@ void CMap::ReadMap()
 	fs.close();
 	//CCamera::GetInstance()->SetCamBoundary(mapColumnCount * tileWidth - WINDOW_WIDTH, mapRowCount * tileHeight);
 }
+void CMap::Update(DWORD dt)
+{
+	if (isStartingBossStage == true)
+	{
+		if (r <= 0 || r > 255)
+		{
+			dcolor = -dcolor;
+		}
+		r -= dcolor*dt;
+		g -= dcolor * dt;
+		b -= dcolor * dt;
+		if (r <= 0)
+		{
+			r = 0;
+			g = 0;
+			b = 0;
+			GlowTime--;
+			if (GlowTime <= 0)
+			{
+				isStartingBossStage = false;
+				((CSceneGame*)CSceneManager::GetInstance()->GetCurrentScene())->BossStageStarted();
+			}
+		}
+	}
+}
 void CMap::DrawMap(CCamera * cam)
 {
 	CGame * game = CGame::GetInstance();
@@ -54,7 +79,13 @@ void CMap::DrawMap(CCamera * cam)
 			r.right = (gid % tileColumn) * tileWidth + tileWidth;
 			r.top = (gid / tileColumn) * tileHeight;
 			r.bottom = (gid / tileColumn) * tileHeight + tileHeight;
-			game->Draw(tilePosition, _texture, r);
+			game->Draw(tilePosition, _texture, r,255,this->r,g,b);
 		}
 	}
+}
+
+void CMap::StartBossStage()
+{
+	isStartingBossStage = true;
+	GlowTime = 3;
 }

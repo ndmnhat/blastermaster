@@ -153,6 +153,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations\Animations.cpp" />
+    <ClCompile Include="Object\Bullet\CannonBullet.cpp" />
+    <ClCompile Include="Object\Bullet\BossBullet.cpp" />
+    <ClCompile Include="Object\BossWall.cpp" />
+    <ClCompile Include="Object\Fence.cpp" />
+    <ClCompile Include="Object\Lava.cpp" />
+    <ClCompile Include="Scene\EndScene.cpp" />
     <ClCompile Include="HUD\HealthBar.cpp" />
     <ClCompile Include="Object\Bullet\FloaterBullet.cpp" />
     <ClCompile Include="Object\Item\Item.cpp" />
@@ -204,6 +210,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\Animations.h" />
+    <ClInclude Include="Object\Bullet\CannonBullet.h" />
+    <ClInclude Include="Object\Bullet\BossBullet.h" />
+    <ClInclude Include="Object\BossWall.h" />
+    <ClInclude Include="Object\Fence.h" />
+    <ClInclude Include="Object\Lava.h" />
+    <ClInclude Include="Scene\EndScene.h" />
     <ClInclude Include="HUD\HealthBar.h" />
     <ClInclude Include="Object\Bullet\FloaterBullet.h" />
     <ClInclude Include="Object\Item\Item.h" />
@@ -262,9 +274,12 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />
+    <Image Include="textures\boss.png" />
     <Image Include="textures\enemies.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </Image>
+    <Image Include="textures\item2.png" />
+    <Image Include="textures\jason_items_bullets.png" />
     <Image Include="textures\tiles.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
