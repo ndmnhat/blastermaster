@@ -9,7 +9,7 @@ CPower::CPower()
 void CPower::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-	vy -= POWER_GRAVITY * dt;
+	//vy -= POWER_GRAVITY * dt;
 
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
@@ -18,8 +18,6 @@ void CPower::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			if (coObjects->at(i) == NULL)
 				continue;
-			if (coObjects->at(i)->type != TYPE_JASON)
-				listObject->push_back(coObjects->at(i));
 		}
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;

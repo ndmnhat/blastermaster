@@ -1,6 +1,6 @@
 #include "Jason.h"
 
-void CJason::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+void CJason::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	left = x;
 	top = y;
@@ -52,9 +52,10 @@ void CJason::Fire(float Direction)
 	bullet->SetPosition(bulletX, bulletY);
 	bullet->SetDirection(Direction);
 	CGrid::GetInstance()->addObject(bullet);
+	Sound::GetInstance()->Play(eSound::soundSophiaShoot);
 }
 
-void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CJason::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 #pragma region Auto go X handle
 	if (isAutoGoX == true)
@@ -103,7 +104,7 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy -= JASON_GRAVITY * dt;
 	UpdateStateTime();
 
-	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
+	vector<LPGAMEOBJECT> *listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
 	if (coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
@@ -141,7 +142,8 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				x += min_tx * dx + e->nx * 0.1f;
 				y += min_ty * dy + e->ny * 0.1f;
 
-				if (e->nx != 0) vx = 0;
+				if (e->nx != 0)
+					vx = 0;
 				if (e->ny != 0)
 				{
 					if (vy < 0)
@@ -162,14 +164,57 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						y += dy;
 				}
 				else
+				{
 					SetState(JASON_STATE_ATTACKED);
+					this->Health -= e->obj->Damage;
+				}
 			}
 			break;
-			case TYPE_PORTAL: case TYPE_LAVA: case TYPE_FENCE:
+			case TYPE_LAVA:
+			case TYPE_FENCE:
 				x += dx;
 				y += dy;
-			break;
-			default: break;
+				break;
+			case TYPE_BULLET:
+				if (dynamic_cast<CFloaterBullet *>(e->obj) || dynamic_cast<CSkullBullet *>(e->obj) || dynamic_cast<CEyeballBullet *>(e->obj))
+				{
+					if (isUntouchable)
+					{
+						if (e->nx != 0)
+						{
+							x += dx;
+						}
+						if (e->ny != 0)
+							y += dy;
+					}
+					else
+					{
+						if (this->Health <= 0)
+						{
+							this->isDestroyed = true;
+						}
+						else
+						{
+							this->SetState(JASON_STATE_ATTACKED);
+							this->Health -= e->obj->Damage;
+						}
+					}
+				}
+				break;
+			case TYPE_PORTAL:
+				x += dx;
+				y += dy;
+				CSceneManager::GetInstance()->SetScene(((CPortal *)(e->obj))->SceneID);
+				break;
+			case TYPE_ITEM:
+				this->x += dx;
+				this->y += dy;
+				e->obj->isDestroyed = true;
+				Sound::GetInstance()->Play(eSound::soundCollectItem);
+				this->Health += 20;
+				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -203,8 +248,8 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (isAutoGoX == false)
 				{
 					isAutoGoX = true;
-					((CGateway*)(listObject->at(i)))->GetDestination(AutoX, AutoY);
-					backupSectionID = ((CGateway*)(listObject->at(i)))->newSectionID;
+					((CGateway *)(listObject->at(i)))->GetDestination(AutoX, AutoY);
+					backupSectionID = ((CGateway *)(listObject->at(i)))->newSectionID;
 				}
 			}
 			break;
@@ -213,7 +258,7 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (isPressingDown)
 				{
 					isPressingDown = false;
-					CSceneManager::GetInstance()->SetScene((((CPortal*)listObject->at(i)))->SceneID);
+					CSceneManager::GetInstance()->SetScene((((CPortal *)listObject->at(i)))->SceneID);
 				}
 			}
 			break;
@@ -228,7 +273,8 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				StartUntouchable();
 			}
 			break;
-			default: break;
+			default:
+				break;
 			}
 		}
 	}
@@ -246,7 +292,10 @@ void CJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (round(vy * 10) / 10 < 0.0f)
 		isFalling = true;
 	else
+	{
 		isFalling = false;
+		Sound::GetInstance()->Play(eSound::soundSophiaGroundTouch);
+	}
 
 	//Reload gun
 	if (ClipSize < 3)
@@ -286,7 +335,7 @@ void CJason::Render()
 	currentAnimation = ani;
 	if (isUntouchable)
 	{
-		CRenderEffectFrame* framecolor = untouchableEffect->GetColor();
+		CRenderEffectFrame *framecolor = untouchableEffect->GetColor();
 		animation_set->at(currentAnimation)->Render(x, y, framecolor->A, framecolor->R, framecolor->G, framecolor->B);
 	}
 	else
@@ -308,12 +357,13 @@ void CJason::SetState(int state)
 		nx = -1;
 		break;
 	case JASON_STATE_JUMP:
-		if (!isJumping&&!isFalling)
-	{
-		vy = JASON_JUMP_SPEED_Y;
-		isJumping = true;
-	}
-	break;
+		if (!isJumping && !isFalling)
+		{
+			vy = JASON_JUMP_SPEED_Y;
+			isJumping = true;
+			Sound::GetInstance()->Play(eSound::soundSophiaLongJump);
+		}
+		break;
 	case JASON_STATE_ATTACKED:
 		vx = -0.1f * nx;
 		StartUntouchable();
@@ -323,8 +373,10 @@ void CJason::SetState(int state)
 		{
 			vy = JASON_JUMPIN_SPEED_Y;
 			isJumpingIn = true;
+			Sound::GetInstance()->Play(eSound::soundSophiaLongJump);
 		}
-	case JASON_STATE_IDLE_LEFT: case JASON_STATE_IDLE_RIGHT:
+	case JASON_STATE_IDLE_LEFT:
+	case JASON_STATE_IDLE_RIGHT:
 		if (vx != 0)
 		{
 			vx -= JASON_FRICTION * vx * dt;

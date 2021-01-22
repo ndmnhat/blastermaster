@@ -2,9 +2,9 @@
 #include "OutdoorEnemy.h"
 #include "..\..\Utils\Utils.h"
 #include "..\..\Camera\Camera.h"
-
+#include "..\Bullet\JasonBullet.h"
 #define DOME_HEALTH				100
-#define DOME_DAMAGE				100
+#define DOME_DAMAGE				10
 
 #define DOME_CHARGING_SPEED		0.15f
 #define DOME_MOVING_SPEED		0.025f

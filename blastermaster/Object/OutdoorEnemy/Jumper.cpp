@@ -5,8 +5,8 @@ CJumper::CJumper() : COutdoorEnemy()
 	enemyType = OutdoorEnemyType::Jumper;
 	width = JUMPER_BBOX_WIDTH;
 	height = JUMPER_BBOX_HEIGHT;
-	health = JUMPER_HEALTH;
-	damage = JUMPER_DAMAGE;
+	Health = JUMPER_HEALTH;
+	Damage = JUMPER_DAMAGE;
 	nx = -1;
 }
 
@@ -27,20 +27,21 @@ void CJumper::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						vy = JUMPER_JUMPING_SPEED;
 						isJumping = true;
+						Sound::GetInstance()->Play(eSound::soundJumperJump);
 					}
 				}
-				if (this->x - coObjects->at(i)->x > 70)
+				if (this->x - coObjects->at(i)->x > 10)
 					nx = -1;
-				if (this->x - coObjects->at(i)->x < -70)
+				if (this->x - coObjects->at(i)->x < -10)
 					nx = 1;
 			}
 		}
 	}
 	CGameObject::Update(dt);
-	
 
-	
-	
+
+
+
 	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
 	if (coObjects != NULL)
@@ -74,18 +75,38 @@ void CJumper::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			switch (e->obj->type)
 			{
 			case TYPE_WALL:
+			{
 				x += min_tx * dx + e->nx * 0.1f;
 				y += min_ty * dy + e->ny * 0.1f;
 
 				if (e->nx != 0) vx = 0;
 				if (e->ny != 0)
 				{
-						isJumping = false;
+					isJumping = false;
 				}
-				break;
+			}
+			break;
 			case TYPE_SOPHIA: case TYPE_ENEMY:
 				x += dx;
 				y += dy;
+				break;
+			case TYPE_BULLET:
+				e->obj->isDestroyed = true;
+				if (dynamic_cast<CJasonBullet*>(e->obj) || dynamic_cast<CSophiaBullet*>(e->obj))
+				{
+					if (this->Health <= 0) {
+						this->isDestroyed = true;
+						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+						if (rand() % 3 == 1)
+						{
+							CPower* power = new CPower();
+							power->SetPosition(x, y);
+							CGrid::GetInstance()->addObject(power);
+						}
+					}
+					else this->Health -= (e->obj->Damage);
+				}
+				break;
 			default:
 				break;
 			}

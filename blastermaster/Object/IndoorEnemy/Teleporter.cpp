@@ -5,6 +5,8 @@ CTeleporter::CTeleporter()
 	enemyType = IndoorEnemyType::Teleporter;
 	width = TELEPORTER_BBOX_WIDTH;
 	height = TELEPORTER_BBOX_HEIGHT;
+	Health = TELEPORTER_HEALTH;
+	Damage = TELEPORTER_DAMAGE;
 	this->x = x;
 	this->y = y;
 	SetState(TELEPORTER_STATE_IDLE);
@@ -70,6 +72,25 @@ void CTeleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny != 0) vy = 0;
 
 				break;
+			case TYPE_BULLET:
+				e->obj->isDestroyed = true;
+				if (state != TELEPORTER_STATE_IDLE) {
+					if (dynamic_cast<CBigJasonBullet*>(e->obj))
+					{
+						if (this->Health <= 0) {
+							this->isDestroyed = true;
+							Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+							if (rand() % 3 == 1)
+							{
+								CPower* power = new CPower();
+								power->SetPosition(x, y);
+								CGrid::GetInstance()->addObject(power);
+							}
+						}
+						else this->Health -= (e->obj->Damage);
+					}
+				}
+				break;
 			default:
 				break;
 			}
@@ -106,6 +127,8 @@ void CTeleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			SetState(TELEPORTER_STATE_TELEPORT);
 			teleportTimeCount = GetTickCount();
 		}
+		else
+			Sound::GetInstance()->Play(eSound::soundTeleporterTransform);
 	}
 
 	if (state == TELEPORTER_STATE_TELEPORT) {
@@ -148,7 +171,7 @@ void CTeleporter::SetState(int state)
 	}
 }
 
-void CTeleporter::GetBoundingBox(float & left, float & top, float & right, float & bottom)
+void CTeleporter::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	CIndoorEnemy::GetBoundingBox(left, top, right, bottom);
 }

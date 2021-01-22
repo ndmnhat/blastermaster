@@ -53,7 +53,7 @@ void CSkullBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				x += min_tx * dx + e->nx * 0.1f;
 				y += min_ty * dy + e->ny * 0.1f;
-				if (e->nx != 0) 
+				if (e->nx != 0)
 					vx = 0;
 				if (e->ny != 0)
 				{
@@ -84,7 +84,7 @@ void CSkullBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					SetState(SKULL_BULLET_STATE_BOUNCING);
 					if (vy < 0)
 						isBouncing = false;
-				
+
 				}
 				else
 				{
@@ -96,6 +96,7 @@ void CSkullBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	if (LifeTime < GetTickCount() - lifeTimeStart) {
 		this->isDestroyed = true;
+		Sound::GetInstance()->Play(eSound::soundSkullBombExplosion);
 		CSmallBulletExplosion* explosion = new CSmallBulletExplosion();
 		explosion->SetPosition(x, y);
 		CGrid::GetInstance()->addObject(explosion);

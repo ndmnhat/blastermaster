@@ -23,12 +23,12 @@ void CSophia::Fire(float Direction)
 	LPBULLET bullet;
 	switch (currentBulletType)
 	{
-		case BulletType::SophiaBullet:
-			bullet = new CSophiaBullet();
-			break;
-		default:
-			bullet = new CSophiaBullet();
-			break;
+	case BulletType::SophiaBullet:
+		bullet = new CSophiaBullet();
+		break;
+	default:
+		bullet = new CSophiaBullet();
+		break;
 	}
 	float bulletX = this->x, bulletY = this->y;
 	if (isPressingUp == true)
@@ -49,6 +49,7 @@ void CSophia::Fire(float Direction)
 	bullet->SetPosition(bulletX, bulletY);
 	bullet->SetDirection(Direction);
 	CGrid::GetInstance()->addObject(bullet);
+	Sound::GetInstance()->Play(eSound::soundSophiaShoot);
 }
 
 void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -61,11 +62,11 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isLiftingGun = false;
 		isLoweringGun = false;
 		isPressingUp = false;
-		isJumping = false; 
+		isJumping = false;
 
 		float space;
 		int direction;
-		if(CCamera::GetInstance()->isMovingToNewSection == false)
+		if (CCamera::GetInstance()->isMovingToNewSection == false)
 			for (int i = 0; i < coObjects->size(); ++i)
 				if (coObjects->at(i)->type == TYPE_WALLIMAGE)
 				{
@@ -107,13 +108,12 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CGameObject::Update(dt);
 
 	// simple fall down
-	//if (isFalling == true) 
+	//if (isFalling == true)
 	//{
 	vy -= SOPHIA_GRAVITY * dt;
 	//}
 
 	UpdateStateTime();
-
 
 	if (isOpening)
 	{
@@ -124,9 +124,9 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		return;
 	}
 
-	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
+	vector<LPGAMEOBJECT> *listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
-	if(coObjects != NULL)
+	if (coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
 			if (coObjects->at(i) == NULL)
@@ -158,21 +158,41 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			switch (e->obj->type)
 			{
-				case TYPE_WALL:
-				{
-					x += min_tx * dx + e->nx * 0.1f;
-					y += min_ty * dy + e->ny * 0.1f;
+			case TYPE_WALL:
+			{
+				x += min_tx * dx + e->nx * 0.1f;
+				y += min_ty * dy + e->ny * 0.1f;
 
-					if (e->nx != 0) vx = 0;
-					if (e->ny != 0)
-					{
-						if (vy < 0)
-							isJumping = false;
-						vy = 0;
-					}
+				if (e->nx != 0)
+					vx = 0;
+				if (e->ny != 0)
+				{
+					if (vy < 0)
+						isJumping = false;
+					vy = 0;
 				}
-				break;
-				case TYPE_ENEMY:
+			}
+			break;
+			case TYPE_ENEMY:
+			{
+				if (isUntouchable)
+				{
+					if (e->nx != 0)
+					{
+						x += dx;
+					}
+					if (e->ny != 0)
+						y += dy;
+				}
+				else
+				{
+					SetState(SOPHIA_STATE_ATTACKED);
+					this->Health -= e->obj->Damage;
+				}
+			}
+			break;
+			case TYPE_BULLET:
+				if (dynamic_cast<CFloaterBullet *>(e->obj) || dynamic_cast<CSkullBullet *>(e->obj) || dynamic_cast<CEyeballBullet *>(e->obj))
 				{
 					if (isUntouchable)
 					{
@@ -185,13 +205,27 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 					else
 					{
-						Health -= 10;
-						SetState(SOPHIA_STATE_ATTACKED);
+						if (this->Health <= 0)
+						{
+							this->isDestroyed = true;
+						}
+						else
+						{
+							this->SetState(SOPHIA_STATE_ATTACKED);
+							this->Health -= e->obj->Damage;
+						}
 					}
-
 				}
 				break;
-				default: break;
+			case TYPE_ITEM:
+				this->x += dx;
+				this->y += dy;
+				e->obj->isDestroyed = true;
+				Sound::GetInstance()->Play(eSound::soundCollectItem);
+				this->Health += 20;
+				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -206,31 +240,32 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			switch (listObject->at(i)->type)
 			{
-				case TYPE_WALL:
+			case TYPE_WALL:
+			{
+				if (direction == 0)
 				{
-					if (direction == 0)
-					{
-						y -= space;
-						vy = 0;
-					}
-					else
-					{
-						x -= space;
-						vx = 0;
-					}
+					y -= space;
+					vy = 0;
 				}
-				break;
-				case TYPE_GATEWAY:
+				else
 				{
-					if (isAutoGoX == false)
-					{
-						isAutoGoX = true;
-						((CGateway*)(listObject->at(i)))->GetDestination(AutoX, AutoY);
-						backupSectionID = ((CGateway*)(listObject->at(i)))->newSectionID;
-					}
+					x -= space;
+					vx = 0;
 				}
+			}
+			break;
+			case TYPE_GATEWAY:
+			{
+				if (isAutoGoX == false)
+				{
+					isAutoGoX = true;
+					((CGateway *)(listObject->at(i)))->GetDestination(AutoX, AutoY);
+					backupSectionID = ((CGateway *)(listObject->at(i)))->newSectionID;
+				}
+			}
+			break;
+			default:
 				break;
-				default: break;
 			}
 		}
 	}
@@ -239,8 +274,11 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (round(vy * 10) / 10 < 0.0f)
 		isFalling = true;
 	else
+	{
 		isFalling = false;
-	
+		Sound::GetInstance()->Play(eSound::soundSophiaGroundTouch);
+	}
+
 	//Gun handle
 	if (isPressingUp == true && isGunUp == false)
 	{
@@ -299,7 +337,7 @@ void CSophia::Render()
 	xdraw = x; //Default x draw
 	ydraw = y; //Default y draw
 
-	if (roundf(vx * 100)/100==0.00f)
+	if (roundf(vx * 100) / 100 == 0.00f)
 	{
 		RenderIdle(ani);
 	}
@@ -329,7 +367,7 @@ void CSophia::Render()
 	{
 		RenderLiftingGun(ani, xdraw, ydraw);
 	}
-	if (isGunUp&&!isLoweringGun) //Not lowering gun
+	if (isGunUp && !isLoweringGun) //Not lowering gun
 	{
 		RenderGunUp(ani, xdraw, ydraw);
 	}
@@ -339,13 +377,13 @@ void CSophia::Render()
 	}
 	if (isOpening)
 	{
-		RenderOpening(ani,ydraw);
+		RenderOpening(ani, ydraw);
 	}
 	if (ani != -1)
 		currentAnimation = ani;
-	if(isUntouchable&&isHavingJason)
+	if (isUntouchable && isHavingJason)
 	{
-		CRenderEffectFrame* framecolor = untouchableEffect->GetColor();
+		CRenderEffectFrame *framecolor = untouchableEffect->GetColor();
 		animation_set->at(currentAnimation)->Render(xdraw, ydraw, framecolor->A, framecolor->R, framecolor->G, framecolor->B);
 	}
 	else
@@ -365,29 +403,39 @@ void CSophia::SetState(int state)
 	{
 	case SOPHIA_STATE_WALKING_RIGHT:
 		vx = SOPHIA_WALKING_SPEED;
-		if (nx == -1) { isRotating = true; rotatingStart = GetTickCount(); }
+		if (nx == -1)
+		{
+			isRotating = true;
+			rotatingStart = GetTickCount();
+		}
 		nx = 1;
 		break;
 	case SOPHIA_STATE_WALKING_LEFT:
 		vx = -SOPHIA_WALKING_SPEED;
-		if (nx == 1) { isRotating = true; rotatingStart = GetTickCount(); }
+		if (nx == 1)
+		{
+			isRotating = true;
+			rotatingStart = GetTickCount();
+		}
 		nx = -1;
 		break;
 	case SOPHIA_STATE_JUMP:
-		if (!isJumping&&!isFalling)
+		if (!isJumping && !isFalling)
 		{
 			vy = SOPHIA_JUMP_SPEED_Y;
 			isJumping = true;
+			Sound::GetInstance()->Play(eSound::soundSophiaLongJump);
 		}
 		break;
 	case SOPHIA_STATE_ATTACKED:
 		vx = -0.1 * nx;
 		StartUntouchable();
 		break;
-	case SOPHIA_STATE_IDLE_LEFT: case SOPHIA_STATE_IDLE_RIGHT:
+	case SOPHIA_STATE_IDLE_LEFT:
+	case SOPHIA_STATE_IDLE_RIGHT:
 		if (vx != 0)
 		{
-				vx -= SOPHIA_FRICTION * vx * dt;
+			vx -= SOPHIA_FRICTION * vx * dt;
 		}
 		break;
 	}
@@ -422,7 +470,6 @@ void CSophia::UpdateStateTime()
 			isFreezing = true;
 			isHavingJason = false;
 		}
-
 	}
 }
 
@@ -474,7 +521,7 @@ void CSophia::RenderWalkingLeft(int &ani)
 	//}
 }
 
-void CSophia::RenderWalkingRight(int& ani)
+void CSophia::RenderWalkingRight(int &ani)
 {
 	if (nx > 0)
 	{
@@ -522,16 +569,24 @@ void CSophia::RenderIdle(int &ani)
 		//DebugOut(L"%d\n", frame);
 		switch (frame)
 		{
-		case 0: case 4: case 8:
+		case 0:
+		case 4:
+		case 8:
 			ani = SOPHIA_ANI_IDLE_RIGHT_1;
 			break;
-		case 1: case 5: case 9:
+		case 1:
+		case 5:
+		case 9:
 			ani = SOPHIA_ANI_IDLE_RIGHT_2;
 			break;
-		case 2: case 6: case 10:
+		case 2:
+		case 6:
+		case 10:
 			ani = SOPHIA_ANI_IDLE_RIGHT_3;
 			break;
-		case 3: case 7: case 11:
+		case 3:
+		case 7:
+		case 11:
 			ani = SOPHIA_ANI_IDLE_RIGHT_4;
 			break;
 		default:
@@ -545,16 +600,24 @@ void CSophia::RenderIdle(int &ani)
 		//DebugOut(L"%d\n", frame);
 		switch (frame)
 		{
-		case 0: case 4: case 8:
+		case 0:
+		case 4:
+		case 8:
 			ani = SOPHIA_ANI_IDLE_LEFT_1;
 			break;
-		case 1: case 5: case 9:
+		case 1:
+		case 5:
+		case 9:
 			ani = SOPHIA_ANI_IDLE_LEFT_2;
 			break;
-		case 2: case 6: case 10:
+		case 2:
+		case 6:
+		case 10:
 			ani = SOPHIA_ANI_IDLE_LEFT_3;
 			break;
-		case 3: case 7: case 11:
+		case 3:
+		case 7:
+		case 11:
 			ani = SOPHIA_ANI_IDLE_LEFT_4;
 			break;
 		default:
@@ -564,42 +627,59 @@ void CSophia::RenderIdle(int &ani)
 	}
 }
 
-void CSophia::RenderRotating(int& ani)
+void CSophia::RenderRotating(int &ani)
 {
 	switch (currentAnimation)
 	{
-	//RIGHT
-	//IDLE
-	case SOPHIA_ANI_ROTATING_RIGHT_1: case SOPHIA_ANI_IDLE_RIGHT_1: case SOPHIA_ANI_IDLE_RIGHT_FALL_1:
+		//RIGHT
+		//IDLE
+	case SOPHIA_ANI_ROTATING_RIGHT_1:
+	case SOPHIA_ANI_IDLE_RIGHT_1:
+	case SOPHIA_ANI_IDLE_RIGHT_FALL_1:
 		ani = SOPHIA_ANI_ROTATING_RIGHT_1;
 		break;
-	case SOPHIA_ANI_ROTATING_RIGHT_2: case SOPHIA_ANI_IDLE_RIGHT_2: case SOPHIA_ANI_IDLE_RIGHT_FALL_2:
+	case SOPHIA_ANI_ROTATING_RIGHT_2:
+	case SOPHIA_ANI_IDLE_RIGHT_2:
+	case SOPHIA_ANI_IDLE_RIGHT_FALL_2:
 		ani = SOPHIA_ANI_ROTATING_RIGHT_2;
 		break;
-	case SOPHIA_ANI_ROTATING_RIGHT_3: case SOPHIA_ANI_IDLE_RIGHT_3: case SOPHIA_ANI_IDLE_RIGHT_FALL_3:
+	case SOPHIA_ANI_ROTATING_RIGHT_3:
+	case SOPHIA_ANI_IDLE_RIGHT_3:
+	case SOPHIA_ANI_IDLE_RIGHT_FALL_3:
 		ani = SOPHIA_ANI_ROTATING_RIGHT_3;
 		break;
-	case SOPHIA_ANI_ROTATING_RIGHT_4: case SOPHIA_ANI_IDLE_RIGHT_4: case SOPHIA_ANI_IDLE_RIGHT_FALL_4:
+	case SOPHIA_ANI_ROTATING_RIGHT_4:
+	case SOPHIA_ANI_IDLE_RIGHT_4:
+	case SOPHIA_ANI_IDLE_RIGHT_FALL_4:
 		ani = SOPHIA_ANI_ROTATING_RIGHT_4;
 		break;
-	//WALK
+		//WALK
 	case SOPHIA_ANI_WALKING_RIGHT:
 	{
 		switch (animation_set->at(SOPHIA_ANI_WALKING_RIGHT)->GetCurrentFrame())
 		{
-		case 0: case 4: case 8:
+		case 0:
+		case 4:
+		case 8:
 			ani = SOPHIA_ANI_ROTATING_RIGHT_1;
 			break;
-		case 1: case 5: case 9:
+		case 1:
+		case 5:
+		case 9:
 			ani = SOPHIA_ANI_ROTATING_RIGHT_2;
 			break;
-		case 2: case 6: case 10:
+		case 2:
+		case 6:
+		case 10:
 			ani = SOPHIA_ANI_ROTATING_RIGHT_3;
 			break;
-		case 3: case 7: case 11:
+		case 3:
+		case 7:
+		case 11:
 			ani = SOPHIA_ANI_ROTATING_RIGHT_4;
 			break;
-		default:break;
+		default:
+			break;
 		}
 	}
 	//FALL
@@ -619,42 +699,60 @@ void CSophia::RenderRotating(int& ani)
 		case 3:
 			ani = SOPHIA_ANI_ROTATING_RIGHT_4;
 			break;
-		default:break;
+		default:
+			break;
 		}
 	}
 	break;
 	//LEFT
 	//IDLE
-	case SOPHIA_ANI_ROTATING_LEFT_1: case SOPHIA_ANI_IDLE_LEFT_1:case SOPHIA_ANI_IDLE_LEFT_FALL_1:
+	case SOPHIA_ANI_ROTATING_LEFT_1:
+	case SOPHIA_ANI_IDLE_LEFT_1:
+	case SOPHIA_ANI_IDLE_LEFT_FALL_1:
 		ani = SOPHIA_ANI_ROTATING_LEFT_1;
 		break;
-	case SOPHIA_ANI_ROTATING_LEFT_2: case SOPHIA_ANI_IDLE_LEFT_2:case SOPHIA_ANI_IDLE_LEFT_FALL_2:
+	case SOPHIA_ANI_ROTATING_LEFT_2:
+	case SOPHIA_ANI_IDLE_LEFT_2:
+	case SOPHIA_ANI_IDLE_LEFT_FALL_2:
 		ani = SOPHIA_ANI_ROTATING_LEFT_2;
 		break;
-	case SOPHIA_ANI_ROTATING_LEFT_3: case SOPHIA_ANI_IDLE_LEFT_3:case SOPHIA_ANI_IDLE_LEFT_FALL_3:
+	case SOPHIA_ANI_ROTATING_LEFT_3:
+	case SOPHIA_ANI_IDLE_LEFT_3:
+	case SOPHIA_ANI_IDLE_LEFT_FALL_3:
 		ani = SOPHIA_ANI_ROTATING_LEFT_3;
 		break;
-	case SOPHIA_ANI_ROTATING_LEFT_4: case SOPHIA_ANI_IDLE_LEFT_4:case SOPHIA_ANI_IDLE_LEFT_FALL_4:
+	case SOPHIA_ANI_ROTATING_LEFT_4:
+	case SOPHIA_ANI_IDLE_LEFT_4:
+	case SOPHIA_ANI_IDLE_LEFT_FALL_4:
 		ani = SOPHIA_ANI_ROTATING_LEFT_4;
 		break;
-	//WALK
+		//WALK
 	case SOPHIA_ANI_WALKING_LEFT:
 	{
 		switch (animation_set->at(SOPHIA_ANI_WALKING_LEFT)->GetCurrentFrame())
 		{
-		case 0: case 4: case 8:
+		case 0:
+		case 4:
+		case 8:
 			ani = SOPHIA_ANI_ROTATING_LEFT_1;
 			break;
-		case 1: case 5: case 9:
+		case 1:
+		case 5:
+		case 9:
 			ani = SOPHIA_ANI_ROTATING_LEFT_2;
 			break;
-		case 2: case 6: case 10:
+		case 2:
+		case 6:
+		case 10:
 			ani = SOPHIA_ANI_ROTATING_LEFT_3;
 			break;
-		case 3: case 7: case 11:
+		case 3:
+		case 7:
+		case 11:
 			ani = SOPHIA_ANI_ROTATING_LEFT_4;
 			break;
-		default:break;
+		default:
+			break;
 		}
 	}
 	break;
@@ -675,15 +773,17 @@ void CSophia::RenderRotating(int& ani)
 		case 3:
 			ani = SOPHIA_ANI_ROTATING_LEFT_4;
 			break;
-		default:break;
+		default:
+			break;
 		}
 	}
 	break;
-	default:break;
+	default:
+		break;
 	}
 }
 
-void CSophia::RenderJumping(int& ani)
+void CSophia::RenderJumping(int &ani)
 {
 	if (roundf(vx * 100) / 100 == 0.00f)
 	{
@@ -691,16 +791,20 @@ void CSophia::RenderJumping(int& ani)
 		{
 			switch (currentAnimation)
 			{
-			case SOPHIA_ANI_IDLE_RIGHT_1: case SOPHIA_ANI_IDLE_RIGHT_JUMP_1:
+			case SOPHIA_ANI_IDLE_RIGHT_1:
+			case SOPHIA_ANI_IDLE_RIGHT_JUMP_1:
 				ani = SOPHIA_ANI_IDLE_RIGHT_JUMP_1;
 				break;
-			case SOPHIA_ANI_IDLE_RIGHT_2: case SOPHIA_ANI_IDLE_RIGHT_JUMP_2:
+			case SOPHIA_ANI_IDLE_RIGHT_2:
+			case SOPHIA_ANI_IDLE_RIGHT_JUMP_2:
 				ani = SOPHIA_ANI_IDLE_RIGHT_JUMP_2;
 				break;
-			case SOPHIA_ANI_IDLE_RIGHT_3: case SOPHIA_ANI_IDLE_RIGHT_JUMP_3:
+			case SOPHIA_ANI_IDLE_RIGHT_3:
+			case SOPHIA_ANI_IDLE_RIGHT_JUMP_3:
 				ani = SOPHIA_ANI_IDLE_RIGHT_JUMP_3;
 				break;
-			case SOPHIA_ANI_IDLE_RIGHT_4: case SOPHIA_ANI_IDLE_RIGHT_JUMP_4:
+			case SOPHIA_ANI_IDLE_RIGHT_4:
+			case SOPHIA_ANI_IDLE_RIGHT_JUMP_4:
 				ani = SOPHIA_ANI_IDLE_RIGHT_JUMP_4;
 				break;
 			}
@@ -709,16 +813,20 @@ void CSophia::RenderJumping(int& ani)
 		{
 			switch (currentAnimation)
 			{
-			case SOPHIA_ANI_IDLE_LEFT_1: case SOPHIA_ANI_IDLE_LEFT_JUMP_1:
+			case SOPHIA_ANI_IDLE_LEFT_1:
+			case SOPHIA_ANI_IDLE_LEFT_JUMP_1:
 				ani = SOPHIA_ANI_IDLE_LEFT_JUMP_1;
 				break;
-			case SOPHIA_ANI_IDLE_LEFT_2: case SOPHIA_ANI_IDLE_LEFT_JUMP_2:
+			case SOPHIA_ANI_IDLE_LEFT_2:
+			case SOPHIA_ANI_IDLE_LEFT_JUMP_2:
 				ani = SOPHIA_ANI_IDLE_LEFT_JUMP_2;
 				break;
-			case SOPHIA_ANI_IDLE_LEFT_3: case SOPHIA_ANI_IDLE_LEFT_JUMP_3:
+			case SOPHIA_ANI_IDLE_LEFT_3:
+			case SOPHIA_ANI_IDLE_LEFT_JUMP_3:
 				ani = SOPHIA_ANI_IDLE_LEFT_JUMP_3;
 				break;
-			case SOPHIA_ANI_IDLE_LEFT_4: case SOPHIA_ANI_IDLE_LEFT_JUMP_4:
+			case SOPHIA_ANI_IDLE_LEFT_4:
+			case SOPHIA_ANI_IDLE_LEFT_JUMP_4:
 				ani = SOPHIA_ANI_IDLE_LEFT_JUMP_4;
 				break;
 			}
@@ -740,7 +848,7 @@ void CSophia::RenderJumping(int& ani)
 	}
 }
 
-void CSophia::RenderFalling(int& ani)
+void CSophia::RenderFalling(int &ani)
 {
 	if (roundf(vx * 100) / 100 == 0.00f)
 	{
@@ -748,16 +856,24 @@ void CSophia::RenderFalling(int& ani)
 		{
 			switch (currentAnimation)
 			{
-			case SOPHIA_ANI_IDLE_RIGHT_1: case SOPHIA_ANI_IDLE_RIGHT_JUMP_1: case SOPHIA_ANI_IDLE_RIGHT_FALL_1:
+			case SOPHIA_ANI_IDLE_RIGHT_1:
+			case SOPHIA_ANI_IDLE_RIGHT_JUMP_1:
+			case SOPHIA_ANI_IDLE_RIGHT_FALL_1:
 				ani = SOPHIA_ANI_IDLE_RIGHT_FALL_1;
 				break;
-			case SOPHIA_ANI_IDLE_RIGHT_2: case SOPHIA_ANI_IDLE_RIGHT_JUMP_2: case SOPHIA_ANI_IDLE_RIGHT_FALL_2:
+			case SOPHIA_ANI_IDLE_RIGHT_2:
+			case SOPHIA_ANI_IDLE_RIGHT_JUMP_2:
+			case SOPHIA_ANI_IDLE_RIGHT_FALL_2:
 				ani = SOPHIA_ANI_IDLE_RIGHT_FALL_2;
 				break;
-			case SOPHIA_ANI_IDLE_RIGHT_3: case SOPHIA_ANI_IDLE_RIGHT_JUMP_3: case SOPHIA_ANI_IDLE_RIGHT_FALL_3:
+			case SOPHIA_ANI_IDLE_RIGHT_3:
+			case SOPHIA_ANI_IDLE_RIGHT_JUMP_3:
+			case SOPHIA_ANI_IDLE_RIGHT_FALL_3:
 				ani = SOPHIA_ANI_IDLE_RIGHT_FALL_3;
 				break;
-			case SOPHIA_ANI_IDLE_RIGHT_4: case SOPHIA_ANI_IDLE_RIGHT_JUMP_4: case SOPHIA_ANI_IDLE_RIGHT_FALL_4:
+			case SOPHIA_ANI_IDLE_RIGHT_4:
+			case SOPHIA_ANI_IDLE_RIGHT_JUMP_4:
+			case SOPHIA_ANI_IDLE_RIGHT_FALL_4:
 				ani = SOPHIA_ANI_IDLE_RIGHT_FALL_4;
 				break;
 			}
@@ -766,16 +882,24 @@ void CSophia::RenderFalling(int& ani)
 		{
 			switch (currentAnimation)
 			{
-			case SOPHIA_ANI_IDLE_LEFT_1: case SOPHIA_ANI_IDLE_LEFT_JUMP_1: case SOPHIA_ANI_IDLE_LEFT_FALL_1:
+			case SOPHIA_ANI_IDLE_LEFT_1:
+			case SOPHIA_ANI_IDLE_LEFT_JUMP_1:
+			case SOPHIA_ANI_IDLE_LEFT_FALL_1:
 				ani = SOPHIA_ANI_IDLE_LEFT_FALL_1;
 				break;
-			case SOPHIA_ANI_IDLE_LEFT_2: case SOPHIA_ANI_IDLE_LEFT_JUMP_2: case SOPHIA_ANI_IDLE_LEFT_FALL_2:
+			case SOPHIA_ANI_IDLE_LEFT_2:
+			case SOPHIA_ANI_IDLE_LEFT_JUMP_2:
+			case SOPHIA_ANI_IDLE_LEFT_FALL_2:
 				ani = SOPHIA_ANI_IDLE_LEFT_FALL_2;
 				break;
-			case SOPHIA_ANI_IDLE_LEFT_3: case SOPHIA_ANI_IDLE_LEFT_JUMP_3: case SOPHIA_ANI_IDLE_LEFT_FALL_3:
+			case SOPHIA_ANI_IDLE_LEFT_3:
+			case SOPHIA_ANI_IDLE_LEFT_JUMP_3:
+			case SOPHIA_ANI_IDLE_LEFT_FALL_3:
 				ani = SOPHIA_ANI_IDLE_LEFT_FALL_3;
 				break;
-			case SOPHIA_ANI_IDLE_LEFT_4: case SOPHIA_ANI_IDLE_LEFT_JUMP_4: case SOPHIA_ANI_IDLE_LEFT_FALL_4:
+			case SOPHIA_ANI_IDLE_LEFT_4:
+			case SOPHIA_ANI_IDLE_LEFT_JUMP_4:
+			case SOPHIA_ANI_IDLE_LEFT_FALL_4:
 				ani = SOPHIA_ANI_IDLE_LEFT_FALL_4;
 				break;
 			}
@@ -797,7 +921,7 @@ void CSophia::RenderFalling(int& ani)
 	}
 }
 
-void CSophia::RenderOpening(int& ani, float &ydraw)
+void CSophia::RenderOpening(int &ani, float &ydraw)
 {
 	ydraw += 8;
 	int currentFrameIndex = animation_set->at(currentAnimation)->GetCurrentFrame();
@@ -827,55 +951,55 @@ void CSophia::RenderOpening(int& ani, float &ydraw)
 			animation_set->at(ani)->ResetFrameTime();
 		}
 		else if (currentAnimation == SOPHIA_ANI_IDLE_RIGHT_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_2 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 1 ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 1 ||
-			currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 11 ||
-			currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 11 ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_GUNUP && currentFrameIndex == 1 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_GUNUP && currentFrameIndex == 1)
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_2 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 1 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 1 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 11 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 11 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_GUNUP && currentFrameIndex == 1 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_GUNUP && currentFrameIndex == 1)
 		{
 			animation_set->at(ani)->SetCurrentFrame(1);
 			animation_set->at(ani)->ResetFrameTime();
 		}
 		else if (currentAnimation == SOPHIA_ANI_IDLE_RIGHT_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_3 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 2 ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 2 ||
-			currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 15 ||
-			currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 15 ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_GUNUP && currentFrameIndex == 2 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_GUNUP && currentFrameIndex == 2)
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_3 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 2 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 2 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 15 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 15 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_GUNUP && currentFrameIndex == 2 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_GUNUP && currentFrameIndex == 2)
 		{
 			animation_set->at(ani)->SetCurrentFrame(2);
 			animation_set->at(ani)->ResetFrameTime();
 		}
 		else if (currentAnimation == SOPHIA_ANI_IDLE_RIGHT_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_4 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 3 ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 3 ||
-			currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 3 ||
-			currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 3 ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_GUNUP && currentFrameIndex == 3 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_GUNUP && currentFrameIndex == 3)
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_4 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 3 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 3 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 3 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 3 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_GUNUP && currentFrameIndex == 3 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_GUNUP && currentFrameIndex == 3)
 		{
 			animation_set->at(ani)->SetCurrentFrame(3);
 			animation_set->at(ani)->ResetFrameTime();
@@ -894,22 +1018,26 @@ void CSophia::RenderOpening(int& ani, float &ydraw)
 	}
 }
 
-void CSophia::RenderRotatingWhileJumping(int& ani)
+void CSophia::RenderRotatingWhileJumping(int &ani)
 {
 	switch (currentAnimation)
 	{
-	//RIGHT
-	//IDLE
-	case SOPHIA_ANI_ROTATING_RIGHT_JUMP_1: case SOPHIA_ANI_IDLE_RIGHT_JUMP_1:
+		//RIGHT
+		//IDLE
+	case SOPHIA_ANI_ROTATING_RIGHT_JUMP_1:
+	case SOPHIA_ANI_IDLE_RIGHT_JUMP_1:
 		ani = SOPHIA_ANI_ROTATING_RIGHT_JUMP_1;
 		break;
-	case SOPHIA_ANI_ROTATING_RIGHT_JUMP_2: case SOPHIA_ANI_IDLE_RIGHT_JUMP_2:
+	case SOPHIA_ANI_ROTATING_RIGHT_JUMP_2:
+	case SOPHIA_ANI_IDLE_RIGHT_JUMP_2:
 		ani = SOPHIA_ANI_ROTATING_RIGHT_JUMP_2;
 		break;
-	case SOPHIA_ANI_ROTATING_RIGHT_JUMP_3: case SOPHIA_ANI_IDLE_RIGHT_JUMP_3:
+	case SOPHIA_ANI_ROTATING_RIGHT_JUMP_3:
+	case SOPHIA_ANI_IDLE_RIGHT_JUMP_3:
 		ani = SOPHIA_ANI_ROTATING_RIGHT_JUMP_3;
 		break;
-	case SOPHIA_ANI_ROTATING_RIGHT_JUMP_4: case SOPHIA_ANI_IDLE_RIGHT_JUMP_4:
+	case SOPHIA_ANI_ROTATING_RIGHT_JUMP_4:
+	case SOPHIA_ANI_IDLE_RIGHT_JUMP_4:
 		ani = SOPHIA_ANI_ROTATING_RIGHT_JUMP_4;
 		break;
 		//WALK
@@ -929,22 +1057,27 @@ void CSophia::RenderRotatingWhileJumping(int& ani)
 		case 3:
 			ani = SOPHIA_ANI_ROTATING_RIGHT_JUMP_4;
 			break;
-		default:break;
+		default:
+			break;
 		}
 	}
 	break;
 	//LEFT
 	//IDLE
-	case SOPHIA_ANI_ROTATING_LEFT_JUMP_1: case SOPHIA_ANI_IDLE_LEFT_JUMP_1:
+	case SOPHIA_ANI_ROTATING_LEFT_JUMP_1:
+	case SOPHIA_ANI_IDLE_LEFT_JUMP_1:
 		ani = SOPHIA_ANI_ROTATING_LEFT_JUMP_1;
 		break;
-	case SOPHIA_ANI_ROTATING_LEFT_JUMP_2: case SOPHIA_ANI_IDLE_LEFT_JUMP_2:
+	case SOPHIA_ANI_ROTATING_LEFT_JUMP_2:
+	case SOPHIA_ANI_IDLE_LEFT_JUMP_2:
 		ani = SOPHIA_ANI_ROTATING_LEFT_JUMP_2;
 		break;
-	case SOPHIA_ANI_ROTATING_LEFT_JUMP_3: case SOPHIA_ANI_IDLE_LEFT_JUMP_3:
+	case SOPHIA_ANI_ROTATING_LEFT_JUMP_3:
+	case SOPHIA_ANI_IDLE_LEFT_JUMP_3:
 		ani = SOPHIA_ANI_ROTATING_LEFT_JUMP_3;
 		break;
-	case SOPHIA_ANI_ROTATING_LEFT_JUMP_4: case SOPHIA_ANI_IDLE_LEFT_JUMP_4:
+	case SOPHIA_ANI_ROTATING_LEFT_JUMP_4:
+	case SOPHIA_ANI_IDLE_LEFT_JUMP_4:
 		ani = SOPHIA_ANI_ROTATING_LEFT_JUMP_4;
 		break;
 		//WALK
@@ -964,20 +1097,22 @@ void CSophia::RenderRotatingWhileJumping(int& ani)
 		case 3:
 			ani = SOPHIA_ANI_ROTATING_LEFT_JUMP_4;
 			break;
-		default:break;
+		default:
+			break;
 		}
 	}
 	break;
-	default:break;
+	default:
+		break;
 	}
 }
 
-void CSophia::RenderLiftingGun(int& ani, float &xdraw, float &ydraw)
+void CSophia::RenderLiftingGun(int &ani, float &xdraw, float &ydraw)
 {
 	int currentFrameIndex = animation_set->at(currentAnimation)->GetCurrentFrame();
 	if (currentAnimation != SOPHIA_ANI_LIFTING_LEFT && currentAnimation != SOPHIA_ANI_LIFTING_RIGHT) //Not lift yet
 	{
-		if (nx > 0)	//Right
+		if (nx > 0) //Right
 		{
 			ani = SOPHIA_ANI_LIFTING_RIGHT;
 		}
@@ -994,7 +1129,7 @@ void CSophia::RenderLiftingGun(int& ani, float &xdraw, float &ydraw)
 			currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_1 ||
 			currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_1 ||
 			currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 0 || currentFrameIndex == 4 || currentFrameIndex == 8) ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 0||
+			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 0 ||
 			currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 0 || currentFrameIndex == 4 || currentFrameIndex == 8) ||
 			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 0)
 		{
@@ -1002,43 +1137,43 @@ void CSophia::RenderLiftingGun(int& ani, float &xdraw, float &ydraw)
 			animation_set->at(ani)->ResetFrameTime();
 		}
 		else if (currentAnimation == SOPHIA_ANI_IDLE_RIGHT_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_2 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 1||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 1)
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_2 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 1 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 1)
 		{
 			animation_set->at(ani)->SetCurrentFrame(4);
 			animation_set->at(ani)->ResetFrameTime();
 		}
 		else if (currentAnimation == SOPHIA_ANI_IDLE_RIGHT_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_3 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 2||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 2)
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_3 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 2 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 2)
 		{
 			animation_set->at(ani)->SetCurrentFrame(8);
 			animation_set->at(ani)->ResetFrameTime();
 		}
 		else if (currentAnimation == SOPHIA_ANI_IDLE_RIGHT_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_4 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 3 ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 3)
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_4 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 3 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 3)
 		{
 			animation_set->at(ani)->SetCurrentFrame(12);
 			animation_set->at(ani)->ResetFrameTime();
@@ -1048,23 +1183,35 @@ void CSophia::RenderLiftingGun(int& ani, float &xdraw, float &ydraw)
 		return;
 	}
 	else //Lifting
-	{	
+	{
 		if (animation_set->at(currentAnimation)->GetPassedFrameTime() < animation_set->at(currentAnimation)->GetFrameAt(currentFrameIndex)->GetTime())
 		{
 			ani = currentAnimation;
 			//Change ydraw
 			switch (currentFrameIndex)
 			{
-			case 0: case 4: case 8: case 12:
+			case 0:
+			case 4:
+			case 8:
+			case 12:
 				ydraw += 8;
 				break;
-			case 1: case 5: case 9: case 13:
+			case 1:
+			case 5:
+			case 9:
+			case 13:
 				ydraw += 10;
 				break;
-			case 2: case 6: case 10: case 14:
+			case 2:
+			case 6:
+			case 10:
+			case 14:
 				ydraw += 12;
 				break;
-			case 3: case 7: case 11: case 15:
+			case 3:
+			case 7:
+			case 11:
+			case 15:
 				ydraw += 16;
 				break;
 			}
@@ -1100,16 +1247,28 @@ void CSophia::RenderLiftingGun(int& ani, float &xdraw, float &ydraw)
 			//Change ydraw
 			switch (newFrameIndex)
 			{
-			case 0: case 4: case 8: case 12:
+			case 0:
+			case 4:
+			case 8:
+			case 12:
 				ydraw += 8;
 				break;
-			case 1: case 5: case 9: case 13:
+			case 1:
+			case 5:
+			case 9:
+			case 13:
 				ydraw += 10;
 				break;
-			case 2: case 6: case 10: case 14:
+			case 2:
+			case 6:
+			case 10:
+			case 14:
 				ydraw += 12;
 				break;
-			case 3: case 7: case 11: case 15:
+			case 3:
+			case 7:
+			case 11:
+			case 15:
 				ydraw += 16;
 				break;
 			}
@@ -1118,7 +1277,7 @@ void CSophia::RenderLiftingGun(int& ani, float &xdraw, float &ydraw)
 	}
 }
 
-void CSophia::RenderLoweringGun(int& ani, float& xdraw, float& ydraw)
+void CSophia::RenderLoweringGun(int &ani, float &xdraw, float &ydraw)
 {
 	int currentFrame = animation_set->at(currentAnimation)->GetCurrentFrame();
 	int newFrame = 0;
@@ -1161,13 +1320,22 @@ void CSophia::RenderLoweringGun(int& ani, float& xdraw, float& ydraw)
 			//Change ydraw
 			switch (currentFrame)
 			{
-			case 0: case 3: case 6: case 9:
+			case 0:
+			case 3:
+			case 6:
+			case 9:
 				ydraw += 12;
 				break;
-			case 1: case 4: case 7: case 10:
+			case 1:
+			case 4:
+			case 7:
+			case 10:
 				ydraw += 10;
 				break;
-			case 2: case 5: case 8: case 11:
+			case 2:
+			case 5:
+			case 8:
+			case 11:
 				ydraw += 8;
 				break;
 			}
@@ -1203,23 +1371,31 @@ void CSophia::RenderLoweringGun(int& ani, float& xdraw, float& ydraw)
 			//Change ydraw
 			switch (newFrame)
 			{
-			case 0: case 3: case 6: case 9:
+			case 0:
+			case 3:
+			case 6:
+			case 9:
 				ydraw += 12;
 				break;
-			case 1: case 4: case 7: case 10:
+			case 1:
+			case 4:
+			case 7:
+			case 10:
 				ydraw += 10;
 				break;
-			case 2: case 5: case 8: case 11:
+			case 2:
+			case 5:
+			case 8:
+			case 11:
 				ydraw += 8;
 				break;
 			}
 			return;
 		}
 	}
-
 }
 
-void CSophia::RenderGunUp(int& ani, float& xdraw, float& ydraw)
+void CSophia::RenderGunUp(int &ani, float &xdraw, float &ydraw)
 {
 	int currentFrameIndex = animation_set->at(currentAnimation)->GetCurrentFrame();
 	if (currentAnimation != SOPHIA_ANI_WALKING_LEFT_GUNUP && currentAnimation != SOPHIA_ANI_WALKING_RIGHT_GUNUP)
@@ -1238,7 +1414,7 @@ void CSophia::RenderGunUp(int& ani, float& xdraw, float& ydraw)
 			currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 0 || currentFrameIndex == 4 || currentFrameIndex == 8) ||
 			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 0 ||
 			currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 0 || currentFrameIndex == 4 || currentFrameIndex == 8) ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 0||
+			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 0 ||
 			currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 7 ||
 			currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 7)
 		{
@@ -1246,49 +1422,49 @@ void CSophia::RenderGunUp(int& ani, float& xdraw, float& ydraw)
 			animation_set->at(ani)->ResetFrameTime();
 		}
 		else if (currentAnimation == SOPHIA_ANI_IDLE_RIGHT_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_2 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_2 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 1 ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 1||
-			currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 11 ||
-			currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 11)
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_2 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_2 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 1 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 1 || currentFrameIndex == 5 || currentFrameIndex == 9) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 1 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 11 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 11)
 		{
 			animation_set->at(ani)->SetCurrentFrame(1);
 			animation_set->at(ani)->ResetFrameTime();
 		}
 		else if (currentAnimation == SOPHIA_ANI_IDLE_RIGHT_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_3 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_3 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 2 ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 2||
-			currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 15 ||
-			currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 15)
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_3 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_3 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 2 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 2 || currentFrameIndex == 6 || currentFrameIndex == 10) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 2 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 15 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 15)
 		{
 			animation_set->at(ani)->SetCurrentFrame(2);
 			animation_set->at(ani)->ResetFrameTime();
 		}
 		else if (currentAnimation == SOPHIA_ANI_IDLE_RIGHT_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_4 ||
-			currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_4 ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
-			currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 3 ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
-			currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 3||
-			currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 3 ||
-			currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 3)
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_FALL_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_RIGHT_JUMP_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_FALL_4 ||
+				 currentAnimation == SOPHIA_ANI_IDLE_LEFT_JUMP_4 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_RIGHT_JUMP && currentFrameIndex == 3 ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT && (currentFrameIndex == 3 || currentFrameIndex == 7 || currentFrameIndex == 11) ||
+				 currentAnimation == SOPHIA_ANI_WALKING_LEFT_JUMP && currentFrameIndex == 3 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_RIGHT && currentFrameIndex == 3 ||
+				 currentAnimation == SOPHIA_ANI_LIFTING_LEFT && currentFrameIndex == 3)
 		{
 			animation_set->at(ani)->SetCurrentFrame(3);
 			animation_set->at(ani)->ResetFrameTime();

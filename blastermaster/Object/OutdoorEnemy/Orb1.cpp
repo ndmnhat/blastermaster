@@ -5,8 +5,8 @@ COrb1::COrb1() : COutdoorEnemy()
 	enemyType = OutdoorEnemyType::Orb1;
 	width = ORB_BBOX_WIDTH;
 	height = ORB_BBOX_HEIGHT;
-	health = ORB_HEALTH;
-	damage = ORB_DAMAGE;
+	Health = ORB_HEALTH;
+	Damage = ORB_DAMAGE;
 	nx = -1;
 	SetState(ORB_STATE_MOVING);
 	startWaiting = GetTickCount();
@@ -91,6 +91,23 @@ void COrb1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				x += dx;
 				y += dy;
 				break;
+			case TYPE_BULLET:
+				e->obj->isDestroyed = true;
+				if (dynamic_cast<CJasonBullet*>(e->obj) || dynamic_cast<CSophiaBullet*>(e->obj))
+				{
+					if (this->Health <= 0) {
+						this->isDestroyed = true;
+						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+						if (rand() % 3 == 1)
+						{
+							CPower* power = new CPower();
+							power->SetPosition(x, y);
+							CGrid::GetInstance()->addObject(power);
+						}
+					}
+					else this->Health -= (e->obj->Damage);
+				}
+				break;
 			default:
 				break;
 			}
@@ -135,9 +152,9 @@ void COrb1::Render()
 			ani = ORB_ANI_MOVING_RIGHT;
 		break;
 	case ORB_STATE_TURNING:
-		if (nx < 0) 
+		if (nx < 0)
 			ani = ORB_ANI_TURNING_LEFT;
-		else 
+		else
 			ani = ORB_ANI_TURNING_RIGHT;
 		break;
 	case ORB_STATE_SPINNING:
@@ -156,7 +173,7 @@ void COrb1::SetState(int state)
 	switch (state) {
 	case ORB_STATE_TURNING:
 		startTurning = GetTickCount();
-		break;	
+		break;
 	case ORB_STATE_SPINNING:
 		startSpinning = GetTickCount();
 		break;

@@ -5,7 +5,7 @@
 #define PI						3.14159265f
 
 #define EYEBALL_HEALTH			100
-#define EYEBALL_DAMAGE			100
+#define EYEBALL_DAMAGE			10
 
 #define EYEBALL_MOVING_SPEED	0.05f
 

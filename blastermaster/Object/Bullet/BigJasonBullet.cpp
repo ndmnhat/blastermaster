@@ -82,14 +82,17 @@ void CBigJasonBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vx = 0;
 				}
 				this->isDestroyed = true;
+				Sound::GetInstance()->Play(eSound::soundSophiaBulletExplosion);
 				CSmallBulletExplosion* explosion = new CSmallBulletExplosion();
 				explosion->SetPosition(x, y);
 				CGrid::GetInstance()->addObject(explosion);
 			}
 		}
 	}
-	if (LifeTime < GetTickCount() - lifeTimeStart)
+	if (LifeTime < GetTickCount() - lifeTimeStart) {
+		Sound::GetInstance()->Play(eSound::soundSophiaBulletExplosion);
 		this->isDestroyed = true;
+	}
 }
 
 void CBigJasonBullet::Render()
@@ -115,8 +118,8 @@ void CBigJasonBullet::GetBoundingBox(float& left, float& top, float& right, floa
 
 CBigJasonBullet::CBigJasonBullet()
 {
-	this->Speed =    BIGJASON_BULLET_SPEED;
-	this->Damage =   BIGJASON_BULLET_DAMAGE;
+	this->Speed = BIGJASON_BULLET_SPEED;
+	this->Damage = BIGJASON_BULLET_DAMAGE;
 	this->LifeTime = BIGJASON_BULLET_LIFETIME;
 	LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(BIGJASON_BULLET_ANIMATION_SET_ID);
 	this->SetAnimationSet(ani_set);

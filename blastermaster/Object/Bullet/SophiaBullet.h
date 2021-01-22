@@ -2,8 +2,9 @@
 #include "Bullet.h"
 #include "..\Effect\SmallBulletExplosion.h"
 #include "..\..\Grid\Grid.h"
+#include "..\..\Sound\Sound.h"
 #define SOPHIA_BULLET_SPEED 0.12f
-#define SOPHIA_BULLET_DAMAGE 10
+#define SOPHIA_BULLET_DAMAGE 50
 #define SOPHIA_BULLET_RELOADTIME 1000
 #define SOPHIA_BULLET_LIFETIME 500
 #define SOPHIA_BULLET_CLIPSIZE 3

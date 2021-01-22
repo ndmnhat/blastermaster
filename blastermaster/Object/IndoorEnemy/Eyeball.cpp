@@ -5,8 +5,8 @@ CEyeball::CEyeball()
 	enemyType = IndoorEnemyType::Eyeball;
 	width = EYEBALL_BBOX_WIDTH;
 	height = EYEBALL_BBOX_HEIGHT;
-	health = EYEBALL_HEALTH;
-	damage = EYEBALL_DAMAGE;
+	Health = EYEBALL_HEALTH;
+	Damage = EYEBALL_DAMAGE;
 	ClipSize = EYEBALL_BULLET_CLIPSIZE;
 	reloadingTimeCount = GetTickCount();
 	this->x = x;
@@ -86,17 +86,36 @@ void CEyeball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				x += min_tx * dx + e->nx * 0.1f;
 				y += min_ty * dy + e->ny * 0.1f;
 
-				if (e->nx != 0) 
+				if (e->nx != 0)
 					this->nx *= -1;
-				if (e->ny != 0) 
+				if (e->ny != 0)
 					vy = 0;
 
 				break;
 			case TYPE_BIGJASON:
 				x += dx;
 				y += dy;
-			break;
-			default: break;
+				break;
+			case TYPE_BULLET:
+				e->obj->isDestroyed = true;
+				if (dynamic_cast<CBigJasonBullet*>(e->obj))
+				{
+					if (this->Health <= 0) {
+						this->isDestroyed = true;
+						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+						if (rand() % 3 == 1)
+						{
+							CPower* power = new CPower();
+							power->SetPosition(x, y);
+							CGrid::GetInstance()->addObject(power);
+						}
+					}
+					else 
+						this->Health -= (e->obj->Damage);
+				}
+				break;
+			default:
+				break;
 			}
 		}
 	}

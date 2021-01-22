@@ -79,19 +79,22 @@ void CJasonBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vx = 0;
 				}
 				this->isDestroyed = true;
+				Sound::GetInstance()->Play(eSound::soundSophiaBulletExplosion);
 				CSmallBulletExplosion* explosion = new CSmallBulletExplosion();
 				explosion->SetPosition(x, y);
 				CGrid::GetInstance()->addObject(explosion);
 			}
 		}
 	}
-	if (LifeTime < GetTickCount() - lifeTimeStart)
+	if (LifeTime < GetTickCount() - lifeTimeStart) {
+		Sound::GetInstance()->Play(eSound::soundSophiaBulletExplosion);
 		this->isDestroyed = true;
+	}
 }
 
 void CJasonBullet::Render()
 {
-	animation_set->at(0)->Render(x,y);
+	animation_set->at(0)->Render(x, y);
 }
 
 void CJasonBullet::GetBoundingBox(float& left, float& top, float& right, float& bottom)

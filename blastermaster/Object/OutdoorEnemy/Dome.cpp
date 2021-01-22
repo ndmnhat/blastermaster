@@ -6,13 +6,13 @@ CDome::CDome() : COutdoorEnemy()
 	width = DOME_BBOX_WIDTH;
 	height = DOME_BBOX_HEIGHT;
 	state = DOME_STATE_ATTACK_Y;
-	health = DOME_HEALTH;
-	damage = DOME_DAMAGE;
+	Health = DOME_HEALTH;
+	Damage = DOME_DAMAGE;
 	nx = -1;
 	ny = 1;
 }
 
-void CDome::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void CDome::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 
 	int i = GetSophiaPosInCoobject(coObjects);
@@ -96,12 +96,12 @@ void CDome::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	//DebugOut(L"DOME Vx: %f Vy: %f\n", this->vx, this->vy);
 	CGameObject::Update(dt);
 
-	vector<LPGAMEOBJECT> *listObject = new vector<LPGAMEOBJECT>();
+	vector<LPGAMEOBJECT>* listObject = new vector<LPGAMEOBJECT>();
 	listObject->clear();
 	if (coObjects != NULL)
 		for (UINT i = 0; i < coObjects->size(); i++)
 		{
-			if (coObjects->at(i)->type != TYPE_ENEMY_DOME)
+			if (coObjects->at(i)->type != TYPE_ENEMY)
 				listObject->push_back(coObjects->at(i));
 		}
 
@@ -163,9 +163,25 @@ void CDome::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				}
 				break;
 			case TYPE_SOPHIA:
-			case TYPE_ENEMY:
 				x += dx;
 				y += dy;
+				break;
+			case TYPE_BULLET:
+				e->obj->isDestroyed = true;
+				if (dynamic_cast<CJasonBullet*>(e->obj) || dynamic_cast<CSophiaBullet*>(e->obj))
+				{
+					if (this->Health <= 0) {
+						this->isDestroyed = true;
+						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+						if (rand() % 3 == 1)
+						{
+							CPower* power = new CPower();
+							power->SetPosition(x, y);
+							CGrid::GetInstance()->addObject(power);
+						}
+					}
+					else this->Health -= (e->obj->Damage);
+				}
 				break;
 			default:
 				break;

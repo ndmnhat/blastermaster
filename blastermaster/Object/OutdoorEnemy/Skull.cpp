@@ -6,14 +6,14 @@ CSkull::CSkull() : COutdoorEnemy()
 	currentBulletType = BulletType::SkullBullet;
 	width = SKULL_BBOX_WIDTH;
 	height = SKULL_BBOX_HEIGHT;
-	health = SKULL_HEALTH;
-	damage = SKULL_DAMAGE;
+	Health = SKULL_HEALTH;
+	Damage = SKULL_DAMAGE;
 	nx = -1;
 	SetState(SKULL_STATE_MOVING);
 }
 
 void CSkull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{	
+{
 	if (state == SKULL_STATE_MOVING) {
 		int i = GetSophiaPosInCoobject(coObjects);
 		if (i != -1)
@@ -24,11 +24,11 @@ void CSkull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 			else if (int(this->x) == int(coObjects->at(i)->x)) {
-					SetState(SKULL_STATE_ATTACKING);
+				SetState(SKULL_STATE_ATTACKING);
 			}
 		}
 	}
-	
+
 	if (state == SKULL_STATE_ATTACKING) {
 		if ((GetTickCount() - startAttacking) > SKULL_ATTACKING_TIME) {
 			startAttacking = 0;
@@ -93,6 +93,24 @@ void CSkull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			case TYPE_SOPHIA:
 				x += dx;
 				y += dy;
+				break;
+			case TYPE_BULLET:
+				e->obj->isDestroyed = true;
+				if (dynamic_cast<CJasonBullet*>(e->obj) || dynamic_cast<CSophiaBullet*>(e->obj))
+				{
+					if (this->Health <= 0) {
+						this->isDestroyed = true;
+						Sound::GetInstance()->Play(eSound::soundEnemyDestroyed);
+						if (rand() % 3 == 1)
+						{
+							CPower* power = new CPower();
+							power->SetPosition(x, y);
+							CGrid::GetInstance()->addObject(power);
+						}
+					}
+					else this->Health -= (e->obj->Damage);
+				}
+				break;
 			default:
 				break;
 			}
@@ -133,7 +151,7 @@ void CSkull::Render()
 	case SKULL_STATE_MOVING:
 		if (nx < 0)
 			ani = SKULL_ANI_MOVING_LEFT;
-		else 
+		else
 			ani = SKULL_ANI_MOVING_RIGHT;
 		break;
 	case SKULL_STATE_ATTACKING:
@@ -165,18 +183,6 @@ void CSkull::SetState(int state)
 void CSkull::Fire(float Direction, int nx)
 {
 	LPBULLET bullet;
-	/*switch (currentBulletType)
-	{
-	case BulletType::SophiaBullet:
-		bullet = new CSophiaBullet();
-		break;
-	case BulletType::SkullBullet:
-		bullet = new CSkullBullet();
-		break;
-	default:
-		bullet = new CSkullBullet();
-		break;
-	}*/
 	bullet = new CSkullBullet(nx);
 	float bulletX = this->x, bulletY = this->y;
 	if (nx > 0)
@@ -186,4 +192,5 @@ void CSkull::Fire(float Direction, int nx)
 	bullet->SetPosition(bulletX, bulletY);
 	bullet->SetDirection(Direction);
 	CGrid::GetInstance()->addObject(bullet);
+	Sound::GetInstance()->Play(eSound::soundSkullBombDrop);
 }

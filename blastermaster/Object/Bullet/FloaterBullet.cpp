@@ -59,12 +59,14 @@ void CFloaterBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				this->isDestroyed = true;
 				((CJason*)(e->obj))->SetState(JASON_STATE_ATTACKED);
+				e->obj->Health -= this->Damage;
 			}
 			break;
 			case TYPE_SOPHIA:
 			{
 				this->isDestroyed = true;
 				((CSophia*)(e->obj))->SetState(SOPHIA_STATE_ATTACKED);
+				e->obj->Health -= this->Damage;
 			}
 			break;
 			default: 

@@ -2,9 +2,9 @@
 #include "Bullet.h"
 #include "..\Effect\SmallBulletExplosion.h"
 #include "..\..\Grid\Grid.h"
-
+#include "..\..\Sound\Sound.h"
 #define JASON_BULLET_SPEED 0.08f
-#define JASON_BULLET_DAMAGE 10
+#define JASON_BULLET_DAMAGE 50
 #define JASON_BULLET_RELOADTIME 1000
 #define JASON_BULLET_LIFETIME 500
 #define JASON_BULLET_CLIPSIZE 3
