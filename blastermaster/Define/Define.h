@@ -45,7 +45,9 @@ enum ObjectType
 	TYPE_EFFECT = 25,
 	TYPE_LAVA = 26,
 	TYPE_FENCE = 27,
-	TYPE_BOSSWALL = 28
+	TYPE_BOSSWALL = 28,
+	TYPE_INTRO_OPENING = 29,
+	TYPE_INTRO_ROLL_OUT = 30
 };
 
 enum TextureID
@@ -82,10 +84,10 @@ public:
 
 #ifndef SAFE_DELETE
 #define SAFE_DELETE(ptr) \
-if(ptr) \
-{\
-	delete (ptr); \
-	ptr = nullptr; \
-} \
+	if (ptr)             \
+	{                    \
+		delete (ptr);    \
+		ptr = nullptr;   \
+	}
 
 #endif

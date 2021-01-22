@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath);G:\DirectX\Include</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath);G:\DirectX\Lib\x86</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath);G:\DirectX\Include;G:\DirectX\Include</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath);G:\DirectX\Lib\x86;G:\DirectX\Lib\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -94,8 +94,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
@@ -163,6 +162,7 @@
     <ClCompile Include="Scene\EndScene.cpp" />
     <ClCompile Include="HUD\HealthBar.cpp" />
     <ClCompile Include="Object\Bullet\EyeballBullet.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="Object\Bullet\FloaterBullet.cpp" />
     <ClCompile Include="Object\Item\Item.cpp" />
     <ClCompile Include="Object\Bullet\BigJasonBullet.cpp" />
@@ -178,6 +178,7 @@
     <ClCompile Include="Animations\RenderEffect.cpp" />
     <ClCompile Include="Object\Item\Power.cpp" />
     <ClCompile Include="Object\Portal.cpp" />
+    <ClCompile Include="OpeningScene.cpp" />
     <ClCompile Include="Scene\CSceneManager.cpp" />
     <ClCompile Include="Object\OutdoorEnemy\BossCrabullus.cpp" />
     <ClCompile Include="Object\IndoorEnemy\Cannon.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="Scene\EndScene.h" />
     <ClInclude Include="HUD\HealthBar.h" />
     <ClInclude Include="Object\Bullet\EyeballBullet.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="Object\Bullet\FloaterBullet.h" />
     <ClInclude Include="Object\Item\Item.h" />
     <ClInclude Include="Object\Bullet\BigJasonBullet.h" />
@@ -239,6 +241,7 @@
     <ClInclude Include="Animations\RenderEffect.h" />
     <ClInclude Include="Object\Item\Power.h" />
     <ClInclude Include="Object\Portal.h" />
+    <ClInclude Include="OpeningScene.h" />
     <ClInclude Include="Scene\CSceneManager.h" />
     <ClInclude Include="Scene\KeyEventHandler.h" />
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
@@ -274,9 +277,13 @@
     <ClInclude Include="Object\Wall.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Map\area2map.txt" />
+    <Text Include="Map\area2overmap.txt" />
     <Text Include="Map\map2.txt">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </Text>
+    <Text Include="Scene\ending.txt" />
+    <Text Include="Scene\intro.txt" />
     <Text Include="Scene\scene.txt" />
     <Text Include="Scene\scene2.txt" />
   </ItemGroup>

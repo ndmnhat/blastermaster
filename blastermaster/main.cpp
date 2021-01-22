@@ -36,9 +36,10 @@ CSophia *sophia;
 CCamera* cam = CCamera::GetInstance();
 
 //CMap m;
-
+CScene* introscene = new IntroScene(0, L"Scene\\intro.txt");
 CScene* scenegame = new CSceneGame(1, L"Scene\\scene.txt");
 CScene* scenegame2 = new CSceneGame(2, L"Scene\\scene2.txt");
+
 //class CSampleKeyHander: public CKeyEventHandler
 //{
 //	virtual void KeyState(BYTE *states);
@@ -370,7 +371,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//scenegame->Load();
 	CSceneManager::GetInstance()->AddScene(scenegame);
 	CSceneManager::GetInstance()->AddScene(scenegame2);
-	CSceneManager::GetInstance()->SetScene(1);
+	CSceneManager::GetInstance()->AddScene(introscene);
+	CSceneManager::GetInstance()->SetScene(0);
 	//LoadResources();
 
 	SetWindowPos(hWnd, 0, 0, 0, WINDOW_WIDTH * 2, WINDOW_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);

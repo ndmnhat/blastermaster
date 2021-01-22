@@ -172,9 +172,9 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 			return;
 		}
 		obj = new CSophia();
-		CSceneManager::GetInstance()->Sophia = (CSophia*)obj;
+		CSceneManager::GetInstance()->Sophia = (CSophia *)obj;
 		currentPlayer = CSceneManager::GetInstance()->Sophia;
-		CCamera::GetInstance()->SetFollow(obj);
+		//CCamera::GetInstance()->SetFollow(obj);
 		DebugOut(L"[INFO] Sophia object created!\n");
 		break;
 
@@ -185,7 +185,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 			return;
 		}
 		obj = new CJason();
-		CSceneManager::GetInstance()->Jason = (CJason*)obj;
+		CSceneManager::GetInstance()->Jason = (CJason *)obj;
 		DebugOut(L"[INFO] Jason object created!\n");
 		break;
 	case TYPE_BIGJASON:
@@ -195,9 +195,9 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 			return;
 		}
 		obj = new CBigJason();
-		CSceneManager::GetInstance()->BigJason = (CBigJason*)obj;
+		CSceneManager::GetInstance()->BigJason = (CBigJason *)obj;
 		currentPlayer = CSceneManager::GetInstance()->BigJason;
-		//CCamera::GetInstance()->SetFollow(obj); 
+		//CCamera::GetInstance()->SetFollow(obj);
 		DebugOut(L"[INFO] Bigjason object created!\n");
 		break;
 	case TYPE_WALL:
@@ -213,7 +213,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		goto addObjectToGrid;
 	}
 	break;
-	
+
 	case TYPE_GATEWAY:
 	{
 		obj = new CGateway();
@@ -231,7 +231,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 	break;
 	case TYPE_PORTAL:
 		obj = new CPortal();
-		((CPortal*)obj)->SceneID = atoi(tokens[3].c_str());
+		((CPortal *)obj)->SceneID = atoi(tokens[3].c_str());
 		obj->SetPosition(x, y);
 		goto addObjectToGrid;
 	case TYPE_WALLIMAGE:
@@ -249,11 +249,11 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 	break;
 	case TYPE_ENEMY_WORM:
 		obj = new CWorm();
-	//	//CCamera::GetInstance()->SetFollow(obj);
+		//	//CCamera::GetInstance()->SetFollow(obj);
 		break;
 	case TYPE_ENEMY_FLOATER:
 		obj = new CFloater();
-	//	//CCamera::GetInstance()->SetFollow(obj);
+		//	//CCamera::GetInstance()->SetFollow(obj);
 		break;
 	case TYPE_ENEMY_DOME:
 		obj = new CDome();
@@ -273,10 +273,10 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		break;
 	case TYPE_ENEMY_TELEPORTER:
 		obj = new CTeleporter();
-    break;
+		break;
 	case TYPE_ENEMY_INSECT:
 		obj = new CInsect();
-	//	//CCamera::GetInstance()->SetFollow(obj);
+		//	//CCamera::GetInstance()->SetFollow(obj);
 		break;
 	case TYPE_ENEMY_ORB_1:
 		obj = new COrb1();
@@ -284,7 +284,7 @@ void CSceneGame::_ParseSection_OBJECTS(std::string line)
 		break;
 	case TYPE_ENEMY_ORB_2:
 		obj = new COrb2();
-	//	//CCamera::GetInstance()->SetFollow(obj);
+		//	//CCamera::GetInstance()->SetFollow(obj);
 		break;
 	case TYPE_ENEMY_SKULL:
 		obj = new CSkull();
@@ -408,7 +408,7 @@ void CSceneGame::Load()
 	f.close();
 	healthbar = new CHealthBar();
 	map->ReadMap();
-	CSectionManager::GetInstance()->ChangeSection(CSectionManager::GetInstance()->GetObjectSectionID(this->currentPlayer),true);
+	CSectionManager::GetInstance()->ChangeSection(CSectionManager::GetInstance()->GetObjectSectionID(this->currentPlayer), true);
 	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	//CCamera::GetInstance()->SetPosition(0.0f, 3024.0f); //Add cam position to scene.txt
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
@@ -437,15 +437,15 @@ void CSceneGame::Update(DWORD dt)
 	//	if (objects[i]->isDestroyed == true)
 	//		SAFE_DELETE(objects[i]);
 	//}
-	if(currentPlayer->type == TYPE_JASON)
-		if (((CJason*)currentPlayer)->state == JASON_STATE_INSOPHIA)
+	if (currentPlayer->type == TYPE_JASON)
+		if (((CJason *)currentPlayer)->state == JASON_STATE_INSOPHIA)
 		{
 			float jasonx = currentPlayer->x;
 			float jasony = currentPlayer->y;
 			currentPlayer = CSceneManager::GetInstance()->Sophia;
 			CCamera::GetInstance()->SetFollow(currentPlayer);
 			currentPlayer->isFreezing = false;
-			((CSophia*)currentPlayer)->StartOpening();
+			((CSophia *)currentPlayer)->StartOpening();
 			objects.push_back(currentPlayer);
 		}
 	CCamera::GetInstance()->Update(dt);
@@ -485,7 +485,7 @@ void CSceneGame::BossStageStarted()
 	objects.clear();
 	objects = CGrid::GetInstance()->ObjectsInCam(CCamera::GetInstance());
 
-	for (auto& GameObject : objects)
+	for (auto &GameObject : objects)
 	{
 		if (GameObject->type == TYPE_ENEMY_CRABULLUS)
 			GameObject->isEnabled = true;
@@ -497,11 +497,11 @@ void CSceneGame::BossStageStarted()
 void CSceneGameKeyHandler::KeyState(BYTE *states)
 {
 	CGame *game = CGame::GetInstance();
-	switch (((CSceneGame*)scence)->currentPlayer->type)
+	switch (((CSceneGame *)scence)->currentPlayer->type)
 	{
 	case TYPE_SOPHIA:
 	{
-		CSophia* sophia = (CSophia*)(((CSceneGame*)scence)->currentPlayer);
+		CSophia *sophia = (CSophia *)(((CSceneGame *)scence)->currentPlayer);
 
 		if (sophia->GetState() == SOPHIA_STATE_DIE)
 			return;
@@ -525,7 +525,7 @@ void CSceneGameKeyHandler::KeyState(BYTE *states)
 	break;
 	case TYPE_JASON:
 	{
-		CJason* jason = (CJason*)(((CSceneGame*)scence)->currentPlayer);
+		CJason *jason = (CJason *)(((CSceneGame *)scence)->currentPlayer);
 
 		if (jason->GetState() == JASON_STATE_DIE || jason->isJumpingIn)
 			return;
@@ -544,7 +544,7 @@ void CSceneGameKeyHandler::KeyState(BYTE *states)
 	}
 	break;
 	case TYPE_BIGJASON:
-		CBigJason* bigjason = (CBigJason*)(((CSceneGame*)scence)->currentPlayer);
+		CBigJason *bigjason = (CBigJason *)(((CSceneGame *)scence)->currentPlayer);
 		if (bigjason->GetState() == BIGJASON_STATE_DIE || bigjason->isAutoGoX || bigjason->isAutoGoY)
 			return;
 		int nx = bigjason->Getnx();
@@ -555,7 +555,7 @@ void CSceneGameKeyHandler::KeyState(BYTE *states)
 			bigjason->SetState(BIGJASON_STATE_WALKING_RIGHT);
 		else if (game->IsKeyDown(DIK_LEFT))
 			bigjason->SetState(BIGJASON_STATE_WALKING_LEFT);
-		
+
 		if (game->IsKeyDown(DIK_UP))
 			bigjason->SetState(BIGJASON_STATE_WALKING_UP);
 		else if (game->IsKeyDown(DIK_DOWN))
@@ -619,81 +619,81 @@ void CSceneGameKeyHandler::OnKeyDown(int KeyCode)
 	}
 	if (KeyCode == DIK_Y)
 	{
-		((CSceneGame*)scence)->map->StartBossStage();
+		((CSceneGame *)scence)->map->StartBossStage();
 	}
-	switch (((CSceneGame*)scence)->currentPlayer->type)
+	switch (((CSceneGame *)scence)->currentPlayer->type)
 	{
 	case TYPE_SOPHIA:
+	{
+		CSophia *sophia = (CSophia *)(((CSceneGame *)scence)->currentPlayer);
+		switch (KeyCode)
 		{
-			CSophia* sophia = (CSophia*)(((CSceneGame*)scence)->currentPlayer);
-			switch (KeyCode)
+		case DIK_S:
+			sophia->SetState(SOPHIA_STATE_JUMP);
+			break;
+		case DIK_A:
+			if (sophia->isPressingUp == true)
+				sophia->Fire(90);
+			else
 			{
-			case DIK_S:
-				sophia->SetState(SOPHIA_STATE_JUMP);
-				break;
-			case DIK_A:
-				if (sophia->isPressingUp == true)
-					sophia->Fire(90);
+				if (sophia->nx > 0)
+					sophia->Fire(180);
 				else
-				{
-					if (sophia->nx > 0)
-						sophia->Fire(180);
-					else
-						sophia->Fire(0);
-				}
-				break;
-			case DIK_Q:
-				if (sophia->isJumping || sophia->isFalling)
-					return;
-				sophia->StartOpening();
-				CJason* jason = CSceneManager::GetInstance()->Jason;
-				((CSceneGame*)scence)->currentPlayer = jason;
-				jason->isEnabled = true;
-				jason->SetState(JASON_STATE_IDLE_RIGHT);
-				jason->SetPosition(sophia->x+9, sophia->y+9);
-				CCamera::GetInstance()->SetFollow(jason);
-				CGrid::GetInstance()->safeRemoveObject(jason);
-				CGrid::GetInstance()->addObject(jason);
-				break;
+					sophia->Fire(0);
 			}
-			return;
+			break;
+		case DIK_Q:
+			if (sophia->isJumping || sophia->isFalling)
+				return;
+			sophia->StartOpening();
+			CJason *jason = CSceneManager::GetInstance()->Jason;
+			((CSceneGame *)scence)->currentPlayer = jason;
+			jason->isEnabled = true;
+			jason->SetState(JASON_STATE_IDLE_RIGHT);
+			jason->SetPosition(sophia->x + 9, sophia->y + 9);
+			CCamera::GetInstance()->SetFollow(jason);
+			CGrid::GetInstance()->safeRemoveObject(jason);
+			CGrid::GetInstance()->addObject(jason);
+			break;
 		}
+		return;
+	}
 	break;
 	case TYPE_JASON:
-		{
-			CJason* jason = (CJason*)(((CSceneGame*)scence)->currentPlayer);
-			if (jason->isJumpingIn)
-				return;
-			switch (KeyCode)
-			{
-			case DIK_S:
-				jason->SetState(JASON_STATE_JUMP);
-				break;
-			case DIK_A:
-				if (jason->nx > 0)
-						jason->Fire(180);
-				else
-						jason->Fire(0);
-				break;
-			case DIK_Q:
-			{
-				CSophia* sophia = CSceneManager::GetInstance()->Sophia;
-				int direction;
-				float space;
-				if (jason->isCollidingWith(sophia, space, direction))
-					jason->SetState(JASON_STATE_JUMPIN);
-				break;
-			}
-			case DIK_DOWN:
-				jason->isPressingDown = true;
-				break;
-			}
+	{
+		CJason *jason = (CJason *)(((CSceneGame *)scence)->currentPlayer);
+		if (jason->isJumpingIn)
 			return;
+		switch (KeyCode)
+		{
+		case DIK_S:
+			jason->SetState(JASON_STATE_JUMP);
+			break;
+		case DIK_A:
+			if (jason->nx > 0)
+				jason->Fire(180);
+			else
+				jason->Fire(0);
+			break;
+		case DIK_Q:
+		{
+			CSophia *sophia = CSceneManager::GetInstance()->Sophia;
+			int direction;
+			float space;
+			if (jason->isCollidingWith(sophia, space, direction))
+				jason->SetState(JASON_STATE_JUMPIN);
+			break;
 		}
+		case DIK_DOWN:
+			jason->isPressingDown = true;
+			break;
+		}
+		return;
+	}
 	break;
 	case TYPE_BIGJASON:
 	{
-		CBigJason* bigjason = (CBigJason*)(((CSceneGame*)scence)->currentPlayer);
+		CBigJason *bigjason = (CBigJason *)(((CSceneGame *)scence)->currentPlayer);
 		if (bigjason->GetState() == BIGJASON_STATE_DIE || bigjason->isAutoGoX || bigjason->isAutoGoY)
 			return;
 		int nx = bigjason->Getnx();
@@ -721,18 +721,16 @@ void CSceneGameKeyHandler::OnKeyDown(int KeyCode)
 		return;
 	}
 	}
-
 }
 
 void CSceneGameKeyHandler::OnKeyUp(int KeyCode)
 {
 
-
-	switch (((CSceneGame*)scence)->currentPlayer->type)
+	switch (((CSceneGame *)scence)->currentPlayer->type)
 	{
 	case TYPE_SOPHIA:
 	{
-		CSophia* sophia = (CSophia*)(((CSceneGame*)scence)->currentPlayer);
+		CSophia *sophia = (CSophia *)(((CSceneGame *)scence)->currentPlayer);
 		switch (KeyCode)
 		{
 		case DIK_UP:
@@ -742,15 +740,13 @@ void CSceneGameKeyHandler::OnKeyUp(int KeyCode)
 	}
 	break;
 	case TYPE_JASON:
-		CJason* jason = (CJason*)(((CSceneGame*)scence)->currentPlayer);
+		CJason *jason = (CJason *)(((CSceneGame *)scence)->currentPlayer);
 		switch (KeyCode)
 		{
 		case DIK_DOWN:
 			jason->isPressingDown = false;
 		}
 		return;
-	break;
+		break;
 	}
-
-
 }
