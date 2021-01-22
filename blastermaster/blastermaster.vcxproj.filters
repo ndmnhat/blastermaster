@@ -54,6 +54,12 @@
     <ClCompile Include="Sound\Sound.cpp" />
     <ClCompile Include="Sound\dxutil.cpp" />
     <ClCompile Include="Sound\DSutil.cpp" />
+    <ClCompile Include="Scene\EndScene.cpp" />
+    <ClCompile Include="Object\Lava.cpp" />
+    <ClCompile Include="Object\Fence.cpp" />
+    <ClCompile Include="Object\BossWall.cpp" />
+    <ClCompile Include="Object\Bullet\BossBullet.cpp" />
+    <ClCompile Include="Object\Bullet\CannonBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object\OutdoorEnemy\BossCrabullus.h" />
@@ -109,11 +115,20 @@
     <ClInclude Include="Sound\Sound.h" />
     <ClInclude Include="Sound\dxutil.h" />
     <ClInclude Include="Sound\DSutil.h" />
+    <ClInclude Include="Scene\EndScene.h" />
+    <ClInclude Include="Object\Lava.h" />
+    <ClInclude Include="Object\Fence.h" />
+    <ClInclude Include="Object\BossWall.h" />
+    <ClInclude Include="Object\Bullet\BossBullet.h" />
+    <ClInclude Include="Object\Bullet\CannonBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\BlasterMasterSheet1.png" />
     <Image Include="textures\enemies.png" />
     <Image Include="textures\tiles.png" />
+    <Image Include="textures\boss.png" />
+    <Image Include="textures\item2.png" />
+    <Image Include="textures\jason_items_bullets.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Map\map2.txt" />

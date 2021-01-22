@@ -316,7 +316,7 @@ void CBigJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 #pragma endregion
 
 	//Reload gun
-	if (ClipSize < 3)
+	if (ClipSize < 1)
 	{
 		if (GetTickCount() - reloadingTimeCount > BIGJASON_RELOAD_TIME)
 		{
@@ -324,7 +324,7 @@ void CBigJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			reloadingTimeCount = GetTickCount();
 		}
 	}
-
+	//DebugOut(L"%d\n", ClipSize);
 	//Dead
 	if(isDead && currentAnimation == BIGJASON_ANI_DIE)
 		if (animation_set->at(currentAnimation)->GetCurrentFrame() == animation_set->at(currentAnimation)->GetFramesSize() - 1)

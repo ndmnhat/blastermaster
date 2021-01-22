@@ -42,6 +42,7 @@ public:
 	bool isJumping = false;
 	bool isFalling = false;
 	bool isInSophia = true;
+	bool isPressingDown = false;
 	void Fire(float Direction);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();

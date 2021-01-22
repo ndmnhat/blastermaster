@@ -21,7 +21,7 @@
 #include "..\Object\OutdoorEnemy\Skull.h"
 #include "..\Object\OutdoorEnemy\Orb1.h"
 #include "..\Object\OutdoorEnemy\Orb2.h"
-
+#include "..\Object\OutdoorEnemy\BossCrabullus.h"
 #include <fstream>
 #include "..\Map\Map.h"
 #include "..\Grid\Grid.h"
@@ -36,7 +36,6 @@ protected:
 	bool isLoaded = false;
 	unordered_map<int, LPSECTION> backupSections;
 	vector<LPGAMEOBJECT> backupObjects;
-	CMap *map;
 	CHealthBar *healthbar;
 	//CSophia *sophia;
 	//CJason* jason;
@@ -52,6 +51,7 @@ protected:
 	friend class CSceneGameKeyHandler;
 
 public:
+	CMap *map;
 	CPlayer *currentPlayer;
 	CSceneGame(int id, LPCWSTR filePath);
 	CPlayer *GetPlayer() { return currentPlayer; }
@@ -59,6 +59,8 @@ public:
 	void Unload();
 	void Update(DWORD dt);
 	void Render();
+	void StartBossStage();
+	void BossStageStarted();
 	~CSceneGame();
 	//friend class CPlayScenceKeyHandler;
 };
